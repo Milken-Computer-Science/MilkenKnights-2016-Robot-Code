@@ -8,7 +8,27 @@ public class Pose {
     public double rightVelocity;
     public double heading;
     public double headingVelocity;
-    
+    /**
+     * Inputs double variables for Distance, Velocity, headingVelocity for both sides of the Robot.
+     * 
+     * @param leftDistance
+     * The distance the left encoder has traveled 
+     * 
+     * @param rightDistance
+     * The distance the left encoder has traveled.
+     * 
+     * @param leftVelocity
+     * The velocity of the left encoder.
+     * 
+     * @param rightVelocity
+     * The velocity of the right encoder.
+     * 
+     * @param heading
+     * The heading of the robot.
+     * 
+     * @param headingVelocity
+     * The rate at which the robot is turning.
+     */
     public Pose(double leftDistance, double rightDistance, double leftVelocity, 
             double rightVelocity, double heading, double headingVelocity) {
         this.leftDistance = leftDistance;
@@ -18,7 +38,27 @@ public class Pose {
         this.heading = heading;
         this.headingVelocity = headingVelocity;
     }
-    
+    /**
+     * Inputs double variables for Distance, Velocity, headingVelocity for both sides of the Robot.
+     * 
+     * @param leftDistance
+     * The distance the left encoder has traveled.
+     * 
+     * @param rightDistance
+     * The distance the left encoder has traveled.
+     * 
+     * @param leftVelocity
+     * The velocity of the left encoder.
+     * 
+     * @param rightVelocity
+     * The velocity of the right encoder.
+     * 
+     * @param heading
+     * The heading of the robot.
+     * 
+     * @param headingVelocity
+     * The rate at which the robot is turning.
+     */
     public void reset(double leftDistance, double rightDistance, double leftVelocity, 
             double rightVelocity, double heading, double headingVelocity) {
         this.leftDistance = leftDistance;
@@ -30,36 +70,47 @@ public class Pose {
     }
     
     /**
-     * @return the leftDistance
+     * Returns the distance of the left side of the Robot.
+     * 
+     * @return the leftDistance.
      */
     public double getLeftDistance() {
         return leftDistance;
     }
     /**
-     * @return the rightDistance
+     * Returns the distance of the right side of the Robot.
+     * 
+     * @return the rightDistance.
      */
     public double getRightDistance() {
         return rightDistance;
     }
     /**
-     * @return the leftVelocity
+     * Returns the velocity of the left side of the Robot.
+     * 
+     * @return the leftVelocity.
      */
     public double getLeftVelocity() {
         return leftVelocity;
     }
     /**
+     * Return the velocity of the right side of the Robot.
+     * 
      * @return the rightVelocity
      */
     public double getRightVelocity() {
         return rightVelocity;
     }
     /**
+     * Returns the heading(Direction) of the Robot.
+     * 
      * @return the heading
      */
     public double getHeading() {
         return heading;
     }
     /**
+     * Return headingVelocity.
      * @return the headingVelocity
      */
     public double getHeadingVelocity() {
@@ -67,7 +118,7 @@ public class Pose {
     }
     
     /**
-     * Get the relative pose compared to another pose
+     * Get the relative pose compared to another pose.
      * 
      * @param pose the pose
      * @return a pose
