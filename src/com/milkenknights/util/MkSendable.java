@@ -1,5 +1,5 @@
 package com.milkenknights.util;
 
-public interface MKSendable {
+public interface MkSendable {
 	public void updateSmartDashboard();
 }
