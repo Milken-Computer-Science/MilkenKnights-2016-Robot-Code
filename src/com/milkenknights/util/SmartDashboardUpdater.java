@@ -3,19 +3,21 @@ package com.milkenknights.util;
 import java.util.Vector;
 
 public class SmartDashboardUpdater implements Loopable {
-	private Looper looper;
-    protected Vector<MKSendable> sendables = new Vector<MKSendable>();
+    private Looper looper;
+    protected Vector<MkSendable> sendables = new Vector<MkSendable>();
 
     public SmartDashboardUpdater(double period) {
-    	this("SmartDashboardUpdater", period);
+        this("SmartDashboardUpdater", period);
     }
     
     public SmartDashboardUpdater(String name, double period) {
         looper = new Looper(name, this, period);
     }
-
+    /**
+     * A function called by Looper or Multilooper.
+     */
     public void update() {
-        for (MKSendable sendable : sendables) {
+        for (MkSendable sendable : sendables) {
             sendable.updateSmartDashboard();
         }
     }
@@ -28,8 +30,8 @@ public class SmartDashboardUpdater implements Loopable {
         looper.stop();
     }
 
-    public void addSendable(MKSendable c) {
-    	sendables.addElement(c);
+    public void addSendable(MkSendable sendable) {
+        sendables.addElement(sendable);
     }
 
 }
