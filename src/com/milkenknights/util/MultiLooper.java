@@ -17,6 +17,9 @@ public class MultiLooper implements Loopable {
         looper = new Looper(name, this, period);
     }
 
+    /**
+     * Method to be called every period.
+     */
     public void update() {
         for (Loopable loopable : loopables) {
             loopable.update();
@@ -31,7 +34,7 @@ public class MultiLooper implements Loopable {
         looper.stop();
     }
 
-    public void addLoopable(Loopable c) {
-        loopables.addElement(c);
+    public void addLoopable(Loopable loopable) {
+        loopables.addElement(loopable);
     }
 }

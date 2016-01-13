@@ -22,7 +22,7 @@ public class MotorPairSignal {
     }
     
     public MotorPairSignal() {
-    	this(0.0, 0.0);
+        this(0.0, 0.0);
     }
     
 }

@@ -3,7 +3,7 @@ package com.milkenknights.util;
 /**
  * This is an abstract class extended by Subsystems.
  */
-public abstract class Subsystem implements MKSendable {
+public abstract class Subsystem implements MkSendable {
 
     private String name;
     

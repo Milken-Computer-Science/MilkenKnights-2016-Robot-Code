@@ -65,6 +65,9 @@ public class Looper {
         }
     }
 
+    /**
+     * The method called every period.
+     */
     private void update() {
         loopable.update();
     }
