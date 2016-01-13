@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Encoder;
 
 public class MkEncoder extends Encoder {
     
+    @SuppressWarnings("unused")
     private double zeroOffset = 0;
 
     public MkEncoder(int channelA, int channelB) {

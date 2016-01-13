@@ -2,6 +2,7 @@ package com.milkenknights.util;
 
 public abstract class Drive extends Subsystem implements Loopable {
 
+    @SuppressWarnings("unused")
     private MotorPairSignal signal = new MotorPairSignal(0, 0);
     private DriveController controller;
 

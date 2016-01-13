@@ -29,6 +29,10 @@ public class MkMath {
         return boundAngleNeg180to180Degrees(to - from);
     }
 
+    /**
+     * Bounds an angle to between 0 and 360 degrees.
+     * @param angle The angle in degrees
+     */
     public static double boundAngle0to360Degrees(double angle) {
         // Naive algorithm
         while (angle >= 360.0) {
@@ -40,6 +44,10 @@ public class MkMath {
         return angle;
     }
 
+    /**
+     * Bounds an angle to between -180 and 180 degrees.
+     * @param angle The angle in degrees
+     */
     public static double boundAngleNeg180to180Degrees(double angle) {
         // Naive algorithm
         while (angle >= 180.0) {
@@ -51,6 +59,10 @@ public class MkMath {
         return angle;
     }
 
+    /**
+     * Bounds an angle to between 0pi and 2pi radians.
+     * @param angle The angle in radians
+     */
     public static double boundAngle0to2PiRadians(double angle) {
         // Naive algorithm
         while (angle >= 2.0 * Math.PI) {
@@ -62,6 +74,10 @@ public class MkMath {
         return angle;
     }
 
+    /**
+     * Bounds an angle to between -pi and pi radians.
+     * @param angle The angle in radians
+     */
     public static double boundAngleNegPiToPiRadians(double angle) {
         // Naive algorithm
         while (angle >= Math.PI) {
@@ -74,5 +90,6 @@ public class MkMath {
     }
 
     public MkMath() {
+        
     }
 }
