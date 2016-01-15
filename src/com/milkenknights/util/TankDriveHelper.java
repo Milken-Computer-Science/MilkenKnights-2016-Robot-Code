@@ -2,7 +2,7 @@ package com.milkenknights.util;
 
 public class TankDriveHelper extends DriveHelper {
 
-    public TankDriveHelper(Drive drive) {
+    public TankDriveHelper(DriveAbstract drive) {
         super(drive);
     }
 

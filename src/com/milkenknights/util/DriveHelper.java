@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 public abstract class DriveHelper {
 
-    protected Drive drive;
+    protected DriveAbstract drive;
 
-    public DriveHelper(Drive drive) {
+    public DriveHelper(DriveAbstract drive) {
         this.drive = drive;
     }
 

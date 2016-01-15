@@ -2,14 +2,15 @@ package com.milkenknights.util;
 
 import edu.wpi.first.wpilibj.Encoder;
 
-public class MkEncoder extends Encoder {
+public abstract class MkEncoder extends Encoder {
     
-    @SuppressWarnings("unused")
     private double zeroOffset = 0;
 
     public MkEncoder(int channelA, int channelB) {
         super(channelA, channelB);
     }
+    
+    public abstract int getPulsesPerRevolution();
     
     public double getDistance() {
         return this.getDistance();

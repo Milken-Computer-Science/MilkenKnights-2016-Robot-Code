@@ -1,12 +1,12 @@
 package com.milkenknights.util;
 
-public abstract class Drive extends Subsystem implements Loopable {
+public abstract class DriveAbstract extends Subsystem implements Loopable {
 
     @SuppressWarnings("unused")
     private MotorPairSignal signal = new MotorPairSignal(0, 0);
     private DriveController controller;
 
-    public Drive(String name) {
+    public DriveAbstract(String name) {
         super(name);
     }
 
