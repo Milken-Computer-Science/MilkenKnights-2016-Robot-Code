@@ -44,5 +44,9 @@ public class Constants {
         
         public static final int SHIFTER_PCM_ID = 0;
     }
+    
+    public class Intake {
+        public static final int TALON = 5;
+    }
 
 }
