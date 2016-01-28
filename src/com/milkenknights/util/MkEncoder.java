@@ -3,8 +3,6 @@ package com.milkenknights.util;
 import edu.wpi.first.wpilibj.Encoder;
 
 public abstract class MkEncoder extends Encoder {
-    
-    private double zeroOffset = 0;
 
     public MkEncoder(int channelA, int channelB) {
         super(channelA, channelB);
@@ -12,12 +10,4 @@ public abstract class MkEncoder extends Encoder {
     
     public abstract int getPulsesPerRevolution();
     
-    public double getDistance() {
-        return this.getDistance();
-    }
-    
-    public void setZeroOffset(double zeroOffset) {
-        this.zeroOffset = zeroOffset;
-    }
-
 }
