@@ -27,11 +27,11 @@ public class Drive extends DriveAbstract {
     private DriveController controller = null;
     private Pose cachedPose = new Pose(0, 0, 0, 0, 0, 0);
     
-    public enum Gear {
+    public enum DriveGear {
         LOW(false), HIGH(true);
         
         private final boolean shifter;
-        Gear(boolean shifter) {
+        DriveGear(boolean shifter) {
             this.shifter = shifter;
         }
         
@@ -117,7 +117,7 @@ public class Drive extends DriveAbstract {
      * Sets the gear of the drive train.
      * @param gear The gear to set to
      */
-    public void setGear(Gear gear) {
+    public void setGear(DriveGear gear) {
         shifter.set(gear.getShifter());
     }
     
@@ -126,8 +126,8 @@ public class Drive extends DriveAbstract {
      * 
      * @return The current gear
      */
-    public Gear getGear() {
-        for (Gear gear : Gear.values()) {
+    public DriveGear getGear() {
+        for (DriveGear gear : DriveGear.values()) {
             if (gear.getShifter() == shifter.get()) {
                 return gear;
             }
