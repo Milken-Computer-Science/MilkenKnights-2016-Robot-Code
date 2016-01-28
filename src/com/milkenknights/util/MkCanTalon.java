@@ -22,7 +22,7 @@ public class MkCanTalon implements SpeedController {
      * @param controller A CANTalon object.
      */
     public MkCanTalon(CANTalon controller) {
-        controllers = new CANTalon[] {controller};
+        this(new CANTalon[] {controller});
     }
     
     /**
@@ -32,6 +32,7 @@ public class MkCanTalon implements SpeedController {
      */
     public MkCanTalon(CANTalon[] controllers) {
         this.controllers = controllers;
+        enableBrakeMode(false);
     }
     
     /**
@@ -100,8 +101,19 @@ public class MkCanTalon implements SpeedController {
 
     @Override
     public void disable() {
-        for (SpeedController controller : controllers) {
+        for (CANTalon controller : controllers) {
             controller.disable();
+        }
+    }
+    
+    /**
+     * Sets the internal brake mode of the CANTalons.
+     * 
+     * @param brake If the controller should brake
+     */
+    public void enableBrakeMode(boolean brake) {
+        for (CANTalon controller : controllers) {
+            controller.enableBrakeMode(brake);
         }
     }
 
