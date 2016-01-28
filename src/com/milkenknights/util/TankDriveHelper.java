@@ -18,7 +18,7 @@ public class TankDriveHelper extends DriveHelper {
         super.drive(leftThrottle, rightThrottle);
 
         signal.leftMotor = handleDeadband(leftThrottle, LEFT_THROTTLE_DEADBAND);
-        signal.rightMotor = handleDeadband(leftThrottle, RIGHT_THROTTLE_DEADBAND);
+        signal.rightMotor = handleDeadband(rightThrottle, RIGHT_THROTTLE_DEADBAND);
 
         drive.setOpenLoop(signal);
     }
