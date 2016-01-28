@@ -15,6 +15,7 @@ public class Intake extends Subsystem {
     }
     
     private MkCanTalon talon;
+    private IntakeSpeed speed;
     
     /**
      * Create a new intake subsystem.
@@ -26,10 +27,16 @@ public class Intake extends Subsystem {
         super(name);
         
         this.talon = talon;
+        setSpeed(IntakeSpeed.STOP);
     }
 
     public void setSpeed(IntakeSpeed speed) {
         talon.set(speed.speed);
+        this.speed = speed;
+    }
+    
+    public IntakeSpeed getSpeed() {
+        return speed;
     }
 
     @Override

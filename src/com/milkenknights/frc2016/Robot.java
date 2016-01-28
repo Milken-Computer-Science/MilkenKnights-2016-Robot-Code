@@ -1,5 +1,11 @@
 package com.milkenknights.frc2016;
 
+import com.milkenknights.frc2016.behavior.BehaviorManager;
+import com.milkenknights.util.MotorPairSignal;
+import com.milkenknights.util.MultiLooper;
+import com.milkenknights.util.SmartDashboardUpdater;
+import com.milkenknights.util.TankDriveHelper;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -8,40 +14,63 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * this project, you must also update the manifest file in the resource directory.
  */
 public class Robot extends IterativeRobot {
+    
+    MultiLooper looper = new MultiLooper("Controllers", 1 / 200.0);
+    MultiLooper slowLooper = new MultiLooper("SlowControllers", 1 / 100.0);
+    SmartDashboardUpdater smartDashboardUpdater = new SmartDashboardUpdater(1 / 50.0);
+    
+    BehaviorManager behaviorManager = new BehaviorManager();
+    OperatorInterface operatorInterface = new OperatorInterface();
+    
+    TankDriveHelper tankDriveHelper = new TankDriveHelper(HardwareAdapter.DRIVE);
 
     /**
      * This function is run when the robot is first started up and should be used for any initialization code.
      */
     public void robotInit() {
-
+        System.out.println("Start robotInit()");
+        
+        slowLooper.addLoopable(HardwareAdapter.DRIVE);
+        
+        smartDashboardUpdater.addSendable(HardwareAdapter.DRIVE);
+        
+        smartDashboardUpdater.start();
+        System.out.println("End robotInit()");
     }
 
     /**
      * This function is called at the start of autonomous.
      */
     public void autonomousInit() {
+        System.out.println("Start autonomousInit()");
+        HardwareAdapter.DRIVE.reset();
+        
+        looper.start();
+        slowLooper.start();
 
-    }
-
-    /**
-     * This function is called periodically during autonomous.
-     */
-    public void autonomousPeriodic() {
-
+        System.out.println("End autonomousInit()");
     }
 
     /**
      * This function is called periodically during operator control.
      */
     public void teleopPeriodic() {
-
+        tankDriveHelper.drive(HardwareAdapter.LEFT_STICK.getY(), HardwareAdapter.RIGHT_STICK.getY());
+        //behaviorManager.update(operatorInterface.getCommands());
     }
-
+    
     /**
-     * This function is called periodically during test mode.
+     * This function is called at the start of the disabled period.
      */
-    public void testPeriodic() {
+    public void disabledInit() {
+        System.out.println("Start disabledInit()");
+        looper.stop();
+        slowLooper.stop();
 
+        HardwareAdapter.DRIVE.setOpenLoop(MotorPairSignal.NEUTRAL);
+        
+        System.gc();
+        System.out.println("End disabledInit()");
     }
 
 }

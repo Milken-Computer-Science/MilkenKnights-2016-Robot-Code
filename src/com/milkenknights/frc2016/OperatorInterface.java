@@ -9,9 +9,9 @@ public class OperatorInterface {
 
     private Commands commands = new Commands();
     
-    Joystick leftStick = HardwareAdapter.kLeftStick;
-    Joystick rightStick = HardwareAdapter.kRightStick;
-    Joystick operatorStick = HardwareAdapter.kOperatorStick;
+    Joystick leftStick = HardwareAdapter.LEFT_STICK;
+    Joystick rightStick = HardwareAdapter.RIGHT_STICK;
+    Joystick operatorStick = HardwareAdapter.OPERATOR_STICK;
     
     public void reset() {
         commands = new Commands();

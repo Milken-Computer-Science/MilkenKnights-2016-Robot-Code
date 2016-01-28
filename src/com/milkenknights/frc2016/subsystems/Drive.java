@@ -13,6 +13,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends DriveAbstract {
         
@@ -20,10 +21,24 @@ public class Drive extends DriveAbstract {
     private MkCanTalon rightMotor;
     private Encoder leftEncoder;
     private Encoder rightEncoder;
+    private Solenoid shifter;
     private AHRS gyro;
     
     private DriveController controller = null;
     private Pose cachedPose = new Pose(0, 0, 0, 0, 0, 0);
+    
+    public enum Gear {
+        LOW(false), HIGH(true);
+        
+        private final boolean shifter;
+        Gear(boolean shifter) {
+            this.shifter = shifter;
+        }
+        
+        public boolean getShifter() {
+            return shifter;
+        }
+    }
 
     /**
      * Create a new drive subsystem.
@@ -37,16 +52,17 @@ public class Drive extends DriveAbstract {
      * @param shifter The solenoid object to shift gears
      */
     public Drive(String name, MkCanTalon leftMotor, MkCanTalon rightMotor, MkEncoder leftEncoder, 
-            MkEncoder rightEncoder, AHRS gyro, Solenoid shifter) {
+            MkEncoder rightEncoder, Solenoid shifter, AHRS gyro) {
         super(name);
         
         this.leftMotor = leftMotor;
         this.rightMotor = rightMotor;
         this.leftEncoder = leftEncoder;
         this.rightEncoder = rightEncoder;
+        this.shifter = shifter;
         this.gyro = gyro;
         
-        this.rightMotor.setInverted(true);
+        this.leftMotor.setInverted(true);
         this.leftEncoder.setDistancePerPulse(leftEncoder.getPulsesPerRevolution() * Math.PI 
                 / Constants.Drive.WHEEL_DIAMETER);
         this.rightEncoder.setDistancePerPulse(rightEncoder.getPulsesPerRevolution() * Math.PI 
@@ -64,7 +80,8 @@ public class Drive extends DriveAbstract {
 
     @Override
     public void updateSmartDashboard() {
-
+        //TODO: Create SmartDashboard information
+        SmartDashboard.putNumber("Drive: Heading", cachedPose.heading);
     }
 
     @Override
@@ -95,6 +112,28 @@ public class Drive extends DriveAbstract {
         velocity = Math.min(Constants.kTurnMaxSpeedRadsPerSec, Math.max(velocity, 0));
         controller = new TurnInPlaceController(getPoseToContinueFrom(true), heading, velocity);
     }
+    
+    /**
+     * Sets the gear of the drive train.
+     * @param gear The gear to set to
+     */
+    public void setGear(Gear gear) {
+        shifter.set(gear.getShifter());
+    }
+    
+    /**
+     * Get what gear the drive is in. 
+     * 
+     * @return The current gear
+     */
+    public Gear getGear() {
+        for (Gear gear : Gear.values()) {
+            if (gear.getShifter() == shifter.get()) {
+                return gear;
+            }
+        }
+        return null;
+    }
 
     @Override
     public void reset() {
@@ -115,13 +154,13 @@ public class Drive extends DriveAbstract {
         rightMotor.set(signal.rightMotor);
     }
     
-    private Pose getPoseToContinueFrom(boolean for_turn_controller) {
-        if (!for_turn_controller && controller instanceof TurnInPlaceController) {
-            Pose pose_to_use = getPhysicalPose();
-            pose_to_use.heading = ((TurnInPlaceController) controller).getHeadingGoal();
-            pose_to_use.headingVelocity = 0;
-            return pose_to_use;
-        } else if (controller == null || (controller instanceof DriveStraightController && for_turn_controller)) {
+    private Pose getPoseToContinueFrom(boolean forTurnController) {
+        if (!forTurnController && controller instanceof TurnInPlaceController) {
+            Pose poseToUse = getPhysicalPose();
+            poseToUse.heading = ((TurnInPlaceController) controller).getHeadingGoal();
+            poseToUse.headingVelocity = 0;
+            return poseToUse;
+        } else if (controller == null || (controller instanceof DriveStraightController && forTurnController)) {
             return getPhysicalPose();
         } else if (controller.isOnTarget()) {
             return controller.getCurrentSetpoint();
