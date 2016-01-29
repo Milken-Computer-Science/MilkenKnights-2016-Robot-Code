@@ -15,14 +15,14 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  */
 public class Robot extends IterativeRobot {
     
-    MultiLooper looper = new MultiLooper("Controllers", 1 / 200.0);
-    MultiLooper slowLooper = new MultiLooper("SlowControllers", 1 / 100.0);
-    SmartDashboardUpdater smartDashboardUpdater = new SmartDashboardUpdater(1 / 50.0);
+    private MultiLooper looper = new MultiLooper("Controllers", 1 / 200.0);
+    private MultiLooper slowLooper = new MultiLooper("SlowControllers", 1 / 100.0);
+    private SmartDashboardUpdater smartDashboardUpdater = new SmartDashboardUpdater(1 / 50.0);
     
-    BehaviorManager behaviorManager = new BehaviorManager();
-    OperatorInterface operatorInterface = new OperatorInterface();
+    private BehaviorManager behaviorManager = new BehaviorManager();
+    private OperatorInterface operatorInterface = new OperatorInterface();
     
-    TankDriveHelper tankDriveHelper = new TankDriveHelper(HardwareAdapter.DRIVE);
+    private TankDriveHelper tankDriveHelper = new TankDriveHelper(HardwareAdapter.DRIVE);
 
     /**
      * This function is run when the robot is first started up and should be used for any initialization code.
@@ -56,7 +56,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         tankDriveHelper.drive(HardwareAdapter.LEFT_STICK.getY(), HardwareAdapter.RIGHT_STICK.getY());
-        //behaviorManager.update(operatorInterface.getCommands());
+        behaviorManager.update(operatorInterface.getCommands());
     }
     
     /**
