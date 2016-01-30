@@ -15,8 +15,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  */
 public class Robot extends IterativeRobot {
     
-    private MultiLooper looper = new MultiLooper("Controllers", 1 / 200.0);
-    private MultiLooper slowLooper = new MultiLooper("SlowControllers", 1 / 100.0);
+    private MultiLooper looper = new MultiLooper("Controllers", 1 / 100.0);
     private SmartDashboardUpdater smartDashboardUpdater = new SmartDashboardUpdater(1 / 50.0);
     
     private BehaviorManager behaviorManager = new BehaviorManager();
@@ -30,9 +29,11 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         System.out.println("Start robotInit()");
         
-        slowLooper.addLoopable(HardwareAdapter.DRIVE);
+        looper.addLoopable(HardwareAdapter.DRIVE);
+        looper.addLoopable(HardwareAdapter.CATAPULT);
         
         smartDashboardUpdater.addSendable(HardwareAdapter.DRIVE);
+        smartDashboardUpdater.addSendable(HardwareAdapter.CATAPULT);
         
         smartDashboardUpdater.start();
         System.out.println("End robotInit()");
@@ -46,9 +47,15 @@ public class Robot extends IterativeRobot {
         HardwareAdapter.DRIVE.reset();
         
         looper.start();
-        slowLooper.start();
 
         System.out.println("End autonomousInit()");
+    }
+    
+    /**
+     * This function is called at the start of telop.
+     */
+    public void teleopInit() {
+        looper.start();
     }
 
     /**
@@ -65,7 +72,6 @@ public class Robot extends IterativeRobot {
     public void disabledInit() {
         System.out.println("Start disabledInit()");
         looper.stop();
-        slowLooper.stop();
 
         HardwareAdapter.DRIVE.setOpenLoop(MotorPairSignal.NEUTRAL);
         

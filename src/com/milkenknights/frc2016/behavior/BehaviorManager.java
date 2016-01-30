@@ -15,8 +15,8 @@ public class BehaviorManager {
      */
     public void update(Commands commands) {
         
-        if (commands.intakeSpeed != HardwareAdapter.INTAKE.getSpeed()) {
-            HardwareAdapter.INTAKE.setSpeed(commands.intakeSpeed);
+        if (commands.fireCatapult) {
+            HardwareAdapter.CATAPULT.fire();
         }
         
     }

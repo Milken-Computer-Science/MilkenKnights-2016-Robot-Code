@@ -47,7 +47,11 @@ public class Constants {
     }
     
     public class Intake {
-        public static final int TALON = 5;
+        public static final int TALON = 0;
+    }
+    
+    public class Catapult {
+        public static final int MOTOR = 6;
     }
 
 }

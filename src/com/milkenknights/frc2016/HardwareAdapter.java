@@ -1,5 +1,6 @@
 package com.milkenknights.frc2016;
 
+import com.milkenknights.frc2016.subsystems.Catapult;
 import com.milkenknights.frc2016.subsystems.Drive;
 import com.milkenknights.frc2016.subsystems.Intake;
 import com.milkenknights.util.MkCanTalon;
@@ -28,6 +29,8 @@ public class HardwareAdapter {
             Constants.Drive.RIGHT_ENCODER_DIOB);
 
     private static final Solenoid DRIVE_SHIFTER = new Solenoid(Constants.PCM_ID, Constants.Drive.SHIFTER_PCM_ID);
+    
+    private static final CANTalon CATAPULT_TALON = new CANTalon(Constants.Catapult.MOTOR);
 
     private static final AHRS GYRO = new AHRS(SPI.Port.kMXP);
     //private static final AnalogInput kPressureTrannsducer;
@@ -35,6 +38,7 @@ public class HardwareAdapter {
     public static final Drive DRIVE = new Drive("Drive", DRIVE_LEFT_TALON, DRIVE_RIGHT_TALON, DRIVE_LEFT_ENCODER,
             DRIVE_RIGHT_ENCODER, DRIVE_SHIFTER, GYRO);
     public static final Intake INTAKE = new Intake("Intake", INTAKE_TALON);
+    public static final Catapult CATAPULT = new Catapult("Catapult", CATAPULT_TALON);
     public static final PowerDistributionPanel PDP = new PowerDistributionPanel();
     public static final Compressor COMPRESSOR = new Compressor(Constants.PCM_ID);
 

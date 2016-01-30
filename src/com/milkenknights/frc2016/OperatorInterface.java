@@ -1,7 +1,6 @@
 package com.milkenknights.frc2016;
 
 import com.milkenknights.frc2016.behavior.Commands;
-import com.milkenknights.frc2016.subsystems.Intake.IntakeSpeed;
 
 public class OperatorInterface {
 
@@ -15,9 +14,10 @@ public class OperatorInterface {
      * Return the commands that the operator wants to execute.
      */
     public Commands getCommands() {
+        reset();
 
         if (HardwareAdapter.OPERATOR_STICK.getRawButton(1)) {
-            commands.intakeSpeed = IntakeSpeed.INTAKE;
+            commands.fireCatapult = true;
         }
         
         return commands;
