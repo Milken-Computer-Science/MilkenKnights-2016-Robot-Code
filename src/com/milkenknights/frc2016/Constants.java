@@ -33,10 +33,10 @@ public class Constants {
         public static final double WHEEL_DIAMETER = 4;
         public static final double MAX_SPEED = 0;
         
-        public static final int LEFT_MOTOR_1 = 7;
-        public static final int LEFT_MOTOR_2 = 8;
-        public static final int RIGHT_MOTOR_1 = 9;
-        public static final int RIGHT_MOTOR_2 = 10;
+        public static final int LEFT_MOTOR_1 = 0;
+        public static final int LEFT_MOTOR_2 = 0;
+        public static final int RIGHT_MOTOR_1 = 0;
+        public static final int RIGHT_MOTOR_2 = 0;
 
         public static final int LEFT_ENCODER_DIOA = 2;
         public static final int LEFT_ENCODER_DIOB = 1;
@@ -47,8 +47,8 @@ public class Constants {
     }
     
     public class Intake {
-        public static final int SPEED_TALON = 0;
-        public static final int POSITION_TALON = 0;
+        public static final int SPEED_TALON = 8;
+        public static final int POSITION_TALON = 7;
     }
     
     public class Catapult {
