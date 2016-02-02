@@ -4,6 +4,7 @@ import com.milkenknights.util.Loopable;
 import com.milkenknights.util.Subsystem;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.InterruptHandlerFunction;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,15 +31,16 @@ public class Catapult extends Subsystem implements Loopable {
     public Catapult(String name, CANTalon talon, DigitalInput banner) {
         super(name);
         
-        talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
-        talon.changeControlMode(CANTalon.TalonControlMode.Position);
-        talon.reverseSensor(true);
-        talon.setAllowableClosedLoopErr(25);
-        talon.setIZone(1000);
-        talon.configPeakOutputVoltage(15, -6);
-        talon.set(0);
-        talon.setPID(0.5, 0.0005, 0);
-        talon.setF(0);
+        talon.changeControlMode(TalonControlMode.PercentVbus);
+//        talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+//        talon.changeControlMode(CANTalon.TalonControlMode.Position);
+//        talon.reverseSensor(true);
+//        talon.setAllowableClosedLoopErr(25);
+//        talon.setIZone(1000);
+//        talon.configPeakOutputVoltage(15, -6);
+//        talon.set(0);
+//        talon.setPID(0.5, 0.0005, 0);
+//        talon.setF(0);
         
         banner.requestInterrupts(new InterruptHandlerFunction<Object>() {
             @Override
@@ -60,37 +62,38 @@ public class Catapult extends Subsystem implements Loopable {
     
     public void fire() {
         setState(CatapultState.FIRE);
+        talon.set(1);
     }
 
     @Override
     public void updateSmartDashboard() {
-        SmartDashboard.putString("Catapult State", state.toString());
-        SmartDashboard.putNumber("Catapult Count", talon.get());
-        SmartDashboard.putNumber("Catapult Error", talon.getError());
+//        SmartDashboard.putString("Catapult State", state.toString());
+//        SmartDashboard.putNumber("Catapult Count", talon.get());
+//        SmartDashboard.putNumber("Catapult Error", talon.getError());
         SmartDashboard.putBoolean("Catapult Banner", banner.get());
     }
 
     @Override
     public void update() {
-        switch (state) {
-            case RETRACT:
-                talon.set(shotCount * camRevolution);
-                if (talon.getClosedLoopError() < 100) {
-                    state = CatapultState.READY;
-                }
-                break;
-            case READY:
-                break;
-            case FIRE:
-                talon.set((shotCount + 1) * camRevolution);
-                if (Math.abs(talon.getError()) < 100) {
-                    shotCount++;
-                    state = CatapultState.RETRACT;
-                }
-                break;
-            default:
-                break;
-        }
+//        switch (state) {
+//            case RETRACT:
+//                talon.set(shotCount * camRevolution);
+//                if (talon.getClosedLoopError() < 100) {
+//                    state = CatapultState.READY;
+//                }
+//                break;
+//            case READY:
+//                break;
+//            case FIRE:
+//                talon.set((shotCount + 1) * camRevolution);
+//                if (Math.abs(talon.getError()) < 100) {
+//                    shotCount++;
+//                    state = CatapultState.RETRACT;
+//                }
+//                break;
+//            default:
+//                break;
+//        }
         
     }
     

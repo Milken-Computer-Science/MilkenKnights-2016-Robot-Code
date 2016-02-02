@@ -8,11 +8,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake extends Subsystem {
     
-    public enum IntakeArmPosition {
+    public static final double POSITION_RATIO = 60 / 18;
+    
+    public enum IntakePosition {
         DOWN(-0.25), UP(0);
         
         public final double position;
-        private IntakeArmPosition(double position) {
+        private IntakePosition(double position) {
             this.position = position;
         }
     }
@@ -28,7 +30,7 @@ public class Intake extends Subsystem {
     
     private CANTalon arm;
     private MkCanTalon intakeCord;
-    private IntakeArmPosition position;
+    private IntakePosition position;
     private IntakeSpeed speed;
     
     /**
@@ -54,7 +56,7 @@ public class Intake extends Subsystem {
         this.arm = arm;
         this.intakeCord = intakeCord;
         
-        setPosition(IntakeArmPosition.UP);
+        setPosition(IntakePosition.UP);
         setSpeed(IntakeSpeed.STOP);
     }
 
@@ -63,9 +65,13 @@ public class Intake extends Subsystem {
         this.speed = speed;
     }
     
-    public void setPosition(IntakeArmPosition position) {
-        arm.set(position.position);
+    public void setPosition(IntakePosition position) {
+        arm.set(position.position * POSITION_RATIO);
         this.position = position;
+    }
+    
+    public IntakePosition getPosition() {
+        return position;
     }
     
     public IntakeSpeed getSpeed() {
