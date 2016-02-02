@@ -38,20 +38,22 @@ public class Constants {
         public static final int RIGHT_MOTOR_1 = 9;
         public static final int RIGHT_MOTOR_2 = 10;
 
-        public static final int LEFT_ENCODER_DIOA = 1;
-        public static final int LEFT_ENCODER_DIOB = 0;
-        public static final int RIGHT_ENCODER_DIOA = 2;
-        public static final int RIGHT_ENCODER_DIOB = 3;
+        public static final int LEFT_ENCODER_DIOA = 2;
+        public static final int LEFT_ENCODER_DIOB = 1;
+        public static final int RIGHT_ENCODER_DIOA = 3;
+        public static final int RIGHT_ENCODER_DIOB = 4;
         
         public static final int SHIFTER_PCM_ID = 0;
     }
     
     public class Intake {
-        public static final int TALON = 0;
+        public static final int SPEED_TALON = 0;
+        public static final int POSITION_TALON = 0;
     }
     
     public class Catapult {
         public static final int MOTOR = 6;
+        public static final int BANNER_DIO = 0;
     }
 
 }

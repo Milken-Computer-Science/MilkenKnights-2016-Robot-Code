@@ -10,6 +10,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
@@ -17,32 +18,49 @@ import edu.wpi.first.wpilibj.Solenoid;
 
 public class HardwareAdapter {
 
-    private static final MkCanTalon DRIVE_LEFT_TALON = new MkCanTalon(
-            new CANTalon[] {new CANTalon(Constants.Drive.LEFT_MOTOR_1), new CANTalon(Constants.Drive.LEFT_MOTOR_2)});
-    private static final MkCanTalon DRIVE_RIGHT_TALON = new MkCanTalon(
-            new CANTalon[] {new CANTalon(Constants.Drive.RIGHT_MOTOR_1), new CANTalon(Constants.Drive.RIGHT_MOTOR_2)});
-    private static final MkCanTalon INTAKE_TALON = new MkCanTalon(new CANTalon(Constants.Intake.TALON));
+    public static Drive DRIVE;
+    public static Intake INTAKE;
+    public static Catapult CATAPULT;
+    public static PowerDistributionPanel PDP;
+    public static Compressor COMPRESSOR;
 
-    private static final S4T360 DRIVE_LEFT_ENCODER = new S4T360(Constants.Drive.LEFT_ENCODER_DIOA, 
-            Constants.Drive.LEFT_ENCODER_DIOB);
-    private static final S4T360 DRIVE_RIGHT_ENCODER = new S4T360(Constants.Drive.RIGHT_ENCODER_DIOA, 
-            Constants.Drive.RIGHT_ENCODER_DIOB);
-
-    private static final Solenoid DRIVE_SHIFTER = new Solenoid(Constants.PCM_ID, Constants.Drive.SHIFTER_PCM_ID);
+    public static Joystick LEFT_STICK;
+    public static Joystick RIGHT_STICK;
+    public static Joystick OPERATOR_STICK;
     
-    private static final CANTalon CATAPULT_TALON = new CANTalon(Constants.Catapult.MOTOR);
+    /**
+     * Initalize the robot hardware.
+     */
+    public static void init() {
+        MkCanTalon driveLeftTalon = new MkCanTalon(new CANTalon[] {
+            new CANTalon(Constants.Drive.LEFT_MOTOR_1), new CANTalon(Constants.Drive.LEFT_MOTOR_2)});
+        MkCanTalon driveRightTalon = new MkCanTalon(new CANTalon[] {
+            new CANTalon(Constants.Drive.RIGHT_MOTOR_1), new CANTalon(Constants.Drive.RIGHT_MOTOR_2)});
+        
+        CANTalon intakePositionTalon = new CANTalon(Constants.Intake.POSITION_TALON);
+        MkCanTalon intakeSpeedTalon = new MkCanTalon(new CANTalon(Constants.Intake.SPEED_TALON));
 
-    private static final AHRS GYRO = new AHRS(SPI.Port.kMXP);
-    //private static final AnalogInput kPressureTrannsducer;
+        S4T360 driveLeftEncoder = new S4T360(Constants.Drive.LEFT_ENCODER_DIOA, Constants.Drive.LEFT_ENCODER_DIOB);
+        S4T360 driveRightEncoder = new S4T360(Constants.Drive.RIGHT_ENCODER_DIOA, Constants.Drive.RIGHT_ENCODER_DIOB);
 
-    public static final Drive DRIVE = new Drive("Drive", DRIVE_LEFT_TALON, DRIVE_RIGHT_TALON, DRIVE_LEFT_ENCODER,
-            DRIVE_RIGHT_ENCODER, DRIVE_SHIFTER, GYRO);
-    public static final Intake INTAKE = new Intake("Intake", INTAKE_TALON);
-    public static final Catapult CATAPULT = new Catapult("Catapult", CATAPULT_TALON);
-    public static final PowerDistributionPanel PDP = new PowerDistributionPanel();
-    public static final Compressor COMPRESSOR = new Compressor(Constants.PCM_ID);
+        Solenoid driveShifter = new Solenoid(Constants.PCM_ID, Constants.Drive.SHIFTER_PCM_ID);
+        
+        CANTalon catapultTalon = new CANTalon(Constants.Catapult.MOTOR);
+        DigitalInput catapultBanner = new DigitalInput(Constants.Catapult.BANNER_DIO);
 
-    public static final Joystick LEFT_STICK = new Joystick(0);
-    public static final Joystick RIGHT_STICK = new Joystick(1);
-    public static final Joystick OPERATOR_STICK = new Joystick(2);
+        AHRS gyro = new AHRS(SPI.Port.kMXP);
+        //private static final AnalogInput kPressureTrannsducer;
+
+        DRIVE = new Drive("Drive", driveLeftTalon, driveRightTalon, driveLeftEncoder, driveRightEncoder, 
+                driveShifter, gyro);
+        INTAKE = new Intake("Intake", intakePositionTalon, intakeSpeedTalon);
+        CATAPULT = new Catapult("Catapult", catapultTalon, catapultBanner);
+        PDP = new PowerDistributionPanel();
+        COMPRESSOR = new Compressor(Constants.PCM_ID);
+
+        LEFT_STICK = new Joystick(0);
+        RIGHT_STICK = new Joystick(1);
+        OPERATOR_STICK = new Joystick(2);
+    }
+    
 }

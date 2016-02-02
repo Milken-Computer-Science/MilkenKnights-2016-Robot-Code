@@ -3,7 +3,19 @@ package com.milkenknights.frc2016.subsystems;
 import com.milkenknights.util.MkCanTalon;
 import com.milkenknights.util.Subsystem;
 
+import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Intake extends Subsystem {
+    
+    public enum IntakeArmPosition {
+        DOWN(-0.25), UP(0);
+        
+        public final double position;
+        private IntakeArmPosition(double position) {
+            this.position = position;
+        }
+    }
     
     public enum IntakeSpeed {
         STOP(0), INTAKE(1), OUTPUT(-1);
@@ -14,25 +26,46 @@ public class Intake extends Subsystem {
         }
     }
     
-    private MkCanTalon talon;
+    private CANTalon arm;
+    private MkCanTalon intakeCord;
+    private IntakeArmPosition position;
     private IntakeSpeed speed;
     
     /**
      * Create a new intake subsystem.
      * 
      * @param name The name of the subsystem
-     * @param talon The CanTalon used to control the intake
+     * @param arm The CANTalon used to move the arm
+     * @param intakeCord The CanTalon used to control the intake
      */
-    public Intake(String name, MkCanTalon talon) {
+    public Intake(String name, CANTalon arm, MkCanTalon intakeCord) {
         super(name);
         
-        this.talon = talon;
+        arm.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+        arm.changeControlMode(CANTalon.TalonControlMode.Position);
+        arm.reverseSensor(true);
+        arm.setAllowableClosedLoopErr(25);
+        arm.setIZone(1000);
+        arm.set(0);
+        arm.setPosition(0);
+        arm.setPID(0.2, 0.0005, 0);
+        arm.setF(0);
+        
+        this.arm = arm;
+        this.intakeCord = intakeCord;
+        
+        setPosition(IntakeArmPosition.UP);
         setSpeed(IntakeSpeed.STOP);
     }
 
     public void setSpeed(IntakeSpeed speed) {
-        talon.set(speed.speed);
+        intakeCord.set(speed.speed);
         this.speed = speed;
+    }
+    
+    public void setPosition(IntakeArmPosition position) {
+        arm.set(position.position);
+        this.position = position;
     }
     
     public IntakeSpeed getSpeed() {
@@ -41,8 +74,11 @@ public class Intake extends Subsystem {
 
     @Override
     public void updateSmartDashboard() {
-        // TODO Auto-generated method stub
-
+        SmartDashboard.putString("Intake Arm State", position.toString());
+        SmartDashboard.putString("Intake Speed State", speed.toString());
+        
+        SmartDashboard.putNumber("Intake Arm Count", arm.get());
+        SmartDashboard.putNumber("Intake Arm Error", arm.getError());
     }
 
 }

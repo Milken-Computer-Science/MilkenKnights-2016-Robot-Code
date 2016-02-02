@@ -18,16 +18,20 @@ public class Robot extends IterativeRobot {
     private MultiLooper looper = new MultiLooper("Controllers", 1 / 100.0);
     private SmartDashboardUpdater smartDashboardUpdater = new SmartDashboardUpdater(1 / 50.0);
     
-    private BehaviorManager behaviorManager = new BehaviorManager();
-    private OperatorInterface operatorInterface = new OperatorInterface();
-    
-    private TankDriveHelper tankDriveHelper = new TankDriveHelper(HardwareAdapter.DRIVE);
+    private BehaviorManager behaviorManager;
+    private OperatorInterface operatorInterface;
+    private TankDriveHelper tankDriveHelper;
 
     /**
      * This function is run when the robot is first started up and should be used for any initialization code.
      */
     public void robotInit() {
         System.out.println("Start robotInit()");
+        HardwareAdapter.init();
+        
+        behaviorManager = new BehaviorManager();
+        operatorInterface = new OperatorInterface();
+        tankDriveHelper = new TankDriveHelper(HardwareAdapter.DRIVE);
         
         looper.addLoopable(HardwareAdapter.DRIVE);
         looper.addLoopable(HardwareAdapter.CATAPULT);
