@@ -3,6 +3,7 @@ package com.milkenknights.frc2016;
 import com.milkenknights.frc2016.auto.AutoMode;
 import com.milkenknights.frc2016.auto.modes.DoNothingAutoMode;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
+import com.milkenknights.frc2016.subsystems.Intake.IntakeSpeed;
 import com.milkenknights.util.MotorPairSignal;
 import com.milkenknights.util.MultiLooper;
 import com.milkenknights.util.SmartDashboardUpdater;
@@ -37,6 +38,8 @@ public class Robot extends IterativeRobot {
         operatorInterface = new OperatorInterface();
         tankDriveHelper = new TankDriveHelper(HardwareAdapter.DRIVE);
         
+        autoMode = new DoNothingAutoMode();
+        
         looper.addLoopable(HardwareAdapter.DRIVE);
         looper.addLoopable(HardwareAdapter.CATAPULT);
         
@@ -54,7 +57,6 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         System.out.println("Start autonomousInit()");
         HardwareAdapter.DRIVE.reset();
-        autoMode = new DoNothingAutoMode();
         
         looper.start();
         autoMode.start();
@@ -66,7 +68,9 @@ public class Robot extends IterativeRobot {
      * This function is called at the start of telop.
      */
     public void teleopInit() {
+        System.out.println("Start teleopInit()");
         looper.start();
+        System.out.println("End teleopInit()");
     }
 
     /**
@@ -84,10 +88,10 @@ public class Robot extends IterativeRobot {
         System.out.println("Start disabledInit()");
         
         autoMode.stop();
-        
         looper.stop();
 
         HardwareAdapter.DRIVE.setOpenLoop(MotorPairSignal.NEUTRAL);
+        HardwareAdapter.INTAKE.setSpeed(IntakeSpeed.NEUTRAL);
         
         System.gc();
         System.out.println("End disabledInit()");

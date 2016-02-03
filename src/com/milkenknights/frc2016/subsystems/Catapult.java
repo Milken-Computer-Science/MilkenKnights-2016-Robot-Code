@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Catapult extends Subsystem implements Loopable {
     
-    private final double CAM_REVOLUTION = 50 / 14;
+    public static final double CAM_RATIO = 50 / 14;
     
     public enum CatapultState {
         RETRACT, READY, FIRE

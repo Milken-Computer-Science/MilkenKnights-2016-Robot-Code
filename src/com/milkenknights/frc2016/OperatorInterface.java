@@ -35,7 +35,7 @@ public class OperatorInterface {
         if (HardwareAdapter.OPERATOR_STICK.getRawButton(5)) {
             commands.intakeSpeed = IntakeSpeed.INTAKE;
         } else {
-            commands.intakeSpeed = IntakeSpeed.STOP;
+            commands.intakeSpeed = IntakeSpeed.NEUTRAL;
         }
         
         return commands;

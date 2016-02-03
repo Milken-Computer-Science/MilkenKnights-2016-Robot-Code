@@ -21,7 +21,7 @@ public class Intake extends Subsystem {
     }
     
     public enum IntakeSpeed {
-        STOP(0), INTAKE(-1), OUTPUT(1);
+        NEUTRAL(0), INTAKE(-1), OUTPUT(1);
         
         public final double speed;
         private IntakeSpeed(double speed) {
@@ -61,7 +61,7 @@ public class Intake extends Subsystem {
         this.intakeCord = intakeCord;
         
         setPosition(IntakePosition.STORED);
-        setSpeed(IntakeSpeed.STOP);
+        setSpeed(IntakeSpeed.NEUTRAL);
     }
 
     public void setSpeed(IntakeSpeed speed) {
@@ -80,6 +80,10 @@ public class Intake extends Subsystem {
     
     public IntakeSpeed getSpeed() {
         return speed;
+    }
+    
+    public boolean armOnTarget() {
+        return Math.abs(arm.getError()) < 200;
     }
 
     @Override

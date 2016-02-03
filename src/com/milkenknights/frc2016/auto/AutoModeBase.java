@@ -2,11 +2,14 @@ package com.milkenknights.frc2016.auto;
 
 import com.milkenknights.frc2016.auto.actions.Action;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public abstract class AutoModeBase implements Runnable {
     
     public static final double UPDATE_RATE = 1.0 / 50.0;
     
     private Thread thread;
+    private Timer timer = new Timer();
     private boolean active = false;
 
     protected abstract void routine() throws AutoModeEndedException;
@@ -17,12 +20,16 @@ public abstract class AutoModeBase implements Runnable {
     public void run() {
         active = true;
         try {
+            timer.reset();
+            timer.start();
             routine();
         } catch (AutoModeEndedException e) {
             System.out.println("Auto mode done, ended early");
             return;
         }
         System.out.println("Auto mode done");
+        System.out.println("Auto time: " + timer.get());
+        timer.stop();
     }
     
     public void start() {
