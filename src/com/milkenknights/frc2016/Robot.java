@@ -1,5 +1,7 @@
 package com.milkenknights.frc2016;
 
+import com.milkenknights.frc2016.auto.AutoMode;
+import com.milkenknights.frc2016.auto.modes.DoNothingAutoMode;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
 import com.milkenknights.util.MotorPairSignal;
 import com.milkenknights.util.MultiLooper;
@@ -21,6 +23,8 @@ public class Robot extends IterativeRobot {
     private BehaviorManager behaviorManager;
     private OperatorInterface operatorInterface;
     private TankDriveHelper tankDriveHelper;
+    
+    private AutoMode autoMode;
 
     /**
      * This function is run when the robot is first started up and should be used for any initialization code.
@@ -50,8 +54,10 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         System.out.println("Start autonomousInit()");
         HardwareAdapter.DRIVE.reset();
+        autoMode = new DoNothingAutoMode();
         
         looper.start();
+        autoMode.start();
 
         System.out.println("End autonomousInit()");
     }
@@ -76,6 +82,9 @@ public class Robot extends IterativeRobot {
      */
     public void disabledInit() {
         System.out.println("Start disabledInit()");
+        
+        autoMode.stop();
+        
         looper.stop();
 
         HardwareAdapter.DRIVE.setOpenLoop(MotorPairSignal.NEUTRAL);
