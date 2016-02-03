@@ -4,6 +4,7 @@ import com.milkenknights.util.MkCanTalon;
 import com.milkenknights.util.Subsystem;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake extends Subsystem {
@@ -11,7 +12,7 @@ public class Intake extends Subsystem {
     public static final double POSITION_RATIO = 60 / 18;
     
     public enum IntakePosition {
-        DOWN(-0.25), UP(0);
+        ZERO(0), INTAKE(0.07), PROTECT(0.25), STORED(0.4);
         
         public final double position;
         private IntakePosition(double position) {
@@ -40,23 +41,26 @@ public class Intake extends Subsystem {
      * @param arm The CANTalon used to move the arm
      * @param intakeCord The CanTalon used to control the intake
      */
-    public Intake(String name, CANTalon arm, MkCanTalon intakeCord) {
+    public Intake(String name, CANTalon arm, CANTalon follower, MkCanTalon intakeCord) {
         super(name);
         
         arm.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
         arm.changeControlMode(CANTalon.TalonControlMode.Position);
         arm.reverseSensor(true);
-        arm.setAllowableClosedLoopErr(25);
-        arm.setIZone(1000);
+        arm.setAllowableClosedLoopErr(0);
+        arm.setIZone(300);
         arm.set(0);
         arm.setPosition(0);
-        arm.setPID(0.2, 0.0005, 0);
-        arm.setF(0);
+        arm.setPID(0.75, 0.0005, 0.1);
+        arm.setF(0.0);
+        
+        follower.changeControlMode(TalonControlMode.Follower);
+        follower.set(arm.getDeviceID());
         
         this.arm = arm;
         this.intakeCord = intakeCord;
         
-        setPosition(IntakePosition.UP);
+        setPosition(IntakePosition.STORED);
         setSpeed(IntakeSpeed.STOP);
     }
 

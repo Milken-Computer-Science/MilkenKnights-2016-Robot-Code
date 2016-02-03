@@ -38,6 +38,7 @@ public class HardwareAdapter {
             new CANTalon(Constants.Drive.RIGHT_MOTOR_1), new CANTalon(Constants.Drive.RIGHT_MOTOR_2)});
         
         CANTalon intakePositionTalon = new CANTalon(Constants.Intake.POSITION_TALON);
+        CANTalon intakeFollowerTalon = new CANTalon(Constants.Intake.FOLLOWER_TALON);
         MkCanTalon intakeSpeedTalon = new MkCanTalon(new CANTalon(Constants.Intake.SPEED_TALON));
 
         S4T360 driveLeftEncoder = new S4T360(Constants.Drive.LEFT_ENCODER_DIOA, Constants.Drive.LEFT_ENCODER_DIOB);
@@ -53,7 +54,7 @@ public class HardwareAdapter {
 
         DRIVE = new Drive("Drive", driveLeftTalon, driveRightTalon, driveLeftEncoder, driveRightEncoder, 
                 driveShifter, gyro);
-        INTAKE = new Intake("Intake", intakePositionTalon, intakeSpeedTalon);
+        INTAKE = new Intake("Intake", intakePositionTalon, intakeFollowerTalon, intakeSpeedTalon);
         CATAPULT = new Catapult("Catapult", catapultTalon, catapultBanner);
         PDP = new PowerDistributionPanel();
         COMPRESSOR = new Compressor(Constants.PCM_ID);

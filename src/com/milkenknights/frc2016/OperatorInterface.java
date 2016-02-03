@@ -24,9 +24,11 @@ public class OperatorInterface {
         }
         
         if (HardwareAdapter.OPERATOR_STICK.getRawButton(2)) {
-            commands.intakePosition = IntakePosition.DOWN;
+            commands.intakePosition = IntakePosition.INTAKE;
         } else if (HardwareAdapter.OPERATOR_STICK.getRawButton(3)) {
-            commands.intakePosition = IntakePosition.UP;
+            commands.intakePosition = IntakePosition.PROTECT;
+        } else if (HardwareAdapter.OPERATOR_STICK.getRawButton(4)) {
+            commands.intakePosition = IntakePosition.STORED;
         }
         
         return commands;

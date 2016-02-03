@@ -48,6 +48,7 @@ public class Constants {
     
     public class Intake {
         public static final int SPEED_TALON = 8;
+        public static final int FOLLOWER_TALON = 9;
         public static final int POSITION_TALON = 7;
     }
     
