@@ -17,9 +17,16 @@ public class BehaviorManager {
         
         if (commands.fireCatapult) {
             HardwareAdapter.CATAPULT.fire();
+        } else {
+            HardwareAdapter.CATAPULT.stop();
         }
+        
         if (commands.intakePosition != null && commands.intakePosition != HardwareAdapter.INTAKE.getPosition()) {
             HardwareAdapter.INTAKE.setPosition(commands.intakePosition);
+        }
+        
+        if (commands.intakeSpeed != null && commands.intakeSpeed != HardwareAdapter.INTAKE.getSpeed()) {
+            HardwareAdapter.INTAKE.setSpeed(commands.intakeSpeed);
         }
         
     }

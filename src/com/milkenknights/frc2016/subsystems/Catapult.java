@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Catapult extends Subsystem implements Loopable {
     
-    private final double camRevolution = 50 / 14;
+    private final double CAM_REVOLUTION = 50 / 14;
     
     public enum CatapultState {
         RETRACT, READY, FIRE
@@ -31,13 +31,13 @@ public class Catapult extends Subsystem implements Loopable {
     public Catapult(String name, CANTalon talon, DigitalInput banner) {
         super(name);
         
-        talon.changeControlMode(TalonControlMode.PercentVbus);
+        talon.changeControlMode(TalonControlMode.Disabled);
 //        talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
 //        talon.changeControlMode(CANTalon.TalonControlMode.Position);
 //        talon.reverseSensor(true);
 //        talon.setAllowableClosedLoopErr(25);
 //        talon.setIZone(1000);
-//        talon.configPeakOutputVoltage(15, -6);
+        talon.configPeakOutputVoltage(15, -6);
 //        talon.set(0);
 //        talon.setPID(0.5, 0.0005, 0);
 //        talon.setF(0);
@@ -57,17 +57,20 @@ public class Catapult extends Subsystem implements Loopable {
         this.talon = talon;
         this.banner = banner;
         
-        setState(CatapultState.RETRACT);
+        setState(CatapultState.READY);
     }
     
     public void fire() {
         setState(CatapultState.FIRE);
-        talon.set(1);
+    }
+    
+    public void stop() {
+        setState(CatapultState.READY);
     }
 
     @Override
     public void updateSmartDashboard() {
-//        SmartDashboard.putString("Catapult State", state.toString());
+        SmartDashboard.putString("Catapult State", state.toString());
 //        SmartDashboard.putNumber("Catapult Count", talon.get());
 //        SmartDashboard.putNumber("Catapult Error", talon.getError());
         SmartDashboard.putBoolean("Catapult Banner", banner.get());
@@ -75,25 +78,27 @@ public class Catapult extends Subsystem implements Loopable {
 
     @Override
     public void update() {
-//        switch (state) {
-//            case RETRACT:
+        switch (state) {
+            case RETRACT:
 //                talon.set(shotCount * camRevolution);
 //                if (talon.getClosedLoopError() < 100) {
 //                    state = CatapultState.READY;
 //                }
-//                break;
-//            case READY:
-//                break;
-//            case FIRE:
-//                talon.set((shotCount + 1) * camRevolution);
-//                if (Math.abs(talon.getError()) < 100) {
-//                    shotCount++;
-//                    state = CatapultState.RETRACT;
-//                }
-//                break;
-//            default:
-//                break;
-//        }
+                break;
+            case READY:
+                talon.set(0);
+                break;
+            case FIRE:
+                talon.set(1);
+                //talon.set((shotCount + 1) * camRevolution);
+                //if (Math.abs(talon.getError()) < 100) {
+                //    shotCount++;
+                //    state = CatapultState.RETRACT;
+                //}
+                break;
+            default:
+                break;
+        }
         
     }
     

@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
         tankDriveHelper = new TankDriveHelper(HardwareAdapter.DRIVE);
         
         looper.addLoopable(HardwareAdapter.DRIVE);
-        //looper.addLoopable(HardwareAdapter.CATAPULT);
+        looper.addLoopable(HardwareAdapter.CATAPULT);
         
         smartDashboardUpdater.addSendable(HardwareAdapter.DRIVE);
         smartDashboardUpdater.addSendable(HardwareAdapter.INTAKE);
