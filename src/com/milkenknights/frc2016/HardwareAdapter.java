@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 
 public class HardwareAdapter {
@@ -49,7 +49,7 @@ public class HardwareAdapter {
         CANTalon catapultTalon = new CANTalon(Constants.Catapult.MOTOR);
         DigitalInput catapultBanner = new DigitalInput(Constants.Catapult.BANNER_DIO);
 
-        AHRS gyro = new AHRS(SerialPort.Port.kUSB);
+        AHRS gyro = new AHRS(SPI.Port.kMXP);
         //private static final AnalogInput kPressureTrannsducer;
 
         DRIVE = new Drive("Drive", driveLeftTalon, driveRightTalon, driveLeftEncoder, driveRightEncoder, 
