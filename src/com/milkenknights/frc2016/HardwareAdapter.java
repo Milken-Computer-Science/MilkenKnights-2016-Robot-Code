@@ -50,12 +50,13 @@ public class HardwareAdapter {
         DigitalInput catapultBanner = new DigitalInput(Constants.Catapult.BANNER_DIO);
 
         AHRS gyro = new AHRS(SPI.Port.kMXP);
+        Solenoid ledRing = new Solenoid(Constants.LED_RING_ID);
         //private static final AnalogInput kPressureTrannsducer;
 
         DRIVE = new Drive("Drive", driveLeftTalon, driveRightTalon, driveLeftEncoder, driveRightEncoder, 
                 driveShifter, gyro);
         INTAKE = new Intake("Intake", intakePositionTalon, intakeFollowerTalon, intakeSpeedTalon);
-        CATAPULT = new Catapult("Catapult", catapultTalon, catapultBanner);
+        CATAPULT = new Catapult("Catapult", catapultTalon, catapultBanner, ledRing);
         PDP = new PowerDistributionPanel();
         COMPRESSOR = new Compressor(Constants.PCM_ID);
 

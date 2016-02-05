@@ -4,6 +4,7 @@ public class Constants {
     
     public static double kControlLoopsDt = 0.005;
     public static int PCM_ID = 1;
+    public static int LED_RING_ID = 7;
     
     // DriveStraightController gains
     public static double kDriveMaxSpeedInchesPerSec = 120;

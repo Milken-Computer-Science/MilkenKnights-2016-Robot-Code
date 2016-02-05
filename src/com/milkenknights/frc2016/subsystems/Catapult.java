@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.InterruptHandlerFunction;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Catapult extends Subsystem implements Loopable {
@@ -19,6 +20,7 @@ public class Catapult extends Subsystem implements Loopable {
     
     private CANTalon talon;
     private DigitalInput banner;
+    private Solenoid ledRing;
     private CatapultState state;
     private int shotCount = 0;
 
@@ -28,7 +30,7 @@ public class Catapult extends Subsystem implements Loopable {
      * @param name The name of the subsystem
      * @param talon The talon to control the catapult
      */
-    public Catapult(String name, CANTalon talon, DigitalInput banner) {
+    public Catapult(String name, CANTalon talon, DigitalInput banner, Solenoid ledRing) {
         super(name);
         
         talon.changeControlMode(TalonControlMode.Disabled);
@@ -37,7 +39,7 @@ public class Catapult extends Subsystem implements Loopable {
 //        talon.reverseSensor(true);
 //        talon.setAllowableClosedLoopErr(25);
 //        talon.setIZone(1000);
-        talon.configPeakOutputVoltage(15, -6);
+//        talon.configPeakOutputVoltage(15, -6);
 //        talon.set(0);
 //        talon.setPID(0.5, 0.0005, 0);
 //        talon.setF(0);
@@ -54,6 +56,7 @@ public class Catapult extends Subsystem implements Loopable {
         banner.setUpSourceEdge(true, false);
         banner.enableInterrupts();
         
+        this.ledRing = ledRing;
         this.talon = talon;
         this.banner = banner;
         
@@ -87,9 +90,11 @@ public class Catapult extends Subsystem implements Loopable {
                 break;
             case READY:
                 talon.set(0);
+                ledRing.set(false);
                 break;
             case FIRE:
                 talon.set(1);
+                ledRing.set(true);
                 //talon.set((shotCount + 1) * camRevolution);
                 //if (Math.abs(talon.getError()) < 100) {
                 //    shotCount++;
