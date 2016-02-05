@@ -33,24 +33,24 @@ public class HardwareAdapter {
      */
     public static void init() {
         MkCanTalon driveLeftTalon = new MkCanTalon(new CANTalon[] {
-            new CANTalon(Constants.Drive.LEFT_MOTOR_1), new CANTalon(Constants.Drive.LEFT_MOTOR_2)});
+            new CANTalon(Constants.CanTalon.DRIVE_LEFT_1), new CANTalon(Constants.CanTalon.DRIVE_LEFT_2)});
         MkCanTalon driveRightTalon = new MkCanTalon(new CANTalon[] {
-            new CANTalon(Constants.Drive.RIGHT_MOTOR_1), new CANTalon(Constants.Drive.RIGHT_MOTOR_2)});
+            new CANTalon(Constants.CanTalon.DRIVE_RIGHT_1), new CANTalon(Constants.CanTalon.DRIVE_RIGHT_2)});
         
-        CANTalon intakePositionTalon = new CANTalon(Constants.Intake.POSITION_TALON);
-        CANTalon intakeFollowerTalon = new CANTalon(Constants.Intake.FOLLOWER_TALON);
-        MkCanTalon intakeSpeedTalon = new MkCanTalon(new CANTalon(Constants.Intake.SPEED_TALON));
+        CANTalon intakePositionTalon = new CANTalon(Constants.CanTalon.INTAKE_ARM_1);
+        CANTalon intakeFollowerTalon = new CANTalon(Constants.CanTalon.INTAKE_ARM_2);
+        MkCanTalon intakeSpeedTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.INTAKE_SPEED));
 
-        S4T360 driveLeftEncoder = new S4T360(Constants.Drive.LEFT_ENCODER_DIOA, Constants.Drive.LEFT_ENCODER_DIOB);
-        S4T360 driveRightEncoder = new S4T360(Constants.Drive.RIGHT_ENCODER_DIOA, Constants.Drive.RIGHT_ENCODER_DIOB);
+        S4T360 driveLeftEncoder = new S4T360(Constants.Dio.DRIVE_LEFT_A, Constants.Dio.DRIVE_LEFT_B);
+        S4T360 driveRightEncoder = new S4T360(Constants.Dio.DRIVE_RIGHT_A, Constants.Dio.DRIVE_RIGHT_B);
 
-        Solenoid driveShifter = new Solenoid(Constants.PCM_ID, Constants.Drive.SHIFTER_PCM_ID);
+        Solenoid driveShifter = new Solenoid(Constants.Pcm.ID, Constants.Pcm.DRIVE_SHIFTER);
         
-        CANTalon catapultTalon = new CANTalon(Constants.Catapult.MOTOR);
-        DigitalInput catapultBanner = new DigitalInput(Constants.Catapult.BANNER_DIO);
+        CANTalon catapultTalon = new CANTalon(Constants.CanTalon.CATAPULT);
+        DigitalInput catapultBanner = new DigitalInput(Constants.Dio.CATAPULT_HOME);
 
         AHRS gyro = new AHRS(SPI.Port.kMXP);
-        Solenoid ledRing = new Solenoid(Constants.LED_RING_ID);
+        Solenoid ledRing = new Solenoid(Constants.Pcm.LED_RING);
         //private static final AnalogInput kPressureTrannsducer;
 
         DRIVE = new Drive("Drive", driveLeftTalon, driveRightTalon, driveLeftEncoder, driveRightEncoder, 
@@ -58,11 +58,11 @@ public class HardwareAdapter {
         INTAKE = new Intake("Intake", intakePositionTalon, intakeFollowerTalon, intakeSpeedTalon);
         CATAPULT = new Catapult("Catapult", catapultTalon, catapultBanner, ledRing);
         PDP = new PowerDistributionPanel();
-        COMPRESSOR = new Compressor(Constants.PCM_ID);
+        COMPRESSOR = new Compressor(Constants.Pcm.ID);
 
-        LEFT_STICK = new Joystick(0);
-        RIGHT_STICK = new Joystick(1);
-        OPERATOR_STICK = new Joystick(2);
+        LEFT_STICK = new Joystick(Constants.DriverStation.JOYSTICK_LEFT);
+        RIGHT_STICK = new Joystick(Constants.DriverStation.JOYSTICK_RIGHT);
+        OPERATOR_STICK = new Joystick(Constants.DriverStation.JOYSTICK_OPERATOR);
     }
     
 }

@@ -3,6 +3,9 @@ package com.milkenknights.frc2016.auto.actions;
 import com.milkenknights.frc2016.HardwareAdapter;
 import com.milkenknights.util.Pose;
 
+/**
+ * This Action waits for the Drive to reach a specified distance.
+ */
 public class WaitForDriveDistanceAction extends TimeoutAction {
 
     public double distance;

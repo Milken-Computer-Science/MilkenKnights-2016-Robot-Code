@@ -2,9 +2,87 @@ package com.milkenknights.frc2016;
 
 public class Constants {
     
+    public class Dio {
+        public static final int CATAPULT_HOME = 0;
+        public static final int DRIVE_LEFT_A = 1;
+        public static final int DRIVE_LEFT_B = 2;
+        public static final int DRIVE_RIGHT_A = 3;
+        public static final int DRIVE_RIGHT_B = 4;
+    }
+    
+    public class Pcm {
+        public static final int ID = 1;
+        
+        public static final int DRIVE_SHIFTER = 0;
+        public static final int LED_RING = 7;
+    }
+    
+    public class CanTalon {
+        public static final int DRIVE_LEFT_1 = 2;
+        public static final int DRIVE_LEFT_2 = 3;
+        public static final int DRIVE_RIGHT_1 = 4;
+        public static final int DRIVE_RIGHT_2 = 5;
+        public static final int CATAPULT = 6;
+        public static final int INTAKE_ARM_1 = 7;
+        public static final int INTAKE_SPEED = 8;
+        public static final int INTAKE_ARM_2 = 9;
+    }
+    
+    public class ControlLoops {
+        public static final double CONTROLLERS_PERIOD = 1 / 100.0;
+        public static final double SMARTDASHBOARD_UPDATER_PERIOD = 1 / 100.0;
+    }
+    
+    public class DriverStation {
+        public static final int JOYSTICK_LEFT = 0;
+        public static final int JOYSTICK_RIGHT = 0;
+        public static final int JOYSTICK_OPERATOR = 0;
+    }
+    
+    public class Auto {
+        public static final double ACTION_UPDATE_PERIOD = 1.0 / 50.0;
+    }
+    
+    public class Subsystems {
+        
+        public class Drive {
+            public static final double WHEEL_DIAMETER = 4;
+            public static final double MAX_SPEED = 0;
+        }
+        
+        public class Intake {
+            
+            public class Arm {
+                public static final double GEAR_RATIO = 60 / 18;
+                
+                public static final double ZERO = 0;
+                public static final double INTAKE = 0.045;
+                public static final double PROTECT = 0.25;
+                public static final double STORED = 0.4;
+                
+                public static final double P = 0.4;
+                public static final double I = 0.0001;
+                public static final double D = 0.0;
+                public static final double F = 0.0;
+                
+                public static final int I_ZONE = 300;
+                public static final int ALLOWABLE_ERROR = 200;
+                
+            }
+            
+            public class Speed {
+                public static final double INTAKE = -1;
+                public static final double OUTPUT = 1;
+            }
+        }
+
+        public class Catapult {
+            public static final double GEAR_RATIO = 50 / 14;
+        }
+        
+    }
+    
     public static double kControlLoopsDt = 0.005;
-    public static int PCM_ID = 1;
-    public static int LED_RING_ID = 7;
     
     // DriveStraightController gains
     public static double kDriveMaxSpeedInchesPerSec = 120;
@@ -30,32 +108,4 @@ public class Constants {
     public static double kTurnKa = 0.075;
     public static double kTurnOnTargetError = 0.0225;
     
-    public class Drive {
-        public static final double WHEEL_DIAMETER = 4;
-        public static final double MAX_SPEED = 0;
-        
-        public static final int LEFT_MOTOR_1 = 2;
-        public static final int LEFT_MOTOR_2 = 3;
-        public static final int RIGHT_MOTOR_1 = 4;
-        public static final int RIGHT_MOTOR_2 = 5;
-
-        public static final int LEFT_ENCODER_DIOA = 2;
-        public static final int LEFT_ENCODER_DIOB = 1;
-        public static final int RIGHT_ENCODER_DIOA = 3;
-        public static final int RIGHT_ENCODER_DIOB = 4;
-        
-        public static final int SHIFTER_PCM_ID = 0;
-    }
-    
-    public class Intake {
-        public static final int SPEED_TALON = 8;
-        public static final int FOLLOWER_TALON = 9;
-        public static final int POSITION_TALON = 7;
-    }
-    
-    public class Catapult {
-        public static final int MOTOR = 6;
-        public static final int BANNER_DIO = 0;
-    }
-
 }

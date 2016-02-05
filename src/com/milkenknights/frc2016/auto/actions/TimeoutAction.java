@@ -2,6 +2,9 @@ package com.milkenknights.frc2016.auto.actions;
 
 import edu.wpi.first.wpilibj.Notifier;
 
+/**
+ * This Action wait for a specified amount of time.
+ */
 public class TimeoutAction extends Action implements Runnable {
     
     private Notifier notifier;

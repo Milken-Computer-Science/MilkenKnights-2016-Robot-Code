@@ -5,6 +5,11 @@ import com.milkenknights.frc2016.auto.AutoMode;
 import com.milkenknights.frc2016.auto.AutoModeEndedException;
 import com.milkenknights.frc2016.subsystems.Intake.IntakePosition;
 
+/**
+ * This AutoMode will reach the OuterWorks and stop.
+ * 
+ * TODO: Test this AutoMode
+ */
 public class ReachAutoMode extends AutoMode {
 
     @Override

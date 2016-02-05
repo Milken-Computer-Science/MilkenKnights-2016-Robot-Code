@@ -18,8 +18,9 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  */
 public class Robot extends IterativeRobot {
     
-    private MultiLooper looper = new MultiLooper("Controllers", 1 / 100.0);
-    private SmartDashboardUpdater smartDashboardUpdater = new SmartDashboardUpdater(1 / 50.0);
+    private MultiLooper looper = new MultiLooper("Controllers", Constants.ControlLoops.CONTROLLERS_PERIOD);
+    private SmartDashboardUpdater smartDashboardUpdater = new SmartDashboardUpdater(
+            Constants.ControlLoops.SMARTDASHBOARD_UPDATER_PERIOD);
     
     private BehaviorManager behaviorManager;
     private OperatorInterface operatorInterface;

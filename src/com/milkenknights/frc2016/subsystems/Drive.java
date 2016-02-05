@@ -64,9 +64,9 @@ public class Drive extends DriveAbstract {
         
         this.leftMotor.setInverted(true);
         this.leftEncoder.setDistancePerPulse(leftEncoder.getPulsesPerRevolution() * Math.PI 
-                / Constants.Drive.WHEEL_DIAMETER);
+                / Constants.Subsystems.Drive.WHEEL_DIAMETER);
         this.rightEncoder.setDistancePerPulse(rightEncoder.getPulsesPerRevolution() * Math.PI 
-                / Constants.Drive.WHEEL_DIAMETER);
+                / Constants.Subsystems.Drive.WHEEL_DIAMETER);
     }
 
     @Override
@@ -92,13 +92,13 @@ public class Drive extends DriveAbstract {
 
     @Override
     public void setDistanceSetpoint(double distance) {
-        setDistanceSetpoint(distance, Constants.Drive.MAX_SPEED);
+        setDistanceSetpoint(distance, Constants.Subsystems.Drive.MAX_SPEED);
 
     }
 
     @Override
     public void setDistanceSetpoint(double distance, double velocity) {
-        velocity = Math.min(Constants.Drive.MAX_SPEED, Math.max(velocity, 0));
+        velocity = Math.min(Constants.Subsystems.Drive.MAX_SPEED, Math.max(velocity, 0));
         controller = new DriveStraightController(getPoseToContinueFrom(false), distance, velocity);
     }
 

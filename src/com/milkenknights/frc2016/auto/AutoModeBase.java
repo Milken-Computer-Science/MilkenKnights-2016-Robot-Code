@@ -1,12 +1,11 @@
 package com.milkenknights.frc2016.auto;
 
+import com.milkenknights.frc2016.Constants;
 import com.milkenknights.frc2016.auto.actions.Action;
 
 import edu.wpi.first.wpilibj.Timer;
 
 public abstract class AutoModeBase implements Runnable {
-    
-    public static final double UPDATE_RATE = 1.0 / 50.0;
     
     private Thread thread;
     private Timer timer = new Timer();
@@ -32,15 +31,24 @@ public abstract class AutoModeBase implements Runnable {
         timer.stop();
     }
     
+    /**
+     * Start running the auto routine.
+     */
     public void start() {
         thread = new Thread(this);
         thread.start();
     }
 
+    /**
+     * Stop the auto routine.
+     */
     public void stop() {
         active = false;
     }
 
+    /**
+     * Get if the auto routine is currently running.
+     */
     public boolean isActive() {
         return active;
     }
@@ -57,13 +65,16 @@ public abstract class AutoModeBase implements Runnable {
         return isActive();
     }
 
+    /**
+     * Run an Action and check at the update rate if it has finished.
+     */
     protected void runAction(Action action) throws AutoModeEndedException {
         isActiveWithThrow();
         action.start();
         while (isActiveWithThrow() && !action.isFinished()) {
             action.update();
             try {
-                Thread.sleep((long) (UPDATE_RATE * 1000.0));
+                Thread.sleep((long) (Constants.Auto.ACTION_UPDATE_PERIOD * 1000.0));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

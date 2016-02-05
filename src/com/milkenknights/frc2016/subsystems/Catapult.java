@@ -12,8 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Catapult extends Subsystem implements Loopable {
     
-    public static final double CAM_RATIO = 50 / 14;
-    
     public enum CatapultState {
         RETRACT, READY, FIRE
     }
@@ -63,10 +61,18 @@ public class Catapult extends Subsystem implements Loopable {
         setState(CatapultState.READY);
     }
     
+    /**
+     * Fire the catapult.
+     */
     public void fire() {
         setState(CatapultState.FIRE);
     }
     
+    /**
+     * This method is temporary because there is no encoder on the catapult.
+     * 
+     * TODO: Remove method
+     */
     public void stop() {
         setState(CatapultState.READY);
     }

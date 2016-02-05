@@ -1,5 +1,6 @@
 package com.milkenknights.frc2016.subsystems;
 
+import com.milkenknights.frc2016.Constants;
 import com.milkenknights.util.MkCanTalon;
 import com.milkenknights.util.Subsystem;
 
@@ -9,10 +10,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake extends Subsystem {
     
-    public static final double POSITION_RATIO = 60 / 18;
-    
     public enum IntakePosition {
-        ZERO(0), INTAKE(0.045), PROTECT(0.25), STORED(0.4);
+        ZERO(Constants.Subsystems.Intake.Arm.ZERO),
+        INTAKE(Constants.Subsystems.Intake.Arm.INTAKE),
+        PROTECT(Constants.Subsystems.Intake.Arm.PROTECT),
+        STORED(Constants.Subsystems.Intake.Arm.STORED);
         
         public final double position;
         private IntakePosition(double position) {
@@ -21,7 +23,7 @@ public class Intake extends Subsystem {
     }
     
     public enum IntakeSpeed {
-        NEUTRAL(0), INTAKE(-1), OUTPUT(1);
+        NEUTRAL(0), INTAKE(Constants.Subsystems.Intake.Speed.INTAKE), OUTPUT(Constants.Subsystems.Intake.Speed.OUTPUT);
         
         public final double speed;
         private IntakeSpeed(double speed) {
@@ -30,7 +32,7 @@ public class Intake extends Subsystem {
     }
     
     private CANTalon arm;
-    private MkCanTalon intakeCord;
+    private MkCanTalon speedController;
     private IntakePosition position;
     private IntakeSpeed speed;
     
@@ -38,52 +40,68 @@ public class Intake extends Subsystem {
      * Create a new intake subsystem.
      * 
      * @param name The name of the subsystem
-     * @param arm The CANTalon used to move the arm
-     * @param intakeCord The CanTalon used to control the intake
+     * @param armController The CANTalon used to move the arm
+     * @param armControllerFollower The CANTalon to follow the main controller
+     * @param speedController The CanTalon used to control the intake
      */
-    public Intake(String name, CANTalon arm, CANTalon follower, MkCanTalon intakeCord) {
+    public Intake(String name, CANTalon armController, CANTalon armControllerFollower, MkCanTalon speedController) {
         super(name);
         
-        arm.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
-        arm.changeControlMode(CANTalon.TalonControlMode.Position);
-        arm.reverseSensor(true);
-        arm.setAllowableClosedLoopErr(0);
-        arm.setIZone(300);
-        arm.set(0);
-        arm.setPosition(0);
-        arm.setPID(0.4, 0.0001, 0.0);
-        arm.setF(0.0);
+        armController.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+        armController.changeControlMode(CANTalon.TalonControlMode.Position);
+        armController.reverseSensor(true);
+        armController.setAllowableClosedLoopErr(0);
+        armController.setIZone(Constants.Subsystems.Intake.Arm.I_ZONE);
+        armController.setPosition(0); // TODO: Temp until we get a sensor to zero.
+        armController.setPID(Constants.Subsystems.Intake.Arm.P, Constants.Subsystems.Intake.Arm.I,
+                Constants.Subsystems.Intake.Arm.D);
+        armController.setF(Constants.Subsystems.Intake.Arm.F);
         
-        follower.changeControlMode(TalonControlMode.Follower);
-        follower.set(arm.getDeviceID());
+        armControllerFollower.changeControlMode(TalonControlMode.Follower);
+        armControllerFollower.set(armController.getDeviceID());
         
-        this.arm = arm;
-        this.intakeCord = intakeCord;
+        this.arm = armController;
+        this.speedController = speedController;
         
         setPosition(IntakePosition.INTAKE);
         setSpeed(IntakeSpeed.NEUTRAL);
     }
 
+    /**
+     * Set the speed of the intake.
+     */
     public void setSpeed(IntakeSpeed speed) {
-        intakeCord.set(speed.speed);
+        speedController.set(speed.speed);
         this.speed = speed;
     }
     
+    /**
+     * Set the position of the intake.
+     */
     public void setPosition(IntakePosition position) {
-        arm.set(position.position * POSITION_RATIO);
+        arm.set(position.position * Constants.Subsystems.Intake.Arm.GEAR_RATIO);
         this.position = position;
     }
     
+    /**
+     * Get the position the arm of the intake is attempting to maintain.
+     */
     public IntakePosition getPosition() {
         return position;
     }
     
+    /**
+     * Get the speed the intake is trying to maintain.
+     */
     public IntakeSpeed getSpeed() {
         return speed;
     }
     
+    /**
+     * Get if the arm is on target.
+     */
     public boolean armOnTarget() {
-        return Math.abs(arm.getError()) < 200;
+        return Math.abs(arm.getError()) < Constants.Subsystems.Intake.Arm.ALLOWABLE_ERROR;
     }
 
     @Override
