@@ -33,7 +33,7 @@ public class Catapult extends Subsystem implements Loopable {
     public Catapult(String name, CANTalon talon, DigitalInput banner, Solenoid ledRing) {
         super(name);
         
-        talon.changeControlMode(TalonControlMode.Disabled);
+        talon.changeControlMode(TalonControlMode.PercentVbus);
 //        talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
 //        talon.changeControlMode(CANTalon.TalonControlMode.Position);
 //        talon.reverseSensor(true);
@@ -53,8 +53,8 @@ public class Catapult extends Subsystem implements Loopable {
             }
             
         });
-        banner.setUpSourceEdge(true, false);
-        banner.enableInterrupts();
+        //banner.setUpSourceEdge(true, false);
+        //banner.enableInterrupts();
         
         this.ledRing = ledRing;
         this.talon = talon;
