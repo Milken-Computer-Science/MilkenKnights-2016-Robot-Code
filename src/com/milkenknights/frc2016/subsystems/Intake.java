@@ -12,7 +12,7 @@ public class Intake extends Subsystem {
     public static final double POSITION_RATIO = 60 / 18;
     
     public enum IntakePosition {
-        ZERO(0), INTAKE(0.05), PROTECT(0.25), STORED(0.4);
+        ZERO(0), INTAKE(0.045), PROTECT(0.25), STORED(0.4);
         
         public final double position;
         private IntakePosition(double position) {
@@ -51,7 +51,7 @@ public class Intake extends Subsystem {
         arm.setIZone(300);
         arm.set(0);
         arm.setPosition(0);
-        arm.setPID(0.1, 0.0, 0.0);
+        arm.setPID(0.4, 0.0001, 0.0);
         arm.setF(0.0);
         
         follower.changeControlMode(TalonControlMode.Follower);
@@ -60,7 +60,7 @@ public class Intake extends Subsystem {
         this.arm = arm;
         this.intakeCord = intakeCord;
         
-        setPosition(IntakePosition.STORED);
+        setPosition(IntakePosition.INTAKE);
         setSpeed(IntakeSpeed.NEUTRAL);
     }
 
