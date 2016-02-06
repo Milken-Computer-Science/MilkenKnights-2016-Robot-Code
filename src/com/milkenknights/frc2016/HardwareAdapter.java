@@ -49,7 +49,7 @@ public class HardwareAdapter {
         CANTalon catapultTalon = new CANTalon(Constants.CanTalon.CATAPULT);
         DigitalInput catapultBanner = new DigitalInput(Constants.Dio.CATAPULT_HOME);
 
-        AHRS gyro = new AHRS(SPI.Port.kMXP);
+        AHRS gyro = new AHRS(SPI.Port.kOnboardCS1);
         Solenoid ledRing = new Solenoid(Constants.Pcm.LED_RING);
         //private static final AnalogInput kPressureTrannsducer;
 

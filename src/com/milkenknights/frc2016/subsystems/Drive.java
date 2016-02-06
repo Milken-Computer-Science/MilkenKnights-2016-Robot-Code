@@ -81,7 +81,8 @@ public class Drive extends DriveAbstract {
     @Override
     public void updateSmartDashboard() {
         //TODO: Create SmartDashboard information
-        SmartDashboard.putNumber("Drive: Heading", cachedPose.heading);
+    	SmartDashboard.putBoolean("Gyro Connected", gyro.isConnected());
+        SmartDashboard.putNumber("Drive: Heading", getPhysicalPose().heading);
     }
 
     @Override
