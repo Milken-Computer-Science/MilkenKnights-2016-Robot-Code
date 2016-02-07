@@ -84,5 +84,4 @@ local.properties
 hs_err_pid*
 dist/FRCUserProgram.jar
 sysProps.xml
-build/jars/NetworkTables.jar
-build/jars/NetworkTables.jar
+build/
