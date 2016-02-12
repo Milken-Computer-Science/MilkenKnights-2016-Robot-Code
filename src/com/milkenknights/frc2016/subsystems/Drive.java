@@ -81,7 +81,7 @@ public class Drive extends DriveAbstract {
     @Override
     public void updateSmartDashboard() {
         //TODO: Create SmartDashboard information
-    	SmartDashboard.putBoolean("Gyro Connected", gyro.isConnected());
+        SmartDashboard.putBoolean("Gyro Connected", gyro.isConnected());
         SmartDashboard.putNumber("Drive: Heading", getPhysicalPose().heading);
     }
 
@@ -94,7 +94,6 @@ public class Drive extends DriveAbstract {
     @Override
     public void setDistanceSetpoint(double distance) {
         setDistanceSetpoint(distance, Constants.Subsystems.Drive.MAX_SPEED);
-
     }
 
     @Override
@@ -112,6 +111,24 @@ public class Drive extends DriveAbstract {
     public void setTurnSetpoint(double heading, double velocity) {
         velocity = Math.min(Constants.kTurnMaxSpeedRadsPerSec, Math.max(velocity, 0));
         controller = new TurnInPlaceController(getPoseToContinueFrom(true), heading, velocity);
+    }
+    
+    /**
+     * If the current controller is a TurnInPlaceController this method will return the heading goal.  If not, it will
+     * return 0.
+     */
+    public double getTurnSetpoint() {
+        if (controller instanceof TurnInPlaceController) {
+            return ((TurnInPlaceController) controller).getHeadingGoal();
+        }
+        return 0;
+    }
+    
+    /**
+     * Gets if the drive is under closed loop control.
+     */
+    public boolean isClosedLoop() {
+        return controller != null;
     }
     
     /**

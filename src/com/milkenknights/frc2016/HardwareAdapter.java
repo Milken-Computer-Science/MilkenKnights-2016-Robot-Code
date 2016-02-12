@@ -3,6 +3,7 @@ package com.milkenknights.frc2016;
 import com.milkenknights.frc2016.subsystems.Catapult;
 import com.milkenknights.frc2016.subsystems.Drive;
 import com.milkenknights.frc2016.subsystems.Intake;
+import com.milkenknights.util.GripHelper;
 import com.milkenknights.util.MkCanTalon;
 import com.milkenknights.util.hardware.S4T360;
 
@@ -23,6 +24,8 @@ public class HardwareAdapter {
     public static Catapult CATAPULT;
     public static PowerDistributionPanel PDP;
     public static Compressor COMPRESSOR;
+    
+    public static GripHelper GRIP;
 
     public static Joystick LEFT_STICK;
     public static Joystick RIGHT_STICK;

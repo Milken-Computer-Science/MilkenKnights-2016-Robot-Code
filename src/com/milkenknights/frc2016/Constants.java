@@ -40,6 +40,14 @@ public class Constants {
         public static final int JOYSTICK_OPERATOR = 2;
     }
     
+    public class Vision {
+        public static final String GRIP_TABLE_ID = "GRIP";
+        public static final String TARGETS_TABLE_ID = "targets";
+        public static final String MAT_SIZE_TABLE_ID = "matSize";
+        
+        public static final double HORIZONTAL_FOV  = 67;
+    }
+    
     public class Auto {
         public static final double ACTION_UPDATE_PERIOD = 1.0 / 50.0;
     }

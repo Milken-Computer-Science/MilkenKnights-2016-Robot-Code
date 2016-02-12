@@ -4,6 +4,7 @@ import com.milkenknights.frc2016.auto.AutoMode;
 import com.milkenknights.frc2016.auto.modes.DoNothingAutoMode;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
 import com.milkenknights.frc2016.subsystems.Intake.IntakeSpeed;
+import com.milkenknights.util.GripHelper;
 import com.milkenknights.util.MotorPairSignal;
 import com.milkenknights.util.MultiLooper;
 import com.milkenknights.util.SmartDashboardUpdater;
@@ -19,12 +20,12 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 public class Robot extends IterativeRobot {
     
     private MultiLooper looper = new MultiLooper("Controllers", Constants.ControlLoops.CONTROLLERS_PERIOD);
+    private MultiLooper visionLooper = new MultiLooper("Vision", Constants.ControlLoops.VISION_PERIOD);
     private SmartDashboardUpdater smartDashboardUpdater = new SmartDashboardUpdater(
             Constants.ControlLoops.SMARTDASHBOARD_UPDATER_PERIOD);
     
     private BehaviorManager behaviorManager;
     private OperatorInterface operatorInterface;
-    private TankDriveHelper tankDriveHelper;
     
     private AutoMode autoMode;
 
@@ -37,7 +38,6 @@ public class Robot extends IterativeRobot {
         
         behaviorManager = new BehaviorManager();
         operatorInterface = new OperatorInterface();
-        tankDriveHelper = new TankDriveHelper(HardwareAdapter.DRIVE);
         
         autoMode = new DoNothingAutoMode();
         
@@ -47,8 +47,13 @@ public class Robot extends IterativeRobot {
         smartDashboardUpdater.addSendable(HardwareAdapter.DRIVE);
         smartDashboardUpdater.addSendable(HardwareAdapter.INTAKE);
         smartDashboardUpdater.addSendable(HardwareAdapter.CATAPULT);
+        smartDashboardUpdater.addSendable(HardwareAdapter.GRIP);
         
+        visionLooper.start();
         smartDashboardUpdater.start();
+        
+        HardwareAdapter.GRIP.register();
+        HardwareAdapter.DRIVE.reset();
         System.out.println("End robotInit()");
     }
 
@@ -70,6 +75,9 @@ public class Robot extends IterativeRobot {
      */
     public void teleopInit() {
         System.out.println("Start teleopInit()");
+        
+        HardwareAdapter.DRIVE.reset();
+        
         looper.start();
         System.out.println("End teleopInit()");
     }
@@ -78,7 +86,6 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control.
      */
     public void teleopPeriodic() {
-        tankDriveHelper.drive(HardwareAdapter.LEFT_STICK.getY(), HardwareAdapter.RIGHT_STICK.getY());
         behaviorManager.update(operatorInterface.getCommands());
     }
     

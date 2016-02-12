@@ -17,6 +17,12 @@ public class OperatorInterface {
      */
     public Commands getCommands() {
         reset();
+        
+        if (HardwareAdapter.LEFT_STICK.getRawButton(1)) {
+            commands.alignRobot = true;
+        } else {
+            commands.alignRobot = false;
+        }
 
         if (HardwareAdapter.OPERATOR_STICK.getRawButton(1)) {
             commands.fireCatapult = true;
