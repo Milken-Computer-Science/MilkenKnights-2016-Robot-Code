@@ -56,9 +56,11 @@ public class HardwareAdapter {
         DRIVE = new Drive("Drive", driveLeftTalon, driveRightTalon, driveLeftEncoder, driveRightEncoder, 
                 driveShifter, gyro);
         INTAKE = new Intake("Intake", intakePositionTalon, intakeFollowerTalon, intakeSpeedTalon);
-        CATAPULT = new Catapult("Catapult", catapultTalon, catapultBanner, ledRing);
+        CATAPULT = new Catapult("Catapult", catapultTalon, catapultBanner);
         PDP = new PowerDistributionPanel();
         COMPRESSOR = new Compressor(Constants.Pcm.ID);
+        
+        GRIP = new GripHelper();
 
         LEFT_STICK = new Joystick(Constants.DriverStation.JOYSTICK_LEFT);
         RIGHT_STICK = new Joystick(Constants.DriverStation.JOYSTICK_RIGHT);

@@ -18,7 +18,6 @@ public class Catapult extends Subsystem implements Loopable {
     
     private CANTalon talon;
     private DigitalInput banner;
-    private Solenoid ledRing;
     private CatapultState state;
     private int shotCount = 0;
 
@@ -28,7 +27,7 @@ public class Catapult extends Subsystem implements Loopable {
      * @param name The name of the subsystem
      * @param talon The talon to control the catapult
      */
-    public Catapult(String name, CANTalon talon, DigitalInput banner, Solenoid ledRing) {
+    public Catapult(String name, CANTalon talon, DigitalInput banner) {
         super(name);
         
         talon.changeControlMode(TalonControlMode.PercentVbus);
@@ -53,8 +52,7 @@ public class Catapult extends Subsystem implements Loopable {
         });
         //banner.setUpSourceEdge(true, false);
         //banner.enableInterrupts();
-        
-        this.ledRing = ledRing;
+
         this.talon = talon;
         this.banner = banner;
         
@@ -96,11 +94,9 @@ public class Catapult extends Subsystem implements Loopable {
                 break;
             case READY:
                 talon.set(0);
-                ledRing.set(false);
                 break;
             case FIRE:
                 talon.set(1);
-                ledRing.set(true);
                 //talon.set((shotCount + 1) * camRevolution);
                 //if (Math.abs(talon.getError()) < 100) {
                 //    shotCount++;
