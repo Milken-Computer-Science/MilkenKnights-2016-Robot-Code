@@ -30,13 +30,14 @@ public class Constants {
     
     public class ControlLoops {
         public static final double CONTROLLERS_PERIOD = 1 / 100.0;
-        public static final double SMARTDASHBOARD_UPDATER_PERIOD = 1 / 100.0;
+        public static final double VISION_PERIOD = 1 / 25.0;
+        public static final double SMARTDASHBOARD_UPDATER_PERIOD = 1 / 50.0;
     }
     
     public class DriverStation {
         public static final int JOYSTICK_LEFT = 0;
-        public static final int JOYSTICK_RIGHT = 0;
-        public static final int JOYSTICK_OPERATOR = 0;
+        public static final int JOYSTICK_RIGHT = 1;
+        public static final int JOYSTICK_OPERATOR = 2;
     }
     
     public class Auto {
@@ -47,7 +48,7 @@ public class Constants {
         
         public class Drive {
             public static final double WHEEL_DIAMETER = 4;
-            public static final double MAX_SPEED = 0;
+            public static final double MAX_SPEED = 20;
         }
         
         public class Intake {
