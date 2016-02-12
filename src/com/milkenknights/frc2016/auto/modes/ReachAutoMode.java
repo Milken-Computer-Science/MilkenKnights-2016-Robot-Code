@@ -16,7 +16,7 @@ public class ReachAutoMode extends AutoMode {
     protected void routine() throws AutoModeEndedException {
         waitTime(0.25);
         
-        HardwareAdapter.INTAKE.setPosition(IntakePosition.PROTECT);
+        HardwareAdapter.INTAKE.setPosition(IntakePosition.INTAKE);
         waitForIntake(1.0);
         
         HardwareAdapter.DRIVE.setDistanceSetpoint(42);

@@ -4,11 +4,9 @@ import com.milkenknights.frc2016.auto.AutoMode;
 import com.milkenknights.frc2016.auto.modes.DoNothingAutoMode;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
 import com.milkenknights.frc2016.subsystems.Intake.IntakeSpeed;
-import com.milkenknights.util.GripHelper;
 import com.milkenknights.util.MotorPairSignal;
 import com.milkenknights.util.MultiLooper;
 import com.milkenknights.util.SmartDashboardUpdater;
-import com.milkenknights.util.TankDriveHelper;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
