@@ -2,12 +2,40 @@ package com.milkenknights.frc2016;
 
 public class Constants {
     
+    public static double kControlLoopsDt = 0.005;
+    
+    // DriveStraightController gains
+    public static double kDriveMaxSpeedInchesPerSec = 120;
+    public static double kDriveMaxAccelInchesPerSec2 = 10;
+    public static double kDrivePositionKp = 0.05; //.7
+    public static double kDrivePositionKi = 0;
+    public static double kDrivePositionKd = 0;
+    public static double kDriveStraightKp = 0.0; //3
+    public static double kDriveStraightKi = 0;
+    public static double kDriveStraightKd = 0;
+    public static double kDrivePositionKv = 0.008;
+    public static double kDrivePositionKa = 0.0017;
+    public static double kDriveOnTargetError = 0.75;
+    public static double kDrivePathHeadingFollowKp = 0.01;
+
+    // TurnInPlaceController gains
+    public static double kTurnMaxSpeedRadsPerSec = 5.25;
+    public static double kTurnMaxAccelRadsPerSec2 = 5.25;
+    public static double kTurnKp = 3.0;
+    public static double kTurnKi = 0.18;
+    public static double kTurnKd = 0.23;
+    public static double kTurnKv = 0.085;
+    public static double kTurnKa = 0.075;
+    public static double kTurnOnTargetError = 0.0225;
+    
     public class Dio {
         public static final int CATAPULT_HOME = 0;
         public static final int DRIVE_LEFT_A = 1; // TODO: Find this value
         public static final int DRIVE_LEFT_B = 2; // TODO: Find this value
         public static final int DRIVE_RIGHT_A = 3; // TODO: Find this value
         public static final int DRIVE_RIGHT_B = 4; // TODO: Find this value
+        public static final int CATAPULT_A = 14;
+        public static final int CATAPULT_B = 15;
     }
     
     public class Pcm {
@@ -24,7 +52,7 @@ public class Constants {
         public static final int CATAPULT = 8;
         public static final int INTAKE_ARM_1 = 7; // TODO: Find this value
         public static final int INTAKE_SPEED = 8; // TODO: Find this value
-        public static final int INTAKE_ARM_2 = 9; // TODO: Find this value
+        public static final int INTAKE_ARM_2 = 6; // TODO: Find this value
     }
     
     public class ControlLoops {
@@ -55,7 +83,8 @@ public class Constants {
         
         public class Drive {
             public static final double WHEEL_DIAMETER = 8;
-            public static final double MAX_SPEED = 20; // TODO: Find this value
+            public static final double MAX_SPEED_LOW = 10; // TODO: Find this value
+            public static final double MAX_SPEED_HIGH = 20; // TODO: Find this value
         }
         
         public class Intake {
@@ -85,35 +114,9 @@ public class Constants {
         }
 
         public class Catapult {
-            public static final double GEAR_RATIO = 50 / 14; // TODO: Find this value
+            public static final double GEAR_RATIO = 64 / 14;
         }
         
     }
-    
-    public static double kControlLoopsDt = 0.005;
-    
-    // DriveStraightController gains
-    public static double kDriveMaxSpeedInchesPerSec = 120;
-    public static double kDriveMaxAccelInchesPerSec2 = 10;
-    public static double kDrivePositionKp = 0.05; //.7
-    public static double kDrivePositionKi = 0;
-    public static double kDrivePositionKd = 0;
-    public static double kDriveStraightKp = 0.0; //3
-    public static double kDriveStraightKi = 0;
-    public static double kDriveStraightKd = 0;
-    public static double kDrivePositionKv = 0.008;
-    public static double kDrivePositionKa = 0.0017;
-    public static double kDriveOnTargetError = 0.75;
-    public static double kDrivePathHeadingFollowKp = 0.01;
-
-    // TurnInPlaceController gains
-    public static double kTurnMaxSpeedRadsPerSec = 5.25;
-    public static double kTurnMaxAccelRadsPerSec2 = 5.25;
-    public static double kTurnKp = 3.0;
-    public static double kTurnKi = 0.18;
-    public static double kTurnKd = 0.23;
-    public static double kTurnKv = 0.085;
-    public static double kTurnKa = 0.075;
-    public static double kTurnOnTargetError = 0.0225;
     
 }

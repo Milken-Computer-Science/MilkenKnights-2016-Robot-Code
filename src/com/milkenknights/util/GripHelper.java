@@ -9,6 +9,12 @@ import edu.wpi.first.wpilibj.tables.ITableListener;
 
 public class GripHelper implements MkSendable, ITableListener {
     
+    private final ITable gripTable = NetworkTable.getTable(Constants.Vision.GRIP_TABLE_ID);
+    private final ITable targetTable = gripTable.getSubTable(Constants.Vision.TARGETS_TABLE_ID);
+    private final ITable matSize = gripTable.getSubTable(Constants.Vision.MAT_SIZE_TABLE_ID);
+    
+    private Target cachedTarget = new Target(0, 0, 0, 0, 0, 0);
+    
     /**
      * Class to store the data of a target.  
      */
@@ -39,12 +45,6 @@ public class GripHelper implements MkSendable, ITableListener {
             this.solidity = solidity;
         }
     }
-
-    private final ITable gripTable = NetworkTable.getTable(Constants.Vision.GRIP_TABLE_ID);
-    private final ITable targetTable = gripTable.getSubTable(Constants.Vision.TARGETS_TABLE_ID);
-    private final ITable matSize = gripTable.getSubTable(Constants.Vision.MAT_SIZE_TABLE_ID);
-    
-    private Target cachedTarget = new Target(0, 0, 0, 0, 0, 0);
     
     /**
      * Tell this GripHelper to begin listening for target updates.

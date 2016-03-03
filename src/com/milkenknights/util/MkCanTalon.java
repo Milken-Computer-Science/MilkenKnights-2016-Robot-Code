@@ -14,7 +14,6 @@ public class MkCanTalon implements SpeedController {
 
     private CANTalon[] controllers = {};
     private boolean invert = false;
-    private double current = 0.0;
     
     /**
      * A constructor for a single MKSpeedController object.
@@ -66,7 +65,7 @@ public class MkCanTalon implements SpeedController {
      * @return The current in amps
      */
     public double getCurrent() {
-        current = 0.0;
+        double current = 0.0;
         for (CANTalon t : controllers) {
             current += t.getOutputCurrent();
         }

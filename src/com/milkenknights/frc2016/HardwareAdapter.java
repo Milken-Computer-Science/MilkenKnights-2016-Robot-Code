@@ -46,6 +46,7 @@ public class HardwareAdapter {
 
         S4T360 driveLeftEncoder = new S4T360(Constants.Dio.DRIVE_LEFT_A, Constants.Dio.DRIVE_LEFT_B);
         S4T360 driveRightEncoder = new S4T360(Constants.Dio.DRIVE_RIGHT_A, Constants.Dio.DRIVE_RIGHT_B);
+        S4T360 catapultEncoder = new S4T360(Constants.Dio.CATAPULT_A, Constants.Dio.CATAPULT_B);
 
         Solenoid driveShifter = new Solenoid(Constants.Pcm.ID, Constants.Pcm.DRIVE_SHIFTER);
         
@@ -58,7 +59,7 @@ public class HardwareAdapter {
         DRIVE = new Drive("Drive", driveLeftTalon, driveRightTalon, driveLeftEncoder, driveRightEncoder, 
                 driveShifter, gyro);
         INTAKE = new Intake("Intake", intakePositionTalon, intakeSpeedTalon);
-        CATAPULT = new Catapult("Catapult", catapultTalon, catapultHome);
+        CATAPULT = new Catapult("Catapult", catapultTalon, catapultEncoder, catapultHome);
         PDP = new PowerDistributionPanel();
         COMPRESSOR = new Compressor(Constants.Pcm.ID);
         

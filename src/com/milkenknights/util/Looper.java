@@ -34,8 +34,8 @@ public class Looper {
         private Looper looper;
 
         public UpdaterTask(Looper looper) {
-            if (looper == null) {
-                throw new NullPointerException("Given Looper was null");
+            if (!(looper instanceof Looper)) {
+                throw new IllegalArgumentException("Given Looper was not a looper");
             }
             this.looper = looper;
         }

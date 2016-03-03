@@ -16,18 +16,18 @@ import com.milkenknights.util.trajectory.Trajectory;
  * @author Tom Bottiglieri
  */
 public class DrivePathController implements Drive.DriveController {
+    
+    protected Trajectory trajectory;
+    protected LegacyTrajectoryFollower followerLeft = new LegacyTrajectoryFollower("left");
+    protected LegacyTrajectoryFollower followerRight = new LegacyTrajectoryFollower("right");
+    protected double direction;
+    protected double heading;
+    protected double turn = -Constants.kDrivePathHeadingFollowKp;
 
     public DrivePathController(Path path) {
         init();
         loadProfile(path.getLeftWheelTrajectory(), path.getRightWheelTrajectory(), 1.0, 0.0);
     }
-
-    Trajectory trajectory;
-    LegacyTrajectoryFollower followerLeft = new LegacyTrajectoryFollower("left");
-    LegacyTrajectoryFollower followerRight = new LegacyTrajectoryFollower("right");
-    double direction;
-    double heading;
-    double kTurn = -Constants.kDrivePathHeadingFollowKp;
 
     public boolean isOnTarget() {
         return followerLeft.isFinishedTrajectory();
@@ -96,7 +96,7 @@ public class DrivePathController implements Drive.DriveController {
                     observedHeading, goalHeading);
             double angleDiff = Math.toDegrees(angleDiffRads);
 
-            double turn = kTurn * angleDiff;
+            double turn = this.turn * angleDiff;
             return new MotorPairSignal(speedLeft + turn, speedRight - turn);
         }
     }

@@ -1,8 +1,11 @@
 package com.milkenknights.frc2016.subsystems;
 
+import com.milkenknights.frc2016.Constants;
 import com.milkenknights.util.Loopable;
 import com.milkenknights.util.MkCanTalon;
+import com.milkenknights.util.MkEncoder;
 import com.milkenknights.util.Subsystem;
+import com.milkenknights.util.SynchronousPid;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.InterruptHandlerFunction;
@@ -11,13 +14,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Catapult extends Subsystem implements Loopable {
     
     public enum CatapultState {
-        RETRACT, READY, FIRE
+        RETRACT, READY, FIRE, ZERO
     }
     
     private MkCanTalon talon;
+    private MkEncoder encoder;
     private DigitalInput home;
     private CatapultState state;
     private int shotCount = 0;
+    private SynchronousPid pid;
+    private boolean zeroed = false;
 
     /**
      * Create a new catapult subsystem.
@@ -25,27 +31,32 @@ public class Catapult extends Subsystem implements Loopable {
      * @param name The name of the subsystem
      * @param talon The talon to control the catapult
      */
-    public Catapult(String name, MkCanTalon talon, DigitalInput home) {
+    public Catapult(String name, MkCanTalon talon, MkEncoder encoder, DigitalInput home) {
         super(name);
         
         talon.setInverted(true);
+        talon.enableBrakeMode(true);
         
         home.requestInterrupts(new InterruptHandlerFunction<Object>() {
             @Override
             public void interruptFired(int arg0, Object arg1) {
-                home.disableInterrupts();
-                //talon.setPosition(0);
+                zeroed = true;
+                encoder.reset();
                 System.out.println("Catapult Zeroed!");
             }
             
         });
-        //banner.setUpSourceEdge(true, false);
-        //banner.enableInterrupts();
+        home.setUpSourceEdge(false, true);
+        home.enableInterrupts();
+        
+        pid = new SynchronousPid();
+        pid.setPid(.0001, 0, 0);
 
         this.talon = talon;
+        this.encoder = encoder;
         this.home = home;
         
-        setState(CatapultState.READY);
+        setState(CatapultState.ZERO);
     }
     
     /**
@@ -54,11 +65,6 @@ public class Catapult extends Subsystem implements Loopable {
     public void fire() {
         setState(CatapultState.FIRE);
     }
-    
-    public void stop() {
-        setState(CatapultState.READY);
-    }
-    
     
     /**
      * Get the current state of the catapult.
@@ -70,30 +76,44 @@ public class Catapult extends Subsystem implements Loopable {
     @Override
     public void updateSmartDashboard() {
         SmartDashboard.putString("Catapult State", state.toString());
-//        SmartDashboard.putNumber("Catapult Count", talon.get());
-//        SmartDashboard.putNumber("Catapult Error", talon.getError());
+        SmartDashboard.putNumber("Catapult Count", encoder.get());
+        SmartDashboard.putNumber("Catapult Error", pid.getError());
         SmartDashboard.putBoolean("Catapult Banner", home.get());
+        SmartDashboard.putNumber("Catapult PID Result", pid.calculate(encoder.get()));
+        SmartDashboard.putBoolean("Catapult Zeroed", zeroed);
+        SmartDashboard.putBoolean("Catapult Home", !home.get());
     }
 
     @Override
     public void update() {
         switch (state) {
             case RETRACT:
-//                talon.set(shotCount * camRevolution);
-//                if (talon.getClosedLoopError() < 100) {
-//                    state = CatapultState.READY;
-//                }
+                pid.setSetpoint(shotCount * Constants.Subsystems.Catapult.GEAR_RATIO
+                        * encoder.getPulsesPerRevolution());
+                talon.set(pid.calculate(encoder.get()));
+                if (pid.onTarget(100)) {
+                    state = CatapultState.READY;
+                }
                 break;
             case READY:
-                talon.set(0);
                 break;
             case FIRE:
-                talon.set(0.5);
-                //talon.set((shotCount + 1) * camRevolution);
-                //if (Math.abs(talon.getError()) < 100) {
-                //    shotCount++;
-                //    state = CatapultState.RETRACT;
-                //}
+                pid.setSetpoint((shotCount + 1) * Constants.Subsystems.Catapult.GEAR_RATIO 
+                        * encoder.getPulsesPerRevolution());
+                talon.set(pid.calculate(encoder.get()));
+                if (pid.onTarget(100)) {
+                    shotCount++;
+                    state = CatapultState.RETRACT;
+                }
+                break;
+            case ZERO:
+                if (!zeroed) {
+                    talon.set(0.25);
+                } else {
+                    home.disableInterrupts();
+                    talon.set(0);
+                    setState(CatapultState.RETRACT);
+                }
                 break;
             default:
                 break;

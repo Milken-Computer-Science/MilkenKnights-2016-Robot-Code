@@ -34,14 +34,15 @@ public class MkMath {
      * @param angle The angle in degrees
      */
     public static double boundAngle0to360Degrees(double angle) {
+        double boundedAngle = angle;
         // Naive algorithm
-        while (angle >= 360.0) {
-            angle -= 360.0;
+        while (boundedAngle >= 360.0) {
+            boundedAngle -= 360.0;
         }
-        while (angle < 0.0) {
-            angle += 360.0;
+        while (boundedAngle < 0.0) {
+            boundedAngle += 360.0;
         }
-        return angle;
+        return boundedAngle;
     }
 
     /**
@@ -49,14 +50,15 @@ public class MkMath {
      * @param angle The angle in degrees
      */
     public static double boundAngleNeg180to180Degrees(double angle) {
+        double boundedAngle = angle;
         // Naive algorithm
-        while (angle >= 180.0) {
-            angle -= 360.0;
+        while (boundedAngle >= 180.0) {
+            boundedAngle -= 360.0;
         }
-        while (angle < -180.0) {
-            angle += 360.0;
+        while (boundedAngle < -180.0) {
+            boundedAngle += 360.0;
         }
-        return angle;
+        return boundedAngle;
     }
 
     /**
@@ -64,14 +66,15 @@ public class MkMath {
      * @param angle The angle in radians
      */
     public static double boundAngle0to2PiRadians(double angle) {
+        double boundedAngle = angle;
         // Naive algorithm
-        while (angle >= 2.0 * Math.PI) {
-            angle -= 2.0 * Math.PI;
+        while (boundedAngle >= 2.0 * Math.PI) {
+            boundedAngle -= 2.0 * Math.PI;
         }
-        while (angle < 0.0) {
-            angle += 2.0 * Math.PI;
+        while (boundedAngle < 0.0) {
+            boundedAngle += 2.0 * Math.PI;
         }
-        return angle;
+        return boundedAngle;
     }
 
     /**
@@ -79,17 +82,15 @@ public class MkMath {
      * @param angle The angle in radians
      */
     public static double boundAngleNegPiToPiRadians(double angle) {
+        double boundedAngle = angle;
         // Naive algorithm
-        while (angle >= Math.PI) {
-            angle -= 2.0 * Math.PI;
+        while (boundedAngle >= Math.PI) {
+            boundedAngle -= 2.0 * Math.PI;
         }
-        while (angle < -Math.PI) {
-            angle += 2.0 * Math.PI;
+        while (boundedAngle < -Math.PI) {
+            boundedAngle += 2.0 * Math.PI;
         }
-        return angle;
+        return boundedAngle;
     }
 
-    public MkMath() {
-        
-    }
 }

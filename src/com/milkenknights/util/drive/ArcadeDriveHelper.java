@@ -1,12 +1,12 @@
 package com.milkenknights.util.drive;
 
 public class ArcadeDriveHelper extends DriveHelper {
+    
+    private MotorPairSignal signal = new MotorPairSignal();
 
     public ArcadeDriveHelper(DriveAbstract drive) {
         super(drive);
     }
-    
-    private MotorPairSignal signal = new MotorPairSignal();
     
     /**
      * Arcade drive control.

@@ -50,7 +50,7 @@ public abstract class AutoModeBase implements Runnable {
      * Get if the auto routine is currently running.
      */
     public boolean isActive() {
-        return active;
+        return active || thread.isAlive();
     }
     
     /**

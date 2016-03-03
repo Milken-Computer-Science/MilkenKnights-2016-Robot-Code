@@ -8,8 +8,8 @@ import com.milkenknights.util.MkEncoder;
 import com.milkenknights.util.Pose;
 import com.milkenknights.util.drive.DriveAbstract;
 import com.milkenknights.util.drive.MotorPairSignal;
-import com.kauailabs.navx.frc.AHRS;
 
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -69,11 +69,10 @@ public class Drive extends DriveAbstract {
     }
 
     @Override
-    public void update() {
+    public void update() {        
         if (controller == null) {
             return;
         }
-        
         setDriveOutputs(controller.update(getPhysicalPose()));
     }
 
@@ -92,13 +91,13 @@ public class Drive extends DriveAbstract {
 
     @Override
     public void setDistanceSetpoint(double distance) {
-        setDistanceSetpoint(distance, Constants.Subsystems.Drive.MAX_SPEED);
+        setDistanceSetpoint(distance, Constants.Subsystems.Drive.MAX_SPEED_HIGH);
     }
 
     @Override
     public void setDistanceSetpoint(double distance, double velocity) {
-        velocity = Math.min(Constants.Subsystems.Drive.MAX_SPEED, Math.max(velocity, 0));
-        controller = new DriveStraightController(getPoseToContinueFrom(false), distance, velocity);
+        controller = new DriveStraightController(getPoseToContinueFrom(false), distance, 
+                Math.min(Constants.Subsystems.Drive.MAX_SPEED_HIGH, Math.max(velocity, 0)));
     }
 
     @Override
@@ -108,8 +107,8 @@ public class Drive extends DriveAbstract {
 
     @Override
     public void setTurnSetpoint(double heading, double velocity) {
-        velocity = Math.min(Constants.kTurnMaxSpeedRadsPerSec, Math.max(velocity, 0));
-        controller = new TurnInPlaceController(getPoseToContinueFrom(true), heading, velocity);
+        controller = new TurnInPlaceController(getPoseToContinueFrom(true), heading, 
+                Math.min(Constants.kTurnMaxSpeedRadsPerSec, Math.max(velocity, 0)));
     }
     
     /**
@@ -134,7 +133,7 @@ public class Drive extends DriveAbstract {
      * Sets the gear of the drive train.
      * @param gear The gear to set to
      */
-    public void setGear(DriveGear gear) {
+    protected void setGear(DriveGear gear) {
         shifter.set(gear.getShifter());
     }
     

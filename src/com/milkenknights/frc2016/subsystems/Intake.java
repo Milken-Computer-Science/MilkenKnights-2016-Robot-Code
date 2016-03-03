@@ -4,8 +4,6 @@ import com.milkenknights.frc2016.Constants;
 import com.milkenknights.util.MkCanTalon;
 import com.milkenknights.util.Subsystem;
 
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake extends Subsystem {
@@ -65,7 +63,7 @@ public class Intake extends Subsystem {
      * Set the position of the intake.
      */
     public void setPosition(IntakePosition position) {
-        //arm.set(position.position * Constants.Subsystems.Intake.Arm.GEAR_RATIO);
+        arm.set(position.position * Constants.Subsystems.Intake.Arm.GEAR_RATIO);
         this.position = position;
     }
     
