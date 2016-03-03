@@ -49,13 +49,11 @@ public class SynchronousPid {
     public double calculate(double input) {
         lastInput = input;
         error = setpoint - input;
-        if (continuous) {
-            if (Math.abs(error) > (maximumInput - minimumInput) / 2) {
-                if (error > 0) {
-                    error = error - maximumInput + minimumInput;
-                } else {
-                    error = error + maximumInput - minimumInput;
-                }
+        if (continuous && Math.abs(error) > (maximumInput - minimumInput) / 2) {
+            if (error > 0) {
+                error = error - maximumInput + minimumInput;
+            } else {
+                error = error + maximumInput - minimumInput;
             }
         }
 
@@ -187,9 +185,9 @@ public class SynchronousPid {
     public void setSetpoint(double setpoint) {
         if (maximumInput > minimumInput) {
             if (setpoint > maximumInput) {
-                setpoint = maximumInput;
+                this.setpoint = maximumInput;
             } else if (setpoint < minimumInput) {
-                setpoint = minimumInput;
+                this.setpoint = minimumInput;
             } else {
                 this.setpoint = setpoint;
             }
