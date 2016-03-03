@@ -13,16 +13,20 @@ public abstract class DriveHelper {
     /**
      * Override this method to drive.
      * 
-     * @param leftThrottle The left throttle power
-     * @param rightThrottle The right throttle power
+     * @param value1 The first drive parameter
+     * @param value2 The second drive parameter
      */
-    public void drive(double leftThrottle, double rightThrottle) {
+    public final void drive(double value1, double value2) {
         if (DriverStation.getInstance().isAutonomous()) {
             return;
         }
+        
+        driveMode(value1, value2);
     }
+    
+    protected abstract void driveMode(double leftThrottle, double rightThrottle);
 
-    public double handleDeadband(double val, double deadband) {
+    public final double handleDeadband(double val, double deadband) {
         return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
     }
 }

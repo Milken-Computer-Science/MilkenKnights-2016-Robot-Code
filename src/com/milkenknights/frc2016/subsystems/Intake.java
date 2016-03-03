@@ -40,9 +40,8 @@ public class Intake extends Subsystem {
      * Create a new intake subsystem.
      * 
      * @param name The name of the subsystem
-     * @param armController The CANTalon used to move the arm
-     * @param armControllerFollower The CANTalon to follow the main controller
-     * @param speedController The CanTalon used to control the intake
+     * @param armController The MkCanTalon used to move the arm
+     * @param speedController The MkCanTalon used to control the intake
      */
     public Intake(String name, MkCanTalon armController, MkCanTalon speedController) {
         super(name);
