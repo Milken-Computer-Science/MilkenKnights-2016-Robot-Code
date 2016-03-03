@@ -8,36 +8,36 @@ import edu.wpi.first.wpilibj.util.BoundaryException;
  * Does all computation synchronously (i.e. the calculate() function must be
  * called by the user from his own thread)
  */
-public class SynchronousPID {
-    private double m_P;            // factor for "proportional" control
-    private double m_I;            // factor for "integral" control
-    private double m_D;            // factor for "derivative" control
-    private double m_maximumOutput = 1.0;    // |maximum output|
-    private double m_minimumOutput = -1.0;    // |minimum output|
-    private double m_maximumInput = 0.0;        // maximum input - limit setpoint to this
-    private double m_minimumInput = 0.0;        // minimum input - limit setpoint to this
-    private boolean m_continuous = false;    // do the endpoints wrap around? eg. Absolute encoder
-    private double m_prevError = 0.0;    // the prior sensor input (used to compute velocity)
-    private double m_totalError = 0.0; //the sum of the errors for use in the integral calc
-    private double m_setpoint = 0.0;
-    private double m_error = 0.0;
-    private double m_result = 0.0;
-    private double m_last_input = Double.NaN;
+public class SynchronousPid {
+    private double proportionalCoefficient; // factor for "proportional" control
+    private double integralCoefficient;     // factor for "integral" control
+    private double derivativeCoefficient;   // factor for "derivative" control
+    private double maximumOutput = 1.0;     // |maximum output|
+    private double minimumOutput = -1.0;    // |minimum output|
+    private double maximumInput = 0.0;      // maximum input - limit setpoint to this
+    private double minimumInput = 0.0;      // minimum input - limit setpoint to this
+    private boolean continuous = false;     // do the endpoints wrap around? eg. Absolute encoder
+    private double prevError = 0.0;         // the prior sensor input (used to compute velocity)
+    private double totalError = 0.0;        //the sum of the errors for use in the integral calc
+    private double setpoint = 0.0;
+    private double error = 0.0;
+    private double result = 0.0;
+    private double lastInput = Double.NaN;
 
-    public SynchronousPID() {
+    public SynchronousPid() {
     }
 
     /**
-     * Allocate a PID object with the given constants for P, I, D
+     * Allocate a PID object with the given constants for P, I, D.
      *
-     * @param Kp the proportional coefficient
-     * @param Ki the integral coefficient
-     * @param Kd the derivative coefficient
+     * @param proportionalCoefficient the proportional coefficient
+     * @param integralCoefficient the integral coefficient
+     * @param derivativeCoefficient the derivative coefficient
      */
-    public SynchronousPID(double Kp, double Ki, double Kd) {
-        m_P = Kp;
-        m_I = Ki;
-        m_D = Kd;
+    public SynchronousPid(double proportionalCoefficient, double integralCoefficient, double derivativeCoefficient) {
+        this.proportionalCoefficient = proportionalCoefficient;
+        this.integralCoefficient = integralCoefficient;
+        this.derivativeCoefficient = derivativeCoefficient;
     }
 
     /**
@@ -47,87 +47,85 @@ public class SynchronousPID {
      * @param input the input
      */
     public double calculate(double input) {
-        m_last_input = input;
-        m_error = m_setpoint - input;
-        if (m_continuous) {
-            if (Math.abs(m_error) >
-                    (m_maximumInput - m_minimumInput) / 2) {
-                if (m_error > 0) {
-                    m_error = m_error - m_maximumInput + m_minimumInput;
+        lastInput = input;
+        error = setpoint - input;
+        if (continuous) {
+            if (Math.abs(error) > (maximumInput - minimumInput) / 2) {
+                if (error > 0) {
+                    error = error - maximumInput + minimumInput;
                 } else {
-                    m_error = m_error +
-                            m_maximumInput - m_minimumInput;
+                    error = error + maximumInput - minimumInput;
                 }
             }
         }
 
-        if ((m_error * m_P < m_maximumOutput) &&
-                (m_error * m_P > m_minimumOutput)) {
-            m_totalError += m_error;
+        if ((error * proportionalCoefficient < maximumOutput) && (error * proportionalCoefficient > minimumOutput)) {
+            totalError += error;
         } else {
-            m_totalError = 0;
+            totalError = 0;
         }
 
-        m_result = (m_P * m_error + m_I * m_totalError + m_D * (m_error - m_prevError));
-        m_prevError = m_error;
+        result = (proportionalCoefficient * error 
+                + integralCoefficient * totalError 
+                + derivativeCoefficient * (error - prevError));
+        prevError = error;
 
-        if (m_result > m_maximumOutput) {
-            m_result = m_maximumOutput;
-        } else if (m_result < m_minimumOutput) {
-            m_result = m_minimumOutput;
+        if (result > maximumOutput) {
+            result = maximumOutput;
+        } else if (result < minimumOutput) {
+            result = minimumOutput;
         }
-        return m_result;
+        return result;
     }
 
     /**
      * Set the PID controller gain parameters.
      * Set the proportional, integral, and differential coefficients.
      *
-     * @param p Proportional coefficient
-     * @param i Integral coefficient
-     * @param d Differential coefficient
+     * @param proportionalCoefficient Proportional coefficient
+     * @param integralCoefficient Integral coefficient
+     * @param derivativeCoefficient Differential coefficient
      */
-    public void setPID(double p, double i, double d) {
-        m_P = p;
-        m_I = i;
-        m_D = d;
+    public void setPid(double proportionalCoefficient, double integralCoefficient, double derivativeCoefficient) {
+        this.proportionalCoefficient = proportionalCoefficient;
+        this.integralCoefficient = integralCoefficient;
+        this.derivativeCoefficient = derivativeCoefficient;
     }
 
     /**
-     * Get the Proportional coefficient
+     * Get the Proportional coefficient.
      *
      * @return proportional coefficient
      */
     public double getP() {
-        return m_P;
+        return proportionalCoefficient;
     }
 
     /**
-     * Get the Integral coefficient
+     * Get the Integral coefficient.
      *
      * @return integral coefficient
      */
     public double getI() {
-        return m_I;
+        return integralCoefficient;
     }
 
     /**
-     * Get the Differential coefficient
+     * Get the Differential coefficient.
      *
      * @return differential coefficient
      */
     public double getD() {
-        return m_D;
+        return derivativeCoefficient;
     }
 
     /**
-     * Return the current PID result
-     * This is always centered on zero and constrained the the max and min outs
+     * Return the current PID result.  This is always centered on zero and constrained the the max and min outs.
      *
      * @return the latest calculated output
      */
     public double get() {
-        return m_result;
+        return result;
     }
 
     /**
@@ -139,7 +137,7 @@ public class SynchronousPID {
      * @param continuous Set to true turns on continuous, false turns off continuous
      */
     public void setContinuous(boolean continuous) {
-        m_continuous = continuous;
+        this.continuous = continuous;
     }
 
     /**
@@ -162,9 +160,9 @@ public class SynchronousPID {
         if (minimumInput > maximumInput) {
             throw new BoundaryException("Lower bound is greater than upper bound");
         }
-        m_minimumInput = minimumInput;
-        m_maximumInput = maximumInput;
-        setSetpoint(m_setpoint);
+        this.minimumInput = minimumInput;
+        this.maximumInput = maximumInput;
+        setSetpoint(setpoint);
     }
 
     /**
@@ -177,82 +175,69 @@ public class SynchronousPID {
         if (minimumOutput > maximumOutput) {
             throw new BoundaryException("Lower bound is greater than upper bound");
         }
-        m_minimumOutput = minimumOutput;
-        m_maximumOutput = maximumOutput;
+        this.minimumOutput = minimumOutput;
+        this.maximumOutput = maximumOutput;
     }
 
     /**
-     * Set the setpoint for the PID controller
+     * Set the setpoint for the PID controller.
      *
      * @param setpoint the desired setpoint
      */
     public void setSetpoint(double setpoint) {
-        if (m_maximumInput > m_minimumInput) {
-            if (setpoint > m_maximumInput) {
-                m_setpoint = m_maximumInput;
-            } else if (setpoint < m_minimumInput) {
-                m_setpoint = m_minimumInput;
+        if (maximumInput > minimumInput) {
+            if (setpoint > maximumInput) {
+                setpoint = maximumInput;
+            } else if (setpoint < minimumInput) {
+                setpoint = minimumInput;
             } else {
-                m_setpoint = setpoint;
+                this.setpoint = setpoint;
             }
         } else {
-            m_setpoint = setpoint;
+            this.setpoint = setpoint;
         }
     }
 
     /**
-     * Returns the current setpoint of the PID controller
+     * Returns the current setpoint of the PID controller.
      *
      * @return the current setpoint
      */
     public double getSetpoint() {
-        return m_setpoint;
+        return setpoint;
     }
 
     /**
-     * Returns the current difference of the input from the setpoint
+     * Returns the current difference of the input from the setpoint.
      *
      * @return the current error
      */
     public double getError() {
-        return m_error;
+        return error;
     }
 
     /**
-     * Return true if the error is within the tolerance
+     * Return true if the error is within the tolerance.
      *
      * @return true if the error is less than the tolerance
      */
     public boolean onTarget(double tolerance) {
-        return m_last_input != Double.NaN && Math.abs(m_last_input - m_setpoint) < tolerance;
+        return lastInput != Double.NaN && Math.abs(lastInput - setpoint) < tolerance;
     }
 
     /**
      * Reset all internal terms.
      */
     public void reset() {
-        m_last_input = Double.NaN;
-        m_prevError = 0;
-        m_totalError = 0;
-        m_result = 0;
-        m_setpoint = 0;
+        lastInput = Double.NaN;
+        prevError = 0;
+        totalError = 0;
+        result = 0;
+        setpoint = 0;
     }
 
     public void resetIntegrator() {
-        m_totalError = 0;
+        totalError = 0;
     }
 
-    public String getState() {
-        String lState = "";
-
-        lState += "Kp: " + m_P + "\n";
-        lState += "Ki: " + m_I + "\n";
-        lState += "Kd: " + m_D + "\n";
-
-        return lState;
-    }
-
-    public String getType() {
-        return "PIDController";
-    }
 }

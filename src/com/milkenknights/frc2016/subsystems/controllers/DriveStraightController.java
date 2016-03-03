@@ -5,14 +5,14 @@ import static com.milkenknights.util.trajectory.TrajectoryFollower.TrajectorySet
 import com.milkenknights.frc2016.Constants;
 import com.milkenknights.frc2016.subsystems.Drive;
 import com.milkenknights.util.Pose;
-import com.milkenknights.util.SynchronousPID;
+import com.milkenknights.util.SynchronousPid;
 import com.milkenknights.util.drive.MotorPairSignal;
 import com.milkenknights.util.trajectory.TrajectoryFollower;
 
 public class DriveStraightController implements Drive.DriveController {
 
     private TrajectoryFollowingPositionController mDistanceController;
-    private SynchronousPID mTurnPid;
+    private SynchronousPid mTurnPid;
     private Pose mSetpointRelativePose;
 
     public DriveStraightController(Pose priorSetpoint, double goalSetpoint, double maxVelocity) {
@@ -35,8 +35,8 @@ public class DriveStraightController implements Drive.DriveController {
         initialSetpoint.vel = encoderVelocity(priorSetpoint);
         mDistanceController.setGoal(initialSetpoint, goalSetpoint);
 
-        mTurnPid = new SynchronousPID();
-        mTurnPid.setPID(
+        mTurnPid = new SynchronousPid();
+        mTurnPid.setPid(
                 Constants.kDriveStraightKp,
                 Constants.kDriveStraightKi,
                 Constants.kDriveStraightKd);
