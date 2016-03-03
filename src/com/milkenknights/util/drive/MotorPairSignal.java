@@ -1,4 +1,4 @@
-package com.milkenknights.util;
+package com.milkenknights.util.drive;
 
 /**
  * This is a Drive Signal class that wraps 2 doubles for drive motors.

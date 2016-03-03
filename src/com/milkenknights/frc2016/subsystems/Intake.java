@@ -31,7 +31,7 @@ public class Intake extends Subsystem {
         }
     }
     
-    private CANTalon arm;
+    private MkCanTalon arm;
     private MkCanTalon speedController;
     private IntakePosition position;
     private IntakeSpeed speed;
@@ -44,21 +44,8 @@ public class Intake extends Subsystem {
      * @param armControllerFollower The CANTalon to follow the main controller
      * @param speedController The CanTalon used to control the intake
      */
-    public Intake(String name, CANTalon armController, CANTalon armControllerFollower, MkCanTalon speedController) {
+    public Intake(String name, MkCanTalon armController, MkCanTalon speedController) {
         super(name);
-        
-        armController.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
-        armController.changeControlMode(CANTalon.TalonControlMode.Position);
-        armController.reverseSensor(true);
-        armController.setAllowableClosedLoopErr(0);
-        armController.setIZone(Constants.Subsystems.Intake.Arm.I_ZONE);
-        armController.setPosition(0); // TODO: Temp until we get a sensor to zero.
-        armController.setPID(Constants.Subsystems.Intake.Arm.P, Constants.Subsystems.Intake.Arm.I,
-                Constants.Subsystems.Intake.Arm.D);
-        armController.setF(Constants.Subsystems.Intake.Arm.F);
-        
-        armControllerFollower.changeControlMode(TalonControlMode.Follower);
-        armControllerFollower.set(armController.getDeviceID());
         
         this.arm = armController;
         this.speedController = speedController;
@@ -79,7 +66,7 @@ public class Intake extends Subsystem {
      * Set the position of the intake.
      */
     public void setPosition(IntakePosition position) {
-        arm.set(position.position * Constants.Subsystems.Intake.Arm.GEAR_RATIO);
+        //arm.set(position.position * Constants.Subsystems.Intake.Arm.GEAR_RATIO);
         this.position = position;
     }
     
@@ -101,16 +88,14 @@ public class Intake extends Subsystem {
      * Get if the arm is on target.
      */
     public boolean armOnTarget() {
-        return Math.abs(arm.getError()) < Constants.Subsystems.Intake.Arm.ALLOWABLE_ERROR;
+        return false; // TODO: Impl
+        //return Math.abs(arm.getError()) < Constants.Subsystems.Intake.Arm.ALLOWABLE_ERROR;
     }
 
     @Override
     public void updateSmartDashboard() {
         SmartDashboard.putString("Intake Arm State", position.toString());
         SmartDashboard.putString("Intake Speed State", speed.toString());
-        
-        SmartDashboard.putNumber("Intake Arm Count", arm.get());
-        SmartDashboard.putNumber("Intake Arm Error", arm.getError());
     }
 
 }

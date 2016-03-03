@@ -1,4 +1,4 @@
-package com.milkenknights.util;
+package com.milkenknights.util.drive;
 
 public class TankDriveHelper extends DriveHelper {
 

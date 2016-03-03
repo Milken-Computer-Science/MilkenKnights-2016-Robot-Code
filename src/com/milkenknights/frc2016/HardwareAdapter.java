@@ -40,8 +40,8 @@ public class HardwareAdapter {
         MkCanTalon driveRightTalon = new MkCanTalon(new CANTalon[] {
             new CANTalon(Constants.CanTalon.DRIVE_RIGHT_1), new CANTalon(Constants.CanTalon.DRIVE_RIGHT_2)});
         
-        CANTalon intakePositionTalon = new CANTalon(Constants.CanTalon.INTAKE_ARM_1);
-        CANTalon intakeFollowerTalon = new CANTalon(Constants.CanTalon.INTAKE_ARM_2);
+        MkCanTalon intakePositionTalon = new MkCanTalon(new CANTalon[] {
+            new CANTalon(Constants.CanTalon.INTAKE_ARM_1), new CANTalon(Constants.CanTalon.INTAKE_ARM_2)});
         MkCanTalon intakeSpeedTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.INTAKE_SPEED));
 
         S4T360 driveLeftEncoder = new S4T360(Constants.Dio.DRIVE_LEFT_A, Constants.Dio.DRIVE_LEFT_B);
@@ -49,17 +49,16 @@ public class HardwareAdapter {
 
         Solenoid driveShifter = new Solenoid(Constants.Pcm.ID, Constants.Pcm.DRIVE_SHIFTER);
         
-        CANTalon catapultTalon = new CANTalon(Constants.CanTalon.CATAPULT);
-        DigitalInput catapultBanner = new DigitalInput(Constants.Dio.CATAPULT_HOME);
+        MkCanTalon catapultTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.CATAPULT));
+        DigitalInput catapultHome = new DigitalInput(Constants.Dio.CATAPULT_HOME);
 
         AHRS gyro = new AHRS(SPI.Port.kOnboardCS1);
-        Solenoid ledRing = new Solenoid(Constants.Pcm.LED_RING);
         //private static final AnalogInput kPressureTrannsducer;
 
         DRIVE = new Drive("Drive", driveLeftTalon, driveRightTalon, driveLeftEncoder, driveRightEncoder, 
                 driveShifter, gyro);
-        INTAKE = new Intake("Intake", intakePositionTalon, intakeFollowerTalon, intakeSpeedTalon);
-        CATAPULT = new Catapult("Catapult", catapultTalon, catapultBanner);
+        INTAKE = new Intake("Intake", intakePositionTalon, intakeSpeedTalon);
+        CATAPULT = new Catapult("Catapult", catapultTalon, catapultHome);
         PDP = new PowerDistributionPanel();
         COMPRESSOR = new Compressor(Constants.Pcm.ID);
         

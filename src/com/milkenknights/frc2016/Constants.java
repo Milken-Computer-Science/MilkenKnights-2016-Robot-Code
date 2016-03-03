@@ -4,28 +4,27 @@ public class Constants {
     
     public class Dio {
         public static final int CATAPULT_HOME = 0;
-        public static final int DRIVE_LEFT_A = 1;
-        public static final int DRIVE_LEFT_B = 2;
-        public static final int DRIVE_RIGHT_A = 3;
-        public static final int DRIVE_RIGHT_B = 4;
+        public static final int DRIVE_LEFT_A = 1; // TODO: Find this value
+        public static final int DRIVE_LEFT_B = 2; // TODO: Find this value
+        public static final int DRIVE_RIGHT_A = 3; // TODO: Find this value
+        public static final int DRIVE_RIGHT_B = 4; // TODO: Find this value
     }
     
     public class Pcm {
         public static final int ID = 1;
-        
+
         public static final int DRIVE_SHIFTER = 0;
-        public static final int LED_RING = 7;
     }
     
     public class CanTalon {
-        public static final int DRIVE_LEFT_1 = 2;
-        public static final int DRIVE_LEFT_2 = 3;
-        public static final int DRIVE_RIGHT_1 = 4;
-        public static final int DRIVE_RIGHT_2 = 5;
-        public static final int CATAPULT = 6;
-        public static final int INTAKE_ARM_1 = 7;
-        public static final int INTAKE_SPEED = 8;
-        public static final int INTAKE_ARM_2 = 9;
+        public static final int DRIVE_LEFT_1 = 11;
+        public static final int DRIVE_LEFT_2 = 10;
+        public static final int DRIVE_RIGHT_1 = 9;
+        public static final int DRIVE_RIGHT_2 = 12;
+        public static final int CATAPULT = 8;
+        public static final int INTAKE_ARM_1 = 7; // TODO: Find this value
+        public static final int INTAKE_SPEED = 8; // TODO: Find this value
+        public static final int INTAKE_ARM_2 = 9; // TODO: Find this value
     }
     
     public class ControlLoops {
@@ -45,7 +44,7 @@ public class Constants {
         public static final String TARGETS_TABLE_ID = "targets";
         public static final String MAT_SIZE_TABLE_ID = "matSize";
         
-        public static final double HORIZONTAL_FOV  = 67;
+        public static final double HORIZONTAL_FOV  = 67; // TODO: Find this value
     }
     
     public class Auto {
@@ -55,27 +54,27 @@ public class Constants {
     public class Subsystems {
         
         public class Drive {
-            public static final double WHEEL_DIAMETER = 4;
-            public static final double MAX_SPEED = 20;
+            public static final double WHEEL_DIAMETER = 8;
+            public static final double MAX_SPEED = 20; // TODO: Find this value
         }
         
         public class Intake {
             
             public class Arm {
-                public static final double GEAR_RATIO = 60 / 18;
+                public static final double GEAR_RATIO = 60 / 18; // TODO: Find this value
                 
-                public static final double ZERO = 0;
-                public static final double INTAKE = 0.045;
-                public static final double PROTECT = 0.25;
-                public static final double STORED = 0.4;
+                public static final double ZERO = 0; // TODO: Find this value
+                public static final double INTAKE = 0.045; // TODO: Find this value
+                public static final double PROTECT = 0.25; // TODO: Find this value
+                public static final double STORED = 0.4; // TODO: Find this value
                 
-                public static final double P = 0.4;
-                public static final double I = 0.0001;
-                public static final double D = 0.0;
-                public static final double F = 0.0;
+                public static final double P = 0.4; // TODO: Find this value
+                public static final double I = 0.0001; // TODO: Find this value
+                public static final double D = 0.0; // TODO: Find this value
+                public static final double F = 0.0; // TODO: Find this value
                 
-                public static final int I_ZONE = 300;
-                public static final int ALLOWABLE_ERROR = 200;
+                public static final int I_ZONE = 300; // TODO: Find this value
+                public static final int ALLOWABLE_ERROR = 200; // TODO: Find this value
                 
             }
             
@@ -86,7 +85,7 @@ public class Constants {
         }
 
         public class Catapult {
-            public static final double GEAR_RATIO = 50 / 14;
+            public static final double GEAR_RATIO = 50 / 14; // TODO: Find this value
         }
         
     }

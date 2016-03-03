@@ -3,12 +3,11 @@ package com.milkenknights.frc2016.subsystems;
 import com.milkenknights.frc2016.Constants;
 import com.milkenknights.frc2016.subsystems.controllers.DriveStraightController;
 import com.milkenknights.frc2016.subsystems.controllers.TurnInPlaceController;
-import com.milkenknights.util.DriveAbstract;
 import com.milkenknights.util.MkCanTalon;
 import com.milkenknights.util.MkEncoder;
-import com.milkenknights.util.MotorPairSignal;
 import com.milkenknights.util.Pose;
-
+import com.milkenknights.util.drive.DriveAbstract;
+import com.milkenknights.util.drive.MotorPairSignal;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;

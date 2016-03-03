@@ -1,13 +1,11 @@
 package com.milkenknights.frc2016.subsystems;
 
 import com.milkenknights.util.Loopable;
+import com.milkenknights.util.MkCanTalon;
 import com.milkenknights.util.Subsystem;
 
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.InterruptHandlerFunction;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Catapult extends Subsystem implements Loopable {
@@ -16,8 +14,8 @@ public class Catapult extends Subsystem implements Loopable {
         RETRACT, READY, FIRE
     }
     
-    private CANTalon talon;
-    private DigitalInput banner;
+    private MkCanTalon talon;
+    private DigitalInput home;
     private CatapultState state;
     private int shotCount = 0;
 
@@ -27,25 +25,16 @@ public class Catapult extends Subsystem implements Loopable {
      * @param name The name of the subsystem
      * @param talon The talon to control the catapult
      */
-    public Catapult(String name, CANTalon talon, DigitalInput banner) {
+    public Catapult(String name, MkCanTalon talon, DigitalInput home) {
         super(name);
         
-        talon.changeControlMode(TalonControlMode.PercentVbus);
-//        talon.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
-//        talon.changeControlMode(CANTalon.TalonControlMode.Position);
-//        talon.reverseSensor(true);
-//        talon.setAllowableClosedLoopErr(25);
-//        talon.setIZone(1000);
-//        talon.configPeakOutputVoltage(15, -6);
-//        talon.set(0);
-//        talon.setPID(0.5, 0.0005, 0);
-//        talon.setF(0);
+        talon.setInverted(true);
         
-        banner.requestInterrupts(new InterruptHandlerFunction<Object>() {
+        home.requestInterrupts(new InterruptHandlerFunction<Object>() {
             @Override
             public void interruptFired(int arg0, Object arg1) {
-                banner.disableInterrupts();
-                talon.setPosition(0);
+                home.disableInterrupts();
+                //talon.setPosition(0);
                 System.out.println("Catapult Zeroed!");
             }
             
@@ -54,7 +43,7 @@ public class Catapult extends Subsystem implements Loopable {
         //banner.enableInterrupts();
 
         this.talon = talon;
-        this.banner = banner;
+        this.home = home;
         
         setState(CatapultState.READY);
     }
@@ -66,13 +55,16 @@ public class Catapult extends Subsystem implements Loopable {
         setState(CatapultState.FIRE);
     }
     
-    /**
-     * This method is temporary because there is no encoder on the catapult.
-     * 
-     * TODO: Remove method
-     */
     public void stop() {
         setState(CatapultState.READY);
+    }
+    
+    
+    /**
+     * Get the current state of the catapult.
+     */
+    public CatapultState getState() {
+        return state;
     }
 
     @Override
@@ -80,7 +72,7 @@ public class Catapult extends Subsystem implements Loopable {
         SmartDashboard.putString("Catapult State", state.toString());
 //        SmartDashboard.putNumber("Catapult Count", talon.get());
 //        SmartDashboard.putNumber("Catapult Error", talon.getError());
-        SmartDashboard.putBoolean("Catapult Banner", banner.get());
+        SmartDashboard.putBoolean("Catapult Banner", home.get());
     }
 
     @Override
@@ -96,7 +88,7 @@ public class Catapult extends Subsystem implements Loopable {
                 talon.set(0);
                 break;
             case FIRE:
-                talon.set(1);
+                talon.set(0.5);
                 //talon.set((shotCount + 1) * camRevolution);
                 //if (Math.abs(talon.getError()) < 100) {
                 //    shotCount++;

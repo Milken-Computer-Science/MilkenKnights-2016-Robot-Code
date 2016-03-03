@@ -4,9 +4,9 @@ import static com.milkenknights.util.trajectory.TrajectoryFollower.TrajectorySet
 
 import com.milkenknights.frc2016.Constants;
 import com.milkenknights.frc2016.subsystems.Drive;
-import com.milkenknights.util.MotorPairSignal;
 import com.milkenknights.util.Pose;
 import com.milkenknights.util.SynchronousPID;
+import com.milkenknights.util.drive.MotorPairSignal;
 import com.milkenknights.util.trajectory.TrajectoryFollower;
 
 public class DriveStraightController implements Drive.DriveController {

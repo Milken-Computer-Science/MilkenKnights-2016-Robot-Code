@@ -4,9 +4,9 @@ import com.milkenknights.frc2016.auto.AutoMode;
 import com.milkenknights.frc2016.auto.modes.DoNothingAutoMode;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
 import com.milkenknights.frc2016.subsystems.Intake.IntakeSpeed;
-import com.milkenknights.util.MotorPairSignal;
 import com.milkenknights.util.MultiLooper;
 import com.milkenknights.util.SmartDashboardUpdater;
+import com.milkenknights.util.drive.MotorPairSignal;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot {
         looper.addLoopable(HardwareAdapter.CATAPULT);
         
         smartDashboardUpdater.addSendable(HardwareAdapter.DRIVE);
-        smartDashboardUpdater.addSendable(HardwareAdapter.INTAKE);
+        //smartDashboardUpdater.addSendable(HardwareAdapter.INTAKE);
         smartDashboardUpdater.addSendable(HardwareAdapter.CATAPULT);
         smartDashboardUpdater.addSendable(HardwareAdapter.GRIP);
         

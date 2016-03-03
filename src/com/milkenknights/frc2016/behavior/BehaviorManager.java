@@ -1,7 +1,7 @@
 package com.milkenknights.frc2016.behavior;
 
 import com.milkenknights.frc2016.HardwareAdapter;
-import com.milkenknights.util.TankDriveHelper;
+import com.milkenknights.util.drive.TankDriveHelper;
 
 public class BehaviorManager {
     
