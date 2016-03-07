@@ -30,10 +30,10 @@ public class Constants {
     
     public class Dio {
         public static final int CATAPULT_HOME = 0;
-        public static final int DRIVE_LEFT_A = 1; // TODO: Find this value
-        public static final int DRIVE_LEFT_B = 2; // TODO: Find this value
-        public static final int DRIVE_RIGHT_A = 3; // TODO: Find this value
-        public static final int DRIVE_RIGHT_B = 4; // TODO: Find this value
+        public static final int DRIVE_LEFT_A = 10;
+        public static final int DRIVE_LEFT_B = 11;
+        public static final int DRIVE_RIGHT_A = 12;
+        public static final int DRIVE_RIGHT_B = 13;
         public static final int CATAPULT_A = 14;
         public static final int CATAPULT_B = 15;
     }
@@ -50,9 +50,8 @@ public class Constants {
         public static final int DRIVE_RIGHT_1 = 9;
         public static final int DRIVE_RIGHT_2 = 11;
         public static final int CATAPULT = 8;
-        public static final int INTAKE_ARM_1 = 7; // TODO: Find this value
-        public static final int INTAKE_SPEED = 8; // TODO: Find this value
-        public static final int INTAKE_ARM_2 = 6; // TODO: Find this value
+        public static final int INTAKE_ARM = 6; // TODO: Find this value
+        public static final int INTAKE_SPEED = 7;
     }
     
     public class ControlLoops {
@@ -62,9 +61,7 @@ public class Constants {
     }
     
     public class DriverStation {
-        public static final int JOYSTICK_LEFT = 0;
-        public static final int JOYSTICK_RIGHT = 1;
-        public static final int JOYSTICK_OPERATOR = 2;
+        public static final int JOYSTICK = 0;
     }
     
     public class Vision {
@@ -83,6 +80,9 @@ public class Constants {
         
         public class Drive {
             public static final double WHEEL_DIAMETER = 8;
+            
+            public static final double GEAR_RATIO = 20.0 / 64.0 / 3.0;
+            
             public static final double MAX_SPEED_LOW = 10; // TODO: Find this value
             public static final double MAX_SPEED_HIGH = 20; // TODO: Find this value
         }

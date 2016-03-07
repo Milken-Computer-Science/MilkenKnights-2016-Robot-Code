@@ -27,9 +27,7 @@ public class HardwareAdapter {
     
     public static GripHelper GRIP;
 
-    public static Joystick LEFT_STICK;
-    public static Joystick RIGHT_STICK;
-    public static Joystick OPERATOR_STICK;
+    public static Joystick STICK;
     
     /**
      * Initalize the robot hardware.
@@ -40,8 +38,7 @@ public class HardwareAdapter {
         MkCanTalon driveRightTalon = new MkCanTalon(new CANTalon[] {
             new CANTalon(Constants.CanTalon.DRIVE_RIGHT_1), new CANTalon(Constants.CanTalon.DRIVE_RIGHT_2)});
         
-        MkCanTalon intakePositionTalon = new MkCanTalon(new CANTalon[] {
-            new CANTalon(Constants.CanTalon.INTAKE_ARM_1), new CANTalon(Constants.CanTalon.INTAKE_ARM_2)});
+        MkCanTalon intakePositionTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.INTAKE_ARM));
         MkCanTalon intakeSpeedTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.INTAKE_SPEED));
 
         S4T360 driveLeftEncoder = new S4T360(Constants.Dio.DRIVE_LEFT_A, Constants.Dio.DRIVE_LEFT_B);
@@ -65,9 +62,7 @@ public class HardwareAdapter {
         
         GRIP = new GripHelper();
 
-        LEFT_STICK = new Joystick(Constants.DriverStation.JOYSTICK_LEFT);
-        RIGHT_STICK = new Joystick(Constants.DriverStation.JOYSTICK_RIGHT);
-        OPERATOR_STICK = new Joystick(Constants.DriverStation.JOYSTICK_OPERATOR);
+        STICK = new Joystick(Constants.DriverStation.JOYSTICK);
     }
     
 }

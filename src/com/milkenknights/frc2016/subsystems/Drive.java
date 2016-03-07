@@ -61,11 +61,12 @@ public class Drive extends DriveAbstract {
         this.shifter = shifter;
         this.gyro = gyro;
         
-        this.leftMotor.setInverted(true);
-        this.leftEncoder.setDistancePerPulse(leftEncoder.getPulsesPerRevolution() * Math.PI 
-                / Constants.Subsystems.Drive.WHEEL_DIAMETER);
-        this.rightEncoder.setDistancePerPulse(rightEncoder.getPulsesPerRevolution() * Math.PI 
-                / Constants.Subsystems.Drive.WHEEL_DIAMETER);
+        this.rightMotor.setInverted(true);
+        
+        this.leftEncoder.setDistancePerPulse(-Math.PI * Constants.Subsystems.Drive.WHEEL_DIAMETER
+                * Constants.Subsystems.Drive.GEAR_RATIO / leftEncoder.getPulsesPerRevolution());
+        this.rightEncoder.setDistancePerPulse(Math.PI * Constants.Subsystems.Drive.WHEEL_DIAMETER
+                * Constants.Subsystems.Drive.GEAR_RATIO / rightEncoder.getPulsesPerRevolution());
     }
 
     @Override
@@ -81,6 +82,8 @@ public class Drive extends DriveAbstract {
         //TODO: Create SmartDashboard information
         SmartDashboard.putBoolean("Gyro Connected", gyro.isConnected());
         SmartDashboard.putNumber("Drive: Heading", getPhysicalPose().heading);
+        SmartDashboard.putNumber("Drive: Left Distance", getPhysicalPose().leftDistance);
+        SmartDashboard.putNumber("Drive: Right Distance", getPhysicalPose().rightDistance);
     }
 
     @Override

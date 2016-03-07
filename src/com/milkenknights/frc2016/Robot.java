@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot {
         looper.addLoopable(HardwareAdapter.CATAPULT);
         
         smartDashboardUpdater.addSendable(HardwareAdapter.DRIVE);
-        //smartDashboardUpdater.addSendable(HardwareAdapter.INTAKE);
+        smartDashboardUpdater.addSendable(HardwareAdapter.INTAKE);
         smartDashboardUpdater.addSendable(HardwareAdapter.CATAPULT);
         smartDashboardUpdater.addSendable(HardwareAdapter.GRIP);
         

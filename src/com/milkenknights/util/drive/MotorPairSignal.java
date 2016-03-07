@@ -25,4 +25,8 @@ public class MotorPairSignal {
         this(0.0, 0.0);
     }
     
+    public String toString() {
+        return "[" + leftMotor + ", " + rightMotor + "]";
+    }
+    
 }

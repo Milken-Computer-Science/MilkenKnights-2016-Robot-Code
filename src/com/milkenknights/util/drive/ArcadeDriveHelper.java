@@ -13,8 +13,8 @@ public class ArcadeDriveHelper extends DriveHelper {
      */
     @Override
     public void driveMode(double speed, double rotate) {
-        signal.leftMotor = speed + rotate;
-        signal.rightMotor = speed - rotate;
+        signal.leftMotor = speed - rotate;
+        signal.rightMotor = speed + rotate;
 
         drive.setOpenLoop(signal);
     }

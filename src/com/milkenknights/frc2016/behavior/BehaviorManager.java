@@ -1,14 +1,14 @@
 package com.milkenknights.frc2016.behavior;
 
 import com.milkenknights.frc2016.HardwareAdapter;
-import com.milkenknights.util.drive.TankDriveHelper;
+import com.milkenknights.util.drive.ArcadeDriveHelper;
 
 public class BehaviorManager {
     
-    private TankDriveHelper tankDriveHelper;
+    private ArcadeDriveHelper driveHelper;
     
     public BehaviorManager() {
-        tankDriveHelper = new TankDriveHelper(HardwareAdapter.DRIVE);
+        driveHelper = new ArcadeDriveHelper(HardwareAdapter.DRIVE);
     }
     
     /**
@@ -24,7 +24,7 @@ public class BehaviorManager {
                         + HardwareAdapter.DRIVE.getPhysicalPose().heading);
             }
         } else {
-            tankDriveHelper.drive(HardwareAdapter.LEFT_STICK.getY(), HardwareAdapter.RIGHT_STICK.getY());
+            driveHelper.drive(commands.driveSpeed, commands.driveRotate);
         }
         
         if (commands.fireCatapult) {

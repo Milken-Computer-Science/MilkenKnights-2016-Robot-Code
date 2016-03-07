@@ -18,28 +18,27 @@ public class OperatorInterface {
     public Commands getCommands() {
         reset();
         
-        if (HardwareAdapter.LEFT_STICK.getRawButton(1)) {
-            commands.alignRobot = true;
-        } else {
-            commands.alignRobot = false;
-        }
-
-        if (HardwareAdapter.OPERATOR_STICK.getRawButton(1)) {
+        commands.driveSpeed = HardwareAdapter.STICK.getY();
+        commands.driveRotate = HardwareAdapter.STICK.getTwist();
+        
+        if (HardwareAdapter.STICK.getRawButton(1) && HardwareAdapter.STICK.getRawButton(2)) {
             commands.fireCatapult = true;
         } else {
             commands.fireCatapult = false;
         }
         
-        if (HardwareAdapter.OPERATOR_STICK.getRawButton(2)) {
-            commands.intakePosition = IntakePosition.INTAKE;
-        } else if (HardwareAdapter.OPERATOR_STICK.getRawButton(3)) {
+        if (HardwareAdapter.STICK.getRawButton(3)) {
             commands.intakePosition = IntakePosition.PROTECT;
-        } else if (HardwareAdapter.OPERATOR_STICK.getRawButton(4)) {
+        } else if (HardwareAdapter.STICK.getRawButton(4)) {
+            commands.intakePosition = IntakePosition.INTAKE;
+        } else if (HardwareAdapter.STICK.getRawButton(5)) {
             commands.intakePosition = IntakePosition.STORED;
         }
         
-        if (HardwareAdapter.OPERATOR_STICK.getRawButton(5)) {
+        if (HardwareAdapter.STICK.getRawButton(4)) {
             commands.intakeSpeed = IntakeSpeed.INTAKE;
+        } else if (HardwareAdapter.STICK.getRawButton(6)) {
+            commands.intakeSpeed = IntakeSpeed.OUTPUT;
         } else {
             commands.intakeSpeed = IntakeSpeed.NEUTRAL;
         }
