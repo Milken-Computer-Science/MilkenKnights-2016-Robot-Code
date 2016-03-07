@@ -45,10 +45,10 @@ public class Constants {
     }
     
     public class CanTalon {
-        public static final int DRIVE_LEFT_1 = 11;
+        public static final int DRIVE_LEFT_1 = 12;
         public static final int DRIVE_LEFT_2 = 10;
         public static final int DRIVE_RIGHT_1 = 9;
-        public static final int DRIVE_RIGHT_2 = 12;
+        public static final int DRIVE_RIGHT_2 = 11;
         public static final int CATAPULT = 8;
         public static final int INTAKE_ARM_1 = 7; // TODO: Find this value
         public static final int INTAKE_SPEED = 8; // TODO: Find this value
