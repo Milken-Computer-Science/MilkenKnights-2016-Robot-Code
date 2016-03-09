@@ -13,14 +13,14 @@ import edu.wpi.first.wpilibj.SpeedController;
 public class MkCanTalon implements SpeedController {
 
     private CANTalon[] controllers = {};
-    private boolean invert = false;
+    private boolean invert;
     
     /**
      * A constructor for a single MKSpeedController object.
      * 
      * @param controller A CANTalon object.
      */
-    public MkCanTalon(CANTalon controller) {
+    public MkCanTalon(final CANTalon controller) {
         this(new CANTalon[] {controller});
     }
     
@@ -29,7 +29,7 @@ public class MkCanTalon implements SpeedController {
      * 
      * @param controllers The SpeedController objects.
      */
-    public MkCanTalon(CANTalon[] controllers) {
+    public MkCanTalon(final CANTalon[] controllers) {
         this.controllers = controllers;
         enableBrakeMode(false);
     }
@@ -39,7 +39,7 @@ public class MkCanTalon implements SpeedController {
      * 
      * @param inverted If the output of this speed controller should be inverted
      */
-    public void setInverted(boolean inverted) {
+    public void setInverted(final boolean inverted) {
         invert = inverted;
     }
     
@@ -66,15 +66,15 @@ public class MkCanTalon implements SpeedController {
      */
     public double getCurrent() {
         double current = 0.0;
-        for (CANTalon t : controllers) {
+        for (final CANTalon t : controllers) {
             current += t.getOutputCurrent();
         }
         return current;
     }
     
     @Override
-    public void pidWrite(double output) {
-        for (CANTalon controller : controllers) {
+    public void pidWrite(final double output) {
+        for (final CANTalon controller : controllers) {
             controller.pidWrite(output * sign());
         }
     }
@@ -85,22 +85,22 @@ public class MkCanTalon implements SpeedController {
     }
 
     @Override
-    public void set(double speed, byte syncGroup) {
-        for (CANTalon controller : controllers) {
+    public void set(final double speed, final byte syncGroup) {
+        for (final CANTalon controller : controllers) {
             controller.set(speed * sign(), syncGroup);
         }
     }
 
     @Override
-    public void set(double speed) {
-        for (CANTalon controller : controllers) {
+    public final void set(final double speed) {
+        for (final CANTalon controller : controllers) {
             controller.set(speed * sign());
         }
     }
 
     @Override
-    public void disable() {
-        for (CANTalon controller : controllers) {
+    public final void disable() {
+        for (final CANTalon controller : controllers) {
             controller.disable();
         }
     }
@@ -110,14 +110,14 @@ public class MkCanTalon implements SpeedController {
      * 
      * @param brake If the controller should brake
      */
-    public void enableBrakeMode(boolean brake) {
-        for (CANTalon controller : controllers) {
+    public final void enableBrakeMode(final boolean brake) {
+        for (final CANTalon controller : controllers) {
             controller.enableBrakeMode(brake);
         }
     }
     
     public void stopMotor() {
-        
+        // Deprecated
     }
 
 }

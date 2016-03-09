@@ -1,7 +1,6 @@
 package com.milkenknights.frc2016;
 
 import com.milkenknights.frc2016.auto.AutoMode;
-import com.milkenknights.frc2016.auto.modes.DoNothingAutoMode;
 import com.milkenknights.frc2016.auto.modes.ReachAutoMode;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
 import com.milkenknights.frc2016.subsystems.Intake.IntakeSpeed;
@@ -18,9 +17,9 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  */
 public class Robot extends IterativeRobot {
     
-    private MultiLooper looper = new MultiLooper("Controllers", Constants.ControlLoops.CONTROLLERS_PERIOD);
-    private MultiLooper visionLooper = new MultiLooper("Vision", Constants.ControlLoops.VISION_PERIOD);
-    private SmartDashboardUpdater smartDashboardUpdater = new SmartDashboardUpdater(
+    private final MultiLooper looper = new MultiLooper("Controllers", Constants.ControlLoops.CONTROLLERS_PERIOD);
+    private final MultiLooper visionLooper = new MultiLooper("Vision", Constants.ControlLoops.VISION_PERIOD);
+    private final SmartDashboardUpdater smartDashboardUpdater = new SmartDashboardUpdater(
             Constants.ControlLoops.SMARTDASHBOARD_UPDATER_PERIOD);
     
     private BehaviorManager behaviorManager;
@@ -33,7 +32,6 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
         System.out.println("Start robotInit()");
-        HardwareAdapter.init();
         
         behaviorManager = new BehaviorManager();
         operatorInterface = new OperatorInterface();

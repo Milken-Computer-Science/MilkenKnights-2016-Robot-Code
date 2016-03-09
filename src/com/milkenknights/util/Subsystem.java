@@ -5,13 +5,13 @@ package com.milkenknights.util;
  */
 public abstract class Subsystem implements MkSendable {
 
-    private String name;
+    private final String name;
     
     /**
      * 
      * @param name The name of the subsystem.
      */
-    public Subsystem(String name) {
+    public Subsystem(final String name) {
         this.name = name;
     }
     

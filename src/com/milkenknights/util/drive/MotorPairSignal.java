@@ -6,23 +6,19 @@ package com.milkenknights.util.drive;
  */
 public class MotorPairSignal {
 
-    public double leftMotor;
-    public double rightMotor;
+    public final double leftMotor;
+    public final double rightMotor;
     
-    public static final MotorPairSignal NEUTRAL = new MotorPairSignal(0, 0);
+    public static final MotorPairSignal NEUTRAL = new MotorPairSignal(0.0, 0.0);
     
     /**
      * 
      * @param left Left motor power.
      * @param right Right motor power.
      */
-    public MotorPairSignal(double left, double right) {
+    public MotorPairSignal(final double left, final double right) {
         leftMotor = left;
         rightMotor = right;
-    }
-    
-    public MotorPairSignal() {
-        this(0.0, 0.0);
     }
     
     public String toString() {

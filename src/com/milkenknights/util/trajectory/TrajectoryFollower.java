@@ -8,6 +8,22 @@ import edu.wpi.first.wpilibj.Timer;
  * @author Jared341
  */
 public class TrajectoryFollower {
+    
+    private double kp_;
+    private double ki_;
+    private double kd_;
+    private double kv_;
+    private double ka_;
+    private double last_error_;
+    private double error_sum_;
+    private boolean reset_ = true;
+    private double last_timestamp_;
+    private TrajectorySetpoint next_state_ = new TrajectorySetpoint();
+
+    private TrajectoryConfig config_ = new TrajectoryConfig();
+    private double goal_position_;
+    private TrajectorySetpoint setpoint_ = new TrajectorySetpoint();
+    
     public static class TrajectoryConfig {
         public double dt;
         public double max_acc;
@@ -31,26 +47,8 @@ public class TrajectoryFollower {
         }
     }
 
-    private double kp_;
-    private double ki_;
-    private double kd_;
-    private double kv_;
-    private double ka_;
-    private double last_error_;
-    private double error_sum_;
-    private boolean reset_ = true;
-    private double last_timestamp_;
-    private TrajectorySetpoint next_state_ = new TrajectorySetpoint();
-
-    private TrajectoryConfig config_ = new TrajectoryConfig();
-    private double goal_position_;
-    private TrajectorySetpoint setpoint_ = new TrajectorySetpoint();
-
-    public TrajectoryFollower() {
-    }
-
-    public void configure(double kp, double ki, double kd, double kv,
-                          double ka, TrajectoryConfig config) {
+    public void configure(final double kp, final double ki, final double kd, final double kv, final double ka,
+            final TrajectoryConfig config) {
         kp_ = kp;
         ki_ = ki;
         kd_ = kd;
@@ -59,7 +57,7 @@ public class TrajectoryFollower {
         config_ = config;
     }
 
-    public void setGoal(TrajectorySetpoint current_state, double goal_position) {
+    public void setGoal(final TrajectorySetpoint current_state, final double goal_position) {
         goal_position_ = goal_position;
         setpoint_ = current_state;
         reset_ = true;
@@ -74,14 +72,14 @@ public class TrajectoryFollower {
         return config_;
     }
 
-    public void setConfig(TrajectoryConfig config) {
+    public void setConfig(final TrajectoryConfig config) {
         config_ = config;
     }
 
-    public double calculate(double position, double velocity) {
+    public double calculate(final double position, final double velocity) {
         double dt = config_.dt;
         if (!reset_) {
-            double now = Timer.getFPGATimestamp();
+            final double now = Timer.getFPGATimestamp();
             dt = now - last_timestamp_;
             last_timestamp_ = now;
         } else {
@@ -96,7 +94,7 @@ public class TrajectoryFollower {
             // Compute the new commanded position, velocity, and acceleration.
             double distance_to_go = goal_position_ - setpoint_.pos;
             double cur_vel = setpoint_.vel;
-            double cur_vel2 = cur_vel * cur_vel;
+            final double cur_vel2 = cur_vel * cur_vel;
             boolean inverted = false;
             if (distance_to_go < 0) {
                 inverted = true;

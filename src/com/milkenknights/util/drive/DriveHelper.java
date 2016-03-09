@@ -16,7 +16,7 @@ public abstract class DriveHelper {
      * @param value1 The first drive parameter
      * @param value2 The second drive parameter
      */
-    public final void drive(final double value1, final double value2) {
+    public final void commandDrive(final double value1, final double value2) {
         if (DriverStation.getInstance().isAutonomous()) {
             return;
         }

@@ -11,10 +11,10 @@ import java.util.TimerTask;
  */
 public class Looper {
 
-    private double period = 1.0 / 100.0;
-    protected Loopable loopable;
+    private final double period;
+    private final Loopable loopable;
+    private final String name;
     private Timer looperUpdater;
-    protected String name;
 
     /**
      * Create a new Looper.  
@@ -23,7 +23,7 @@ public class Looper {
      * @param loopable The Loopable object to loop with
      * @param period The period that the update method should be called
      */
-    public Looper(String name, Loopable loopable, double period) {
+    public Looper(final String name, final Loopable loopable, final double period) {
         this.period = period;
         this.loopable = loopable;
         this.name = name;
@@ -31,9 +31,11 @@ public class Looper {
 
     private class UpdaterTask extends TimerTask {
 
-        private Looper looper;
+        private final Looper looper;
 
-        public UpdaterTask(Looper looper) {
+        public UpdaterTask(final Looper looper) {
+            super();
+            
             if (!(looper instanceof Looper)) {
                 throw new IllegalArgumentException("Given Looper was not a looper");
             }

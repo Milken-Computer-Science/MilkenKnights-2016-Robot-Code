@@ -1,6 +1,7 @@
 package com.milkenknights.util;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Runs several Loopables simultaneously with one Looper.
@@ -10,10 +11,10 @@ import java.util.Vector;
  * @author Tom Bottiglieri
  */
 public class MultiLooper implements Loopable {
-    private Looper looper;
-    private Vector<Loopable> loopables = new Vector<Loopable>();
+    private final Looper looper;
+    private final List<Loopable> loopables = new ArrayList<Loopable>();
 
-    public MultiLooper(String name, double period) {
+    public MultiLooper(final String name, final double period) {
         looper = new Looper(name, this, period);
     }
 
@@ -21,7 +22,7 @@ public class MultiLooper implements Loopable {
      * Method to be called every period.
      */
     public void update() {
-        for (Loopable loopable : loopables) {
+        for (final Loopable loopable : loopables) {
             loopable.update();
         }
     }
@@ -34,7 +35,7 @@ public class MultiLooper implements Loopable {
         looper.stop();
     }
 
-    public void addLoopable(Loopable loopable) {
-        loopables.addElement(loopable);
+    public void addLoopable(final Loopable loopable) {
+        loopables.add(loopable);
     }
 }

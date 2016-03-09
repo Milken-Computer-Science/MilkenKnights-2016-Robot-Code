@@ -45,7 +45,8 @@ public class Intake extends Subsystem implements Loopable {
      * @param armController The MkCanTalon used to move the arm
      * @param speedController The MkCanTalon used to control the intake
      */
-    public Intake(final String name, MkCanTalon armController, MkCanTalon speedController, MkEncoder armEncoder) {
+    public Intake(final String name, final MkCanTalon armController, final MkCanTalon speedController,
+            final MkEncoder armEncoder) {
         super(name);
         
         armEncoder.setDistancePerPulse(Constants.Subsystems.Intake.Arm.GEAR_RATIO

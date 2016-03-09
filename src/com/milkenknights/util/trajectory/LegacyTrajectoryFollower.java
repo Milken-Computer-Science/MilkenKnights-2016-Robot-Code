@@ -18,11 +18,11 @@ public class LegacyTrajectoryFollower {
     private Trajectory profile_;
     public String name;
 
-    public LegacyTrajectoryFollower(String name) {
+    public LegacyTrajectoryFollower(final String name) {
         this.name = name;
     }
 
-    public void configure(double kp, double ki, double kd, double kv, double ka) {
+    public void configure(final double kp, final double ki, final double kd, final double kv, final double ka) {
         kp_ = kp;
         ki_ = ki;
         kd_ = kd;
@@ -35,16 +35,16 @@ public class LegacyTrajectoryFollower {
         current_segment = 0;
     }
 
-    public void setTrajectory(Trajectory profile) {
+    public void setTrajectory(final Trajectory profile) {
         profile_ = profile;
     }
 
-    public double calculate(double distance_so_far) {
+    public double calculate(final double distance_so_far) {
 
         if (current_segment < profile_.getNumSegments()) {
-            Trajectory.Segment segment = profile_.getSegment(current_segment);
-            double error = segment.pos - distance_so_far;
-            double output = kp_ * error + kd_ * ((error - last_error_)
+            final Trajectory.Segment segment = profile_.getSegment(current_segment);
+            final double error = segment.pos - distance_so_far;
+            final double output = kp_ * error + kd_ * ((error - last_error_)
                     / segment.dt - segment.vel) + (kv_ * segment.vel
                     + ka_ * segment.acc);
 

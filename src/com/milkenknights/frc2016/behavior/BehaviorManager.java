@@ -5,7 +5,7 @@ import com.milkenknights.util.drive.ArcadeDriveHelper;
 
 public class BehaviorManager {
     
-    private ArcadeDriveHelper driveHelper;
+    private final ArcadeDriveHelper driveHelper;
     
     public BehaviorManager() {
         driveHelper = new ArcadeDriveHelper(HardwareAdapter.DRIVE);
@@ -16,7 +16,7 @@ public class BehaviorManager {
      * 
      * @param commands The commands
      */
-    public void update(Commands commands) {
+    public void update(final Commands commands) {
         
         if (commands.alignRobot) {
             if (HardwareAdapter.GRIP.getAngleToTarget() != HardwareAdapter.DRIVE.getTurnSetpoint()) {
@@ -24,7 +24,7 @@ public class BehaviorManager {
                         + HardwareAdapter.DRIVE.getPhysicalPose().heading);
             }
         } else {
-            driveHelper.drive(commands.driveSpeed, commands.driveRotate);
+            driveHelper.commandDrive(commands.driveSpeed, commands.driveRotate);
         }
         
         if (commands.fireCatapult) {

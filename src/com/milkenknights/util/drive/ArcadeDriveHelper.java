@@ -1,8 +1,6 @@
 package com.milkenknights.util.drive;
 
 public class ArcadeDriveHelper extends DriveHelper {
-    
-    private final MotorPairSignal signal = new MotorPairSignal();
 
     public ArcadeDriveHelper(final DriveAbstract drive) {
         super(drive);
@@ -13,10 +11,7 @@ public class ArcadeDriveHelper extends DriveHelper {
      */
     @Override
     public void driveMode(final double speed, final double rotate) {
-        signal.leftMotor = speed - rotate;
-        signal.rightMotor = speed + rotate;
-
-        drive.setOpenLoop(signal);
+        drive.setOpenLoop(new MotorPairSignal(speed - rotate, speed + rotate));
     }
     
 }

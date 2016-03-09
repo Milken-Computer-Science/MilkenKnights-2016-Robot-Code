@@ -14,18 +14,15 @@ public class SynchronousPid {
     private double derivativeCoefficient;   // factor for "derivative" control
     private double maximumOutput = 1.0;     // |maximum output|
     private double minimumOutput = -1.0;    // |minimum output|
-    private double maximumInput = 0.0;      // maximum input - limit setpoint to this
-    private double minimumInput = 0.0;      // minimum input - limit setpoint to this
-    private boolean continuous = false;     // do the endpoints wrap around? eg. Absolute encoder
-    private double prevError = 0.0;         // the prior sensor input (used to compute velocity)
-    private double totalError = 0.0;        //the sum of the errors for use in the integral calc
-    private double setpoint = 0.0;
-    private double error = 0.0;
-    private double result = 0.0;
+    private double maximumInput;      // maximum input - limit setpoint to this
+    private double minimumInput;      // minimum input - limit setpoint to this
+    private boolean continuous;     // do the endpoints wrap around? eg. Absolute encoder
+    private double prevError;         // the prior sensor input (used to compute velocity)
+    private double totalError;        //the sum of the errors for use in the integral calc
+    private double setpoint;
+    private double error;
+    private double result;
     private double lastInput = Double.NaN;
-
-    public SynchronousPid() {
-    }
 
     /**
      * Allocate a PID object with the given constants for P, I, D.
@@ -34,10 +31,15 @@ public class SynchronousPid {
      * @param integralCoefficient the integral coefficient
      * @param derivativeCoefficient the derivative coefficient
      */
-    public SynchronousPid(double proportionalCoefficient, double integralCoefficient, double derivativeCoefficient) {
+    public SynchronousPid(final double proportionalCoefficient, final double integralCoefficient,
+            final double derivativeCoefficient) {
         this.proportionalCoefficient = proportionalCoefficient;
         this.integralCoefficient = integralCoefficient;
         this.derivativeCoefficient = derivativeCoefficient;
+    }
+    
+    public SynchronousPid() {
+        // Default constructor
     }
 
     /**
@@ -46,7 +48,7 @@ public class SynchronousPid {
      *
      * @param input the input
      */
-    public double calculate(double input) {
+    public double calculate(final double input) {
         lastInput = input;
         error = setpoint - input;
         if (continuous && Math.abs(error) > (maximumInput - minimumInput) / 2) {
@@ -84,7 +86,8 @@ public class SynchronousPid {
      * @param integralCoefficient Integral coefficient
      * @param derivativeCoefficient Differential coefficient
      */
-    public void setPid(double proportionalCoefficient, double integralCoefficient, double derivativeCoefficient) {
+    public void setPid(final double proportionalCoefficient, final double integralCoefficient,
+            final double derivativeCoefficient) {
         this.proportionalCoefficient = proportionalCoefficient;
         this.integralCoefficient = integralCoefficient;
         this.derivativeCoefficient = derivativeCoefficient;
@@ -134,7 +137,7 @@ public class SynchronousPid {
      *
      * @param continuous Set to true turns on continuous, false turns off continuous
      */
-    public void setContinuous(boolean continuous) {
+    public void setContinuous(final boolean continuous) {
         this.continuous = continuous;
     }
 
@@ -154,7 +157,7 @@ public class SynchronousPid {
      * @param minimumInput the minimum value expected from the input
      * @param maximumInput the maximum value expected from the output
      */
-    public void setInputRange(double minimumInput, double maximumInput) {
+    public void setInputRange(final double minimumInput, final double maximumInput) {
         if (minimumInput > maximumInput) {
             throw new BoundaryException("Lower bound is greater than upper bound");
         }
@@ -169,7 +172,7 @@ public class SynchronousPid {
      * @param minimumOutput the minimum value to write to the output
      * @param maximumOutput the maximum value to write to the output
      */
-    public void setOutputRange(double minimumOutput, double maximumOutput) {
+    public void setOutputRange(final double minimumOutput, final double maximumOutput) {
         if (minimumOutput > maximumOutput) {
             throw new BoundaryException("Lower bound is greater than upper bound");
         }
@@ -182,7 +185,7 @@ public class SynchronousPid {
      *
      * @param setpoint the desired setpoint
      */
-    public void setSetpoint(double setpoint) {
+    public void setSetpoint(final double setpoint) {
         if (maximumInput > minimumInput) {
             if (setpoint > maximumInput) {
                 this.setpoint = maximumInput;
@@ -219,7 +222,7 @@ public class SynchronousPid {
      *
      * @return true if the error is less than the tolerance
      */
-    public boolean onTarget(double tolerance) {
+    public boolean onTarget(final double tolerance) {
         return lastInput != Double.NaN && Math.abs(lastInput - setpoint) < tolerance;
     }
 

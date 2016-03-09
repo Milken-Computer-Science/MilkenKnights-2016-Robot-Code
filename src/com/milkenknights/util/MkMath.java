@@ -4,7 +4,12 @@ package com.milkenknights.util;
  * This class holds a bunch of static methods and variables needed for
  * mathematics.
  */
-public class MkMath {
+public final class MkMath {
+    
+    private MkMath() {
+        // This is a utility class
+    }
+    
     /**
      * Get the difference in angle between two angles.
      *
@@ -13,7 +18,7 @@ public class MkMath {
      * @return The change in angle from the first argument necessary to line up
      *      with the second. Always between -Pi and Pi
      */
-    public static double getDifferenceInAngleRadians(double from, double to) {
+    public static double getDifferenceInAngleRadians(final double from, final double to) {
         return boundAngleNegPiToPiRadians(to - from);
     }
 
@@ -25,7 +30,7 @@ public class MkMath {
      * @return The change in angle from the first argument necessary to line up
      *      with the second. Always between -180 and 180
      */
-    public static double getDifferenceInAngleDegrees(double from, double to) {
+    public static double getDifferenceInAngleDegrees(final double from, final double to) {
         return boundAngleNeg180to180Degrees(to - from);
     }
 
@@ -33,7 +38,7 @@ public class MkMath {
      * Bounds an angle to between 0 and 360 degrees.
      * @param angle The angle in degrees
      */
-    public static double boundAngle0to360Degrees(double angle) {
+    public static double boundAngle0to360Degrees(final double angle) {
         double boundedAngle = angle;
         // Naive algorithm
         while (boundedAngle >= 360.0) {
@@ -49,7 +54,7 @@ public class MkMath {
      * Bounds an angle to between -180 and 180 degrees.
      * @param angle The angle in degrees
      */
-    public static double boundAngleNeg180to180Degrees(double angle) {
+    public static double boundAngleNeg180to180Degrees(final double angle) {
         double boundedAngle = angle;
         // Naive algorithm
         while (boundedAngle >= 180.0) {
@@ -65,7 +70,7 @@ public class MkMath {
      * Bounds an angle to between 0pi and 2pi radians.
      * @param angle The angle in radians
      */
-    public static double boundAngle0to2PiRadians(double angle) {
+    public static double boundAngle0to2PiRadians(final double angle) {
         double boundedAngle = angle;
         // Naive algorithm
         while (boundedAngle >= 2.0 * Math.PI) {
@@ -81,7 +86,7 @@ public class MkMath {
      * Bounds an angle to between -pi and pi radians.
      * @param angle The angle in radians
      */
-    public static double boundAngleNegPiToPiRadians(double angle) {
+    public static double boundAngleNegPiToPiRadians(final double angle) {
         double boundedAngle = angle;
         // Naive algorithm
         while (boundedAngle >= Math.PI) {

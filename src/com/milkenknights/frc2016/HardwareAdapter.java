@@ -17,42 +17,44 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 
-public class HardwareAdapter {
+public final class HardwareAdapter {
 
-    public static Drive DRIVE;
-    public static Intake INTAKE;
-    public static Catapult CATAPULT;
-    public static PowerDistributionPanel PDP;
-    public static Compressor COMPRESSOR;
+    public static final Drive DRIVE;
+    public static final Intake INTAKE;
+    public static final Catapult CATAPULT;
+    public static final PowerDistributionPanel PDP;
+    public static final Compressor COMPRESSOR;
     
-    public static GripHelper GRIP;
+    public static final GripHelper GRIP;
 
-    public static Joystick STICK;
+    public static final Joystick STICK;
     
     /**
      * Initalize the robot hardware.
      */
-    public static void init() {
-        MkCanTalon driveLeftTalon = new MkCanTalon(new CANTalon[] {
+    static {
+        System.out.println("Init hardware");
+        
+        final MkCanTalon driveLeftTalon = new MkCanTalon(new CANTalon[] {
             new CANTalon(Constants.CanTalon.DRIVE_LEFT_1), new CANTalon(Constants.CanTalon.DRIVE_LEFT_2)});
-        MkCanTalon driveRightTalon = new MkCanTalon(new CANTalon[] {
+        final MkCanTalon driveRightTalon = new MkCanTalon(new CANTalon[] {
             new CANTalon(Constants.CanTalon.DRIVE_RIGHT_1), new CANTalon(Constants.CanTalon.DRIVE_RIGHT_2)});
         
-        MkCanTalon intakePositionTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.INTAKE_ARM));
-        MkCanTalon intakeSpeedTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.INTAKE_SPEED));
+        final MkCanTalon intakePositionTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.INTAKE_ARM));
+        final MkCanTalon intakeSpeedTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.INTAKE_SPEED));
 
-        S4T360 driveLeftEncoder = new S4T360(Constants.Dio.DRIVE_LEFT_A, Constants.Dio.DRIVE_LEFT_B);
-        S4T360 driveRightEncoder = new S4T360(Constants.Dio.DRIVE_RIGHT_A, Constants.Dio.DRIVE_RIGHT_B);
-        S4T360 catapultEncoder = new S4T360(Constants.Dio.CATAPULT_A, Constants.Dio.CATAPULT_B);
-        S4T360 intakeEncoder = new S4T360(Constants.Dio.INTAKE_A, Constants.Dio.INTAKE_B);
+        final S4T360 driveLeftEncoder = new S4T360(Constants.Dio.DRIVE_LEFT_A, Constants.Dio.DRIVE_LEFT_B);
+        final S4T360 driveRightEncoder = new S4T360(Constants.Dio.DRIVE_RIGHT_A, Constants.Dio.DRIVE_RIGHT_B);
+        final S4T360 catapultEncoder = new S4T360(Constants.Dio.CATAPULT_A, Constants.Dio.CATAPULT_B);
+        final S4T360 intakeEncoder = new S4T360(Constants.Dio.INTAKE_A, Constants.Dio.INTAKE_B);
 
-        Solenoid driveShifter = new Solenoid(Constants.Pcm.ID, Constants.Pcm.DRIVE_SHIFTER);
-        Solenoid ballHolder = new Solenoid(Constants.Pcm.ID, Constants.Pcm.BALL_HOLDER);
+        final Solenoid driveShifter = new Solenoid(Constants.Pcm.ID, Constants.Pcm.DRIVE_SHIFTER);
+        final Solenoid ballHolder = new Solenoid(Constants.Pcm.ID, Constants.Pcm.BALL_HOLDER);
         
-        MkCanTalon catapultTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.CATAPULT));
-        DigitalInput catapultHome = new DigitalInput(Constants.Dio.CATAPULT_HOME);
+        final MkCanTalon catapultTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.CATAPULT));
+        final DigitalInput catapultHome = new DigitalInput(Constants.Dio.CATAPULT_HOME);
 
-        AHRS gyro = new AHRS(SPI.Port.kOnboardCS1);
+        final AHRS gyro = new AHRS(SPI.Port.kOnboardCS1);
         //private static final AnalogInput kPressureTrannsducer;
 
         DRIVE = new Drive("Drive", driveLeftTalon, driveRightTalon, driveLeftEncoder, driveRightEncoder, 
@@ -65,6 +67,10 @@ public class HardwareAdapter {
         GRIP = new GripHelper();
 
         STICK = new Joystick(Constants.DriverStation.JOYSTICK);
+    }
+    
+    private HardwareAdapter() {
+        // Utility Class
     }
     
 }

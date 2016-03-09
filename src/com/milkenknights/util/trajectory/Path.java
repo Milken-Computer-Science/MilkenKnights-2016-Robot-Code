@@ -12,7 +12,7 @@ public class Path {
     protected String name_;
     protected boolean go_left_;
 
-    public Path(String name, Trajectory.Pair go_left_pair) {
+    public Path(final String name, final Trajectory.Pair go_left_pair) {
         name_ = name;
         go_left_pair_ = go_left_pair;
         go_left_ = true;
@@ -42,15 +42,15 @@ public class Path {
         return (go_left_ ? go_left_pair_.right : go_left_pair_.left);
     }
 
-    public boolean canFlip(int segmentNum) {
-        Segment a = go_left_pair_.right.getSegment(segmentNum);
-        Segment b = go_left_pair_.left.getSegment(segmentNum);
+    public boolean canFlip(final int segmentNum) {
+        final Segment a = go_left_pair_.right.getSegment(segmentNum);
+        final Segment b = go_left_pair_.left.getSegment(segmentNum);
         return (a.pos == b.pos) && (a.vel == b.vel);
     }
 
     public double getEndHeading() {
-        int numSegments = getLeftWheelTrajectory().getNumSegments();
-        Segment lastSegment = getLeftWheelTrajectory().getSegment(numSegments - 1);
+        final int numSegments = getLeftWheelTrajectory().getNumSegments();
+        final Segment lastSegment = getLeftWheelTrajectory().getSegment(numSegments - 1);
         return lastSegment.heading;
     }
 }

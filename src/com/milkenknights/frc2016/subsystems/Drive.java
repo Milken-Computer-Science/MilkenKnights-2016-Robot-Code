@@ -166,18 +166,18 @@ public class Drive extends DriveAbstract {
     }
     
     private Pose getPoseToContinueFrom(final boolean forTurnController) {
+        Pose poseToContinueFrom = getPhysicalPose();
+        
         if (!forTurnController && controller instanceof TurnInPlaceController) {
             final Pose poseToUse = getPhysicalPose();
             poseToUse.heading = ((TurnInPlaceController) controller).getHeadingGoal();
             poseToUse.headingVelocity = 0;
-            return poseToUse;
-        } else if (controller == null || (controller instanceof DriveStraightController && forTurnController)) {
-            return getPhysicalPose();
+            poseToContinueFrom = poseToUse;
         } else if (controller.isOnTarget()) {
-            return controller.getCurrentSetpoint();
-        } else {
-            return getPhysicalPose();
+            poseToContinueFrom = controller.getCurrentSetpoint();
         }
+        
+        return poseToContinueFrom;
     }
 
 }

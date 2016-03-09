@@ -1,7 +1,7 @@
 package com.milkenknights.util;
 
 public abstract class Controller {
-    protected boolean enabled = false;
+    protected boolean enabled;
 
     public abstract void reset();
 
