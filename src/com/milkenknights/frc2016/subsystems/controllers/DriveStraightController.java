@@ -59,7 +59,6 @@ public class DriveStraightController implements Drive.DriveController {
         double turn = mTurnPid.calculate(currentPose.getHeading());
 
         return new MotorPairSignal(throttle + turn, throttle - turn);
-        //return new DriveSignal(throttle + turn, throttle - turn + 0.02);
     }
 
     @Override

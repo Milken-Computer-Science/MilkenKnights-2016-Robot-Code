@@ -9,6 +9,7 @@ import com.milkenknights.util.SynchronousPid;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.InterruptHandlerFunction;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Catapult extends Subsystem implements Loopable {
@@ -17,13 +18,14 @@ public class Catapult extends Subsystem implements Loopable {
         RETRACT, READY, FIRE, ZERO
     }
     
-    private MkCanTalon talon;
-    private MkEncoder encoder;
-    private DigitalInput home;
+    private final MkCanTalon talon;
+    private final Solenoid ballHolder;
+    private final MkEncoder encoder;
+    private final DigitalInput home;
+    private final SynchronousPid pid;
     private CatapultState state;
-    private int shotCount = 0;
-    private SynchronousPid pid;
-    private boolean zeroed = false;
+    private int shotCount;
+    private boolean zeroed;
 
     /**
      * Create a new catapult subsystem.
@@ -31,15 +33,16 @@ public class Catapult extends Subsystem implements Loopable {
      * @param name The name of the subsystem
      * @param talon The talon to control the catapult
      */
-    public Catapult(String name, MkCanTalon talon, MkEncoder encoder, DigitalInput home) {
+    public Catapult(final String name, final MkCanTalon talon, final Solenoid ballHolder, final MkEncoder encoder,
+            final DigitalInput home) {
         super(name);
         
-        talon.setInverted(true);
         talon.enableBrakeMode(true);
+        encoder.setDistancePerPulse(Constants.Subsystems.Catapult.GEAR_RATIO / encoder.getPulsesPerRevolution());
         
         home.requestInterrupts(new InterruptHandlerFunction<Object>() {
             @Override
-            public void interruptFired(int arg0, Object arg1) {
+            public void interruptFired(final int arg0, final Object arg1) {
                 zeroed = true;
                 encoder.reset();
                 System.out.println("Catapult Zeroed!");
@@ -50,9 +53,11 @@ public class Catapult extends Subsystem implements Loopable {
         home.enableInterrupts();
         
         pid = new SynchronousPid();
-        pid.setPid(.0001, 0, 0);
+        pid.setPid(2, 0, 0);
+        pid.setOutputRange(Constants.Subsystems.Catapult.DEADBAND, 1);
 
         this.talon = talon;
+        this.ballHolder = ballHolder;
         this.encoder = encoder;
         this.home = home;
         
@@ -76,10 +81,10 @@ public class Catapult extends Subsystem implements Loopable {
     @Override
     public void updateSmartDashboard() {
         SmartDashboard.putString("Catapult State", state.toString());
-        SmartDashboard.putNumber("Catapult Count", encoder.get());
+        SmartDashboard.putNumber("Catapult Count", encoder.getDistance());
         SmartDashboard.putNumber("Catapult Error", pid.getError());
+        SmartDashboard.putNumber("Catapult PID Result", pid.calculate(encoder.getDistance()));
         SmartDashboard.putBoolean("Catapult Banner", home.get());
-        SmartDashboard.putNumber("Catapult PID Result", pid.calculate(encoder.get()));
         SmartDashboard.putBoolean("Catapult Zeroed", zeroed);
         SmartDashboard.putBoolean("Catapult Home", !home.get());
     }
@@ -88,30 +93,29 @@ public class Catapult extends Subsystem implements Loopable {
     public void update() {
         switch (state) {
             case RETRACT:
-                pid.setSetpoint(shotCount * Constants.Subsystems.Catapult.GEAR_RATIO
-                        * encoder.getPulsesPerRevolution());
-                talon.set(pid.calculate(encoder.get()));
-                if (pid.onTarget(100)) {
+                pid.setSetpoint(shotCount + Constants.Subsystems.Catapult.OFFSET);
+                talon.set(pid.calculate(encoder.getDistance()));
+                if (pid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR) || pid.getError() < 0) {
                     state = CatapultState.READY;
                 }
                 break;
             case READY:
+                talon.set(0.0);
                 break;
             case FIRE:
-                pid.setSetpoint((shotCount + 1) * Constants.Subsystems.Catapult.GEAR_RATIO 
-                        * encoder.getPulsesPerRevolution());
-                talon.set(pid.calculate(encoder.get()));
-                if (pid.onTarget(100)) {
+                pid.setSetpoint(shotCount + 1 + Constants.Subsystems.Catapult.OFFSET);
+                talon.set(pid.calculate(encoder.getDistance()));
+                if (pid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR)) {
                     shotCount++;
                     state = CatapultState.RETRACT;
                 }
                 break;
             case ZERO:
                 if (!zeroed) {
-                    talon.set(0.25);
+                    talon.set(Constants.Subsystems.Catapult.DEADBAND);
                 } else {
                     home.disableInterrupts();
-                    talon.set(0);
+                    talon.set(0.0);
                     setState(CatapultState.RETRACT);
                 }
                 break;
@@ -121,7 +125,7 @@ public class Catapult extends Subsystem implements Loopable {
         
     }
     
-    private void setState(CatapultState state) {
+    private void setState(final CatapultState state) {
         this.state = state;
     }
 

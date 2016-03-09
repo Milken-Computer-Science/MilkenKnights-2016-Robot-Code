@@ -6,7 +6,7 @@ public abstract class DriveHelper {
 
     protected DriveAbstract drive;
 
-    public DriveHelper(DriveAbstract drive) {
+    public DriveHelper(final DriveAbstract drive) {
         this.drive = drive;
     }
 
@@ -16,7 +16,7 @@ public abstract class DriveHelper {
      * @param value1 The first drive parameter
      * @param value2 The second drive parameter
      */
-    public final void drive(double value1, double value2) {
+    public final void drive(final double value1, final double value2) {
         if (DriverStation.getInstance().isAutonomous()) {
             return;
         }
@@ -26,7 +26,7 @@ public abstract class DriveHelper {
     
     protected abstract void driveMode(double leftThrottle, double rightThrottle);
 
-    public final double handleDeadband(double val, double deadband) {
+    public final double handleDeadband(final double val, final double deadband) {
         return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
     }
 }

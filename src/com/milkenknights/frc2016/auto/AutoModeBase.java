@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.Timer;
 public abstract class AutoModeBase implements Runnable {
     
     private Thread thread;
-    private Timer timer = new Timer();
-    private boolean active = false;
+    private final Timer timer = new Timer();
+    private boolean active;
 
     protected abstract void routine() throws AutoModeEndedException;
 
@@ -68,7 +68,7 @@ public abstract class AutoModeBase implements Runnable {
     /**
      * Run an Action and check at the update rate if it has finished.
      */
-    protected void runAction(Action action) throws AutoModeEndedException {
+    protected void runAction(final Action action) throws AutoModeEndedException {
         isActiveWithThrow();
         action.start();
         while (isActiveWithThrow() && !action.isFinished()) {

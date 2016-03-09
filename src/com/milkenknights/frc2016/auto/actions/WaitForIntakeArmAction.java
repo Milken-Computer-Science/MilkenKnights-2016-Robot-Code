@@ -7,7 +7,7 @@ import com.milkenknights.frc2016.HardwareAdapter;
  */
 public class WaitForIntakeArmAction extends TimeoutAction {
 
-    public WaitForIntakeArmAction(double time) {
+    public WaitForIntakeArmAction(final double time) {
         super(time);
     }
     

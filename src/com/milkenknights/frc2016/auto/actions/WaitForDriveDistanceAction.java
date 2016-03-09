@@ -18,7 +18,7 @@ public class WaitForDriveDistanceAction extends TimeoutAction {
      * @param positive If the robot is moving forward or backward
      * @param timeout When to timeout
      */
-    public WaitForDriveDistanceAction(double distance, boolean positive, double timeout) {
+    public WaitForDriveDistanceAction(final double distance, final boolean positive, final double timeout) {
         super(timeout);
         this.distance = distance;
         this.positive = positive;
@@ -26,8 +26,8 @@ public class WaitForDriveDistanceAction extends TimeoutAction {
 
     @Override
     public boolean isFinished() {
-        Pose pose = HardwareAdapter.DRIVE.getPhysicalPose();
-        double avg = (pose.getLeftDistance() + pose.getRightDistance()) / 2.0;
+        final Pose pose = HardwareAdapter.DRIVE.getPhysicalPose();
+        final double avg = (pose.getLeftDistance() + pose.getRightDistance()) / 2.0;
         return (positive ? avg >= distance : avg <= distance) || super.isFinished();
     }
     

@@ -6,11 +6,9 @@ import com.milkenknights.util.Subsystem;
 
 public abstract class DriveAbstract extends Subsystem implements Loopable {
 
-    @SuppressWarnings("unused")
-    private MotorPairSignal signal = new MotorPairSignal(0, 0);
     private DriveController controller;
 
-    public DriveAbstract(String name) {
+    public DriveAbstract(final String name) {
         super(name);
     }
 
@@ -36,7 +34,7 @@ public abstract class DriveAbstract extends Subsystem implements Loopable {
 
     public abstract Pose getPhysicalPose();
 
-    public boolean controllerOnTarget() {
+    public final boolean controllerOnTarget() {
         return controller != null && controller.isOnTarget();
     }
 

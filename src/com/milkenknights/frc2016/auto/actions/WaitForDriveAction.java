@@ -7,7 +7,7 @@ import com.milkenknights.frc2016.HardwareAdapter;
  */
 public class WaitForDriveAction extends TimeoutAction {
 
-    public WaitForDriveAction(double timeout) {
+    public WaitForDriveAction(final double timeout) {
         super(timeout);
     }
 

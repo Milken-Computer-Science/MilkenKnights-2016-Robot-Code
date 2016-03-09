@@ -5,8 +5,8 @@ public class Constants {
     public static double kControlLoopsDt = 0.005;
     
     // DriveStraightController gains
-    public static double kDriveMaxSpeedInchesPerSec = 120;
-    public static double kDriveMaxAccelInchesPerSec2 = 10;
+    public static double kDriveMaxSpeedInchesPerSec = 50;
+    public static double kDriveMaxAccelInchesPerSec2 = 180;
     public static double kDrivePositionKp = 0.05; //.7
     public static double kDrivePositionKi = 0;
     public static double kDrivePositionKd = 0;
@@ -30,18 +30,21 @@ public class Constants {
     
     public class Dio {
         public static final int CATAPULT_HOME = 0;
-        public static final int DRIVE_LEFT_A = 10;
-        public static final int DRIVE_LEFT_B = 11;
-        public static final int DRIVE_RIGHT_A = 12;
-        public static final int DRIVE_RIGHT_B = 13;
-        public static final int CATAPULT_A = 14;
-        public static final int CATAPULT_B = 15;
+        public static final int DRIVE_LEFT_A = 10; // ENC 0
+        public static final int DRIVE_LEFT_B = 11; // ENC 0
+        public static final int DRIVE_RIGHT_A = 12; // ENC 1
+        public static final int DRIVE_RIGHT_B = 13; // ENC 1
+        public static final int CATAPULT_A = 14; // ENC 2
+        public static final int CATAPULT_B = 15; // ENC 2
+        public static final int INTAKE_A = 16; // ENC 3
+        public static final int INTAKE_B = 17; // ENC 3
     }
     
     public class Pcm {
         public static final int ID = 1;
 
         public static final int DRIVE_SHIFTER = 0;
+        public static final int BALL_HOLDER = 1;
     }
     
     public class CanTalon {
@@ -49,9 +52,9 @@ public class Constants {
         public static final int DRIVE_LEFT_2 = 10;
         public static final int DRIVE_RIGHT_1 = 9;
         public static final int DRIVE_RIGHT_2 = 11;
-        public static final int CATAPULT = 7;
-        public static final int INTAKE_ARM = 8;
-        public static final int INTAKE_SPEED = 6;
+        public static final int CATAPULT = 8;
+        public static final int INTAKE_ARM = 7;
+        public static final int INTAKE_SPEED = 3;
     }
     
     public class ControlLoops {
@@ -79,31 +82,26 @@ public class Constants {
     public class Subsystems {
         
         public class Drive {
-            public static final double WHEEL_DIAMETER = 8;
+            public static final double WHEEL_DIAMETER = 7.67;
             
             public static final double GEAR_RATIO = 20.0 / 64.0 / 3.0;
-            
-            public static final double MAX_SPEED_LOW = 10; // TODO: Find this value
-            public static final double MAX_SPEED_HIGH = 20; // TODO: Find this value
         }
         
         public class Intake {
             
             public class Arm {
-                public static final double GEAR_RATIO = 60 / 18; // TODO: Find this value
+                public static final double GEAR_RATIO = 16.0 / 44.0;
                 
-                public static final double ZERO = 0; // TODO: Find this value
-                public static final double INTAKE = 0.045; // TODO: Find this value
-                public static final double PROTECT = 0.25; // TODO: Find this value
-                public static final double STORED = 0.4; // TODO: Find this value
+                public static final double INTAKE = -330.0;
+                public static final double PROTECT = -170.0;
+                public static final double STORED = 0.0;
                 
-                public static final double P = 0.4; // TODO: Find this value
-                public static final double I = 0.0001; // TODO: Find this value
+                public static final double P = 0.2; // TODO: Find this value
+                public static final double I = 0.0; // TODO: Find this value
                 public static final double D = 0.0; // TODO: Find this value
                 public static final double F = 0.0; // TODO: Find this value
                 
-                public static final int I_ZONE = 300; // TODO: Find this value
-                public static final int ALLOWABLE_ERROR = 200; // TODO: Find this value
+                public static final double ALLOWABLE_ERROR = 0.125; // TODO: Find this value
                 
             }
             
@@ -114,7 +112,12 @@ public class Constants {
         }
 
         public class Catapult {
-            public static final double GEAR_RATIO = 64 / 14;
+            public static final double GEAR_RATIO = -(14.0 / 64.0);
+            
+            public static final double ALLOWABLE_ERROR = 0.025;
+            public static final double DEADBAND = 0.15;
+            
+            public static final double OFFSET = 0.15;
         }
         
     }

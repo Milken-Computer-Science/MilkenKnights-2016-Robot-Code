@@ -2,9 +2,9 @@ package com.milkenknights.util.drive;
 
 public class TankDriveHelper extends DriveHelper {
     
-    private MotorPairSignal signal = new MotorPairSignal();
+    private final MotorPairSignal signal = new MotorPairSignal();
 
-    public TankDriveHelper(DriveAbstract drive) {
+    public TankDriveHelper(final DriveAbstract drive) {
         super(drive);
     }
     
@@ -12,7 +12,7 @@ public class TankDriveHelper extends DriveHelper {
      * Left and Right throttle control.
      */
     @Override
-    protected void driveMode(double leftThrottle, double rightThrottle) {
+    protected void driveMode(final double leftThrottle, final double rightThrottle) {
         signal.leftMotor = leftThrottle;
         signal.rightMotor = rightThrottle;
 

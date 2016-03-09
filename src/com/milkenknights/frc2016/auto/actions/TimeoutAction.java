@@ -7,11 +7,18 @@ import edu.wpi.first.wpilibj.Notifier;
  */
 public class TimeoutAction extends Action implements Runnable {
     
-    private Notifier notifier;
-    private double time;
-    private boolean finished = false;
+    private final Notifier notifier;
+    private final double time;
+    private boolean finished;
     
-    public TimeoutAction(double time) {
+    /**
+     * Create a new TimeoutAction.  Will wait until an amount of time has passed and then continue.
+     * 
+     * @param time The amount of time in seconds to wait
+     */
+    public TimeoutAction(final double time) {
+        super();
+        
         notifier = new Notifier(this);
         this.time = time;
     }
@@ -23,12 +30,12 @@ public class TimeoutAction extends Action implements Runnable {
 
     @Override
     public void update() {
-
+        // Override me!
     }
 
     @Override
     public void done() {
-
+        // Override me!
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.milkenknights.util;
 
 import com.milkenknights.frc2016.Constants;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
@@ -13,7 +14,7 @@ public class GripHelper implements MkSendable, ITableListener {
     private final ITable targetTable = gripTable.getSubTable(Constants.Vision.TARGETS_TABLE_ID);
     private final ITable matSize = gripTable.getSubTable(Constants.Vision.MAT_SIZE_TABLE_ID);
     
-    private Target cachedTarget = new Target(0, 0, 0, 0, 0, 0);
+    private final Target cachedTarget = new Target(0, 0, 0, 0, 0, 0);
     
     /**
      * Class to store the data of a target.  
@@ -29,14 +30,16 @@ public class GripHelper implements MkSendable, ITableListener {
         /**
          * Create a new target.
          */
-        public Target(double centerX, double centerY, double width, double height, double area, double solidity) {
+        public Target(final double centerX, final double centerY, final double width, final double height,
+                final double area, final double solidity) {
             reset(centerX, centerY, width, height, area, solidity);
         }
         
         /**
          * Reset this targets information.
          */
-        public void reset(double centerX, double centerY, double width, double height, double area, double solidity) {
+        public void reset(final double centerX, final double centerY, final double width, final double height,
+                final double area, final double solidity) {
             this.centerX = centerX;
             this.centerY = centerY;
             this.width = width;
@@ -62,13 +65,13 @@ public class GripHelper implements MkSendable, ITableListener {
     }
     
     @Override
-    public void valueChanged(ITable source, String key, Object value, boolean isNew) {
-        double[] centerX = source.getNumberArray("centerX", new double[0]);
-        double[] centerY = source.getNumberArray("centerY", new double[0]);
-        double[] width = source.getNumberArray("width", new double[0]);
-        double[] height = source.getNumberArray("height", new double[0]);
-        double[] area = source.getNumberArray("area", new double[0]);
-        double[] solidity = source.getNumberArray("solidity", new double[0]);
+    public void valueChanged(final ITable source, final String key, final Object value, final boolean isNew) {
+        final double[] centerX = source.getNumberArray("centerX", new double[0]);
+        final double[] centerY = source.getNumberArray("centerY", new double[0]);
+        final double[] width = source.getNumberArray("width", new double[0]);
+        final double[] height = source.getNumberArray("height", new double[0]);
+        final double[] area = source.getNumberArray("area", new double[0]);
+        final double[] solidity = source.getNumberArray("solidity", new double[0]);
         
         if (area.length > 0) {
             int index = 0;

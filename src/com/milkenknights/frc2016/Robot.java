@@ -2,6 +2,7 @@ package com.milkenknights.frc2016;
 
 import com.milkenknights.frc2016.auto.AutoMode;
 import com.milkenknights.frc2016.auto.modes.DoNothingAutoMode;
+import com.milkenknights.frc2016.auto.modes.ReachAutoMode;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
 import com.milkenknights.frc2016.subsystems.Intake.IntakeSpeed;
 import com.milkenknights.util.MultiLooper;
@@ -37,9 +38,10 @@ public class Robot extends IterativeRobot {
         behaviorManager = new BehaviorManager();
         operatorInterface = new OperatorInterface();
         
-        autoMode = new DoNothingAutoMode();
+        autoMode = new ReachAutoMode();
         
         looper.addLoopable(HardwareAdapter.DRIVE);
+        //looper.addLoopable(HardwareAdapter.INTAKE);
         looper.addLoopable(HardwareAdapter.CATAPULT);
         
         smartDashboardUpdater.addSendable(HardwareAdapter.DRIVE);

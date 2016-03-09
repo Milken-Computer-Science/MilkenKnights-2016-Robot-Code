@@ -1,21 +1,23 @@
 package com.milkenknights.frc2016.subsystems;
 
 import com.milkenknights.frc2016.Constants;
+import com.milkenknights.util.Loopable;
 import com.milkenknights.util.MkCanTalon;
+import com.milkenknights.util.MkEncoder;
 import com.milkenknights.util.Subsystem;
+import com.milkenknights.util.SynchronousPid;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Intake extends Subsystem {
+public class Intake extends Subsystem implements Loopable {
     
     public enum IntakePosition {
-        ZERO(Constants.Subsystems.Intake.Arm.ZERO),
         INTAKE(Constants.Subsystems.Intake.Arm.INTAKE),
         PROTECT(Constants.Subsystems.Intake.Arm.PROTECT),
         STORED(Constants.Subsystems.Intake.Arm.STORED);
         
         public final double position;
-        private IntakePosition(double position) {
+        private IntakePosition(final double position) {
             this.position = position;
         }
     }
@@ -24,15 +26,17 @@ public class Intake extends Subsystem {
         NEUTRAL(0), INTAKE(Constants.Subsystems.Intake.Speed.INTAKE), OUTPUT(Constants.Subsystems.Intake.Speed.OUTPUT);
         
         public final double speed;
-        private IntakeSpeed(double speed) {
+        private IntakeSpeed(final double speed) {
             this.speed = speed;
         }
     }
     
     private MkCanTalon arm;
     private MkCanTalon speedController;
-    private IntakePosition position;
-    private IntakeSpeed speed;
+    private MkEncoder armEncoder;
+    private IntakePosition position = IntakePosition.STORED;
+    private IntakeSpeed speed = IntakeSpeed.NEUTRAL;
+    private SynchronousPid pid;
     
     /**
      * Create a new intake subsystem.
@@ -41,30 +45,34 @@ public class Intake extends Subsystem {
      * @param armController The MkCanTalon used to move the arm
      * @param speedController The MkCanTalon used to control the intake
      */
-    public Intake(String name, MkCanTalon armController, MkCanTalon speedController) {
+    public Intake(final String name, MkCanTalon armController, MkCanTalon speedController, MkEncoder armEncoder) {
         super(name);
+        
+        armEncoder.setDistancePerPulse(Constants.Subsystems.Intake.Arm.GEAR_RATIO
+                / armEncoder.getPulsesPerRevolution());
+        
+        pid = new SynchronousPid();
+        pid.setPid(.1, 0, 0);
+        //pid.setOutputRange(0., 1);
         
         this.arm = armController;
         this.speedController = speedController;
-        
-        setPosition(IntakePosition.INTAKE);
-        setSpeed(IntakeSpeed.NEUTRAL);
+        this.armEncoder = armEncoder;
     }
 
     /**
      * Set the speed of the intake.
      */
-    public void setSpeed(IntakeSpeed speed) {
-        speedController.set(speed.speed);
+    public void setSpeed(final IntakeSpeed speed) {
         this.speed = speed;
     }
     
     /**
      * Set the position of the intake.
      */
-    public void setPosition(IntakePosition position) {
-        arm.set(position.position * Constants.Subsystems.Intake.Arm.GEAR_RATIO);
-        this.position = position;
+    public void setPosition(final IntakePosition position) {
+        pid.setSetpoint(position.position);
+        
     }
     
     /**
@@ -85,14 +93,22 @@ public class Intake extends Subsystem {
      * Get if the arm is on target.
      */
     public boolean armOnTarget() {
-        return false; // TODO: Impl
-        //return Math.abs(arm.getError()) < Constants.Subsystems.Intake.Arm.ALLOWABLE_ERROR;
+        return pid.onTarget(Constants.Subsystems.Intake.Arm.ALLOWABLE_ERROR);
     }
 
     @Override
     public void updateSmartDashboard() {
         SmartDashboard.putString("Intake Arm State", position.toString());
         SmartDashboard.putString("Intake Speed State", speed.toString());
+        SmartDashboard.putNumber("Intake Arm PID Result", pid.calculate(armEncoder.getDistance()));
+        SmartDashboard.putNumber("Intake Arm Count", armEncoder.get());
+        SmartDashboard.putNumber("Intake Arm Distance", armEncoder.getDistance());
+    }
+
+    @Override
+    public void update() {
+        arm.set(pid.calculate(armEncoder.getDistance()));
+        speedController.set(speed.speed);
     }
 
 }

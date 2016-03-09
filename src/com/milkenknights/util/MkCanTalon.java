@@ -115,5 +115,9 @@ public class MkCanTalon implements SpeedController {
             controller.enableBrakeMode(brake);
         }
     }
+    
+    public void stopMotor() {
+        
+    }
 
 }
