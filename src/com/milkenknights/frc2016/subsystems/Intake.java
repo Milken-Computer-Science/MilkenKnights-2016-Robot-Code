@@ -53,8 +53,10 @@ public class Intake extends Subsystem implements Loopable {
                 / armEncoder.getPulsesPerRevolution());
         
         pid = new SynchronousPid();
-        pid.setPid(.1, 0, 0);
-        //pid.setOutputRange(0., 1);
+        pid.setPid(Constants.Subsystems.Intake.Arm.P, Constants.Subsystems.Intake.Arm.I,
+                Constants.Subsystems.Intake.Arm.D);
+        pid.setOutputRange(-Constants.Subsystems.Intake.Arm.MAXIMUM_OUTPUT,
+                Constants.Subsystems.Intake.Arm.MAXIMUM_OUTPUT);
         
         this.arm = armController;
         this.speedController = speedController;
@@ -72,6 +74,7 @@ public class Intake extends Subsystem implements Loopable {
      * Set the position of the intake.
      */
     public void setPosition(final IntakePosition position) {
+        this.position = position;
         pid.setSetpoint(position.position);
         
     }
@@ -104,6 +107,7 @@ public class Intake extends Subsystem implements Loopable {
         SmartDashboard.putNumber("Intake Arm PID Result", pid.calculate(armEncoder.getDistance()));
         SmartDashboard.putNumber("Intake Arm Count", armEncoder.get());
         SmartDashboard.putNumber("Intake Arm Distance", armEncoder.getDistance());
+        SmartDashboard.putNumber("Intake Arm Error", pid.getError());
     }
 
     @Override

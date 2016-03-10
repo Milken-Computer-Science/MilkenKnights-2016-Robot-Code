@@ -92,14 +92,15 @@ public class Constants {
             public class Arm {
                 public static final double GEAR_RATIO = 16.0 / 44.0;
                 
-                public static final double INTAKE = -330.0;
-                public static final double PROTECT = -170.0;
+                public static final double INTAKE = -0.3333;
+                public static final double PROTECT = -0.1717;
                 public static final double STORED = 0.0;
                 
-                public static final double P = 0.2; // TODO: Find this value
-                public static final double I = 0.0; // TODO: Find this value
-                public static final double D = 0.0; // TODO: Find this value
-                public static final double F = 0.0; // TODO: Find this value
+                public static final double P = 7.5;
+                public static final double I = 0.0;
+                public static final double D = 0.0;
+                
+                public static final double MAXIMUM_OUTPUT = 0.50;
                 
                 public static final double ALLOWABLE_ERROR = 0.125; // TODO: Find this value
                 

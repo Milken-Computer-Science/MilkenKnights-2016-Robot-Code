@@ -39,7 +39,7 @@ public class Robot extends IterativeRobot {
         autoMode = new ReachAutoMode();
         
         looper.addLoopable(HardwareAdapter.DRIVE);
-        //looper.addLoopable(HardwareAdapter.INTAKE);
+        looper.addLoopable(HardwareAdapter.INTAKE);
         looper.addLoopable(HardwareAdapter.CATAPULT);
         
         smartDashboardUpdater.addSendable(HardwareAdapter.DRIVE);
