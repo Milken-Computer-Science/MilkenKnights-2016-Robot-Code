@@ -19,7 +19,7 @@ public class OperatorInterface {
         reset();
         
         commands.driveSpeed = -HardwareAdapter.STICK.getY();
-        commands.driveRotate = -HardwareAdapter.STICK.getTwist();
+        commands.driveRotate = -HardwareAdapter.STICK.getTwist() * 1.5;
         
         if (HardwareAdapter.STICK.getRawButton(1) && HardwareAdapter.STICK.getRawButton(2)) {
             commands.fireCatapult = true;
