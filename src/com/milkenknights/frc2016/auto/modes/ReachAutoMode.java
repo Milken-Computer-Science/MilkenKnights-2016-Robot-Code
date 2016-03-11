@@ -18,7 +18,6 @@ public class ReachAutoMode extends AutoMode {
         
 //        HardwareAdapter.INTAKE.setPosition(IntakePosition.INTAKE);
 //        waitForIntake(1.0);
-        
         HardwareAdapter.DRIVE.setDistanceSetpoint(120);
         waitForDrive(10.0);
     }

@@ -87,7 +87,7 @@ public class Drive extends DriveAbstract {
 
     @Override
     public void setOpenLoop(final MotorPairSignal signal) {
-        controller = null;
+    	controller = null;
         setDriveOutputs(signal);
     }
 
@@ -100,6 +100,7 @@ public class Drive extends DriveAbstract {
     public void setDistanceSetpoint(final double distance, final double velocity) {
         controller = new DriveStraightController(getPoseToContinueFrom(false), distance, 
                 Math.min(Constants.kDriveMaxSpeedInchesPerSec, Math.max(velocity, 0)));
+        System.out.println(controller);
     }
 
     @Override
@@ -167,13 +168,13 @@ public class Drive extends DriveAbstract {
     
     private Pose getPoseToContinueFrom(final boolean forTurnController) {
         Pose poseToContinueFrom = getPhysicalPose();
-        
+        System.out.println(controller);
         if (!forTurnController && controller instanceof TurnInPlaceController) {
             final Pose poseToUse = getPhysicalPose();
             poseToUse.heading = ((TurnInPlaceController) controller).getHeadingGoal();
             poseToUse.headingVelocity = 0;
             poseToContinueFrom = poseToUse;
-        } else if (controller.isOnTarget()) {
+        } else if (controller != null && controller.isOnTarget()) {
             poseToContinueFrom = controller.getCurrentSetpoint();
         }
         
