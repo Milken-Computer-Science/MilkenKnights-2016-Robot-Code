@@ -92,7 +92,7 @@ public class Constants {
             public class Arm {
                 public static final double GEAR_RATIO = 16.0 / 44.0;
                 
-                public static final double INTAKE = -0.3333;
+                public static final double INTAKE = -0.35;
                 public static final double PROTECT = -0.1717;
                 public static final double STORED = 0.0;
                 
@@ -107,8 +107,8 @@ public class Constants {
             }
             
             public class Speed {
-                public static final double INTAKE = -1;
-                public static final double OUTPUT = 1;
+                public static final double INTAKE = 1;
+                public static final double OUTPUT = -1;
             }
         }
 

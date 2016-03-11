@@ -52,9 +52,11 @@ public class DriveStraightController implements Drive.DriveController {
 
     @Override
     public MotorPairSignal update(Pose currentPose) {
-        mDistanceController.update(
+        /**mDistanceController.update(
                 (currentPose.getLeftDistance() + currentPose.getRightDistance()) / 2.0,
                 (currentPose.getLeftVelocity() + currentPose.getRightVelocity()) / 2.0);
+                **/
+        mDistanceController.update(currentPose.getLeftDistance(), currentPose.getLeftVelocity());
         double throttle = mDistanceController.get();
         double turn = mTurnPid.calculate(currentPose.getHeading());
 
@@ -76,11 +78,13 @@ public class DriveStraightController implements Drive.DriveController {
     }
 
     public static double encoderVelocity(Pose pose) {
-        return (pose.getLeftVelocity() + pose.getRightVelocity()) / 2.0;
+    	return pose.getLeftVelocity();
+        //return (pose.getLeftVelocity() + pose.getRightVelocity()) / 2.0;
     }
 
     public static double encoderDistance(Pose pose) {
-        return (pose.getLeftDistance() + pose.getRightDistance()) / 2.0;
+    	return pose.getLeftDistance();
+        //return (pose.getLeftDistance() + pose.getRightDistance()) / 2.0;
     }
 
     @Override

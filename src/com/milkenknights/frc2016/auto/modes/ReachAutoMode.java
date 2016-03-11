@@ -14,13 +14,13 @@ public class ReachAutoMode extends AutoMode {
 
     @Override
     protected void routine() throws AutoModeEndedException {
-        waitTime(0.25);
+        //waitTime(0.25);
         
 //        HardwareAdapter.INTAKE.setPosition(IntakePosition.INTAKE);
 //        waitForIntake(1.0);
         
-        HardwareAdapter.DRIVE.setDistanceSetpoint(100);
-        waitForDrive(2.0);
+        HardwareAdapter.DRIVE.setDistanceSetpoint(120);
+        waitForDrive(10.0);
     }
 
 }

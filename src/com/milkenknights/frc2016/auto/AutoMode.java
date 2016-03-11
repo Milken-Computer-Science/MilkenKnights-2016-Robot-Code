@@ -1,5 +1,6 @@
 package com.milkenknights.frc2016.auto;
 
+import com.milkenknights.frc2016.auto.actions.TimedDriveAction;
 import com.milkenknights.frc2016.auto.actions.TimeoutAction;
 import com.milkenknights.frc2016.auto.actions.WaitForDriveAction;
 import com.milkenknights.frc2016.auto.actions.WaitForDriveDistanceAction;
@@ -12,6 +13,13 @@ public abstract class AutoMode extends AutoModeBase {
      */
     public void waitTime(final double seconds) throws AutoModeEndedException {
         runAction(new TimeoutAction(seconds));
+    }
+    
+    /**
+     * Run a new TimedDriveAction.
+     */
+    public void waitForTimedDrive(final double seconds, final double speed) throws AutoModeEndedException {
+    	runAction(new TimedDriveAction(seconds, speed));
     }
     
     /**
