@@ -27,7 +27,8 @@ public final class HardwareAdapter {
     
     public static final GripHelper GRIP;
 
-    public static final Joystick STICK;
+    public static final Joystick DRIVE_STICK;
+    public static final Joystick OPERATOR_STICK;
     
     /**
      * Initalize the robot hardware.
@@ -66,7 +67,8 @@ public final class HardwareAdapter {
         
         GRIP = new GripHelper();
 
-        STICK = new Joystick(Constants.DriverStation.JOYSTICK);
+        DRIVE_STICK = new Joystick(Constants.DriverStation.DRIVE_JOYSTICK);
+        OPERATOR_STICK = new Joystick(Constants.DriverStation.OPERATOR_JOYSTICK);
     }
     
     private HardwareAdapter() {

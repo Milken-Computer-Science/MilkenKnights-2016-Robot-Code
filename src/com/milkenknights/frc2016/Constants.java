@@ -64,7 +64,8 @@ public class Constants {
     }
     
     public class DriverStation {
-        public static final int JOYSTICK = 0;
+        public static final int DRIVE_JOYSTICK = 0;
+        public static final int OPERATOR_JOYSTICK = 1;
     }
     
     public class Vision {
