@@ -8,8 +8,8 @@ import com.milkenknights.frc2016.subsystems.Intake.IntakeSpeed;
 public class OperatorInterface {
 
     private Commands commands = new Commands();
-    private boolean buttonSevenLast = false;
-    private boolean buttonEightLast = false;
+    private boolean buttonSevenLast;
+    private boolean buttonEightLast;
     
     public void reset() {
         commands = new Commands();
@@ -48,17 +48,17 @@ public class OperatorInterface {
         
         
         if (!HardwareAdapter.STICK.getRawButton(7)) {
-        	buttonSevenLast = true;
+            buttonSevenLast = true;
         } else if (buttonSevenLast && HardwareAdapter.STICK.getRawButton(7)) {
-        	buttonSevenLast = false;
-        	commands.driveGear = HardwareAdapter.DRIVE.getGear() == DriveGear.HIGH ? DriveGear.LOW : DriveGear.HIGH;
+            buttonSevenLast = false;
+            commands.driveGear = HardwareAdapter.DRIVE.getGear() == DriveGear.HIGH ? DriveGear.LOW : DriveGear.HIGH;
         }
         
         if (!HardwareAdapter.STICK.getRawButton(8)) {
-        	buttonEightLast = true;
+            buttonEightLast = true;
         } else if (buttonEightLast && HardwareAdapter.STICK.getRawButton(8)) {
-        	buttonEightLast = false;
-        	commands.reverseDrive = true;
+            buttonEightLast = false;
+            commands.reverseDrive = true;
         }
         
         return commands;

@@ -18,10 +18,10 @@ public class BehaviorManager {
      * @param commands The commands
      */
     public void update(final Commands commands) {
-    	
-    	if (commands.reverseDrive) {
-    		driveReversed = ! driveReversed;
-    	}
+
+        if (commands.reverseDrive) {
+            driveReversed = ! driveReversed;
+        }
 
         if (commands.alignRobot) {
             if (HardwareAdapter.GRIP.getAngleToTarget() != HardwareAdapter.DRIVE.getTurnSetpoint()) {
@@ -29,13 +29,13 @@ public class BehaviorManager {
                         + HardwareAdapter.DRIVE.getPhysicalPose().heading);
             }
         } else if (driveReversed) {
-        	driveHelper.commandDrive(-commands.driveSpeed, commands.driveRotate);
+            driveHelper.commandDrive(-commands.driveSpeed, commands.driveRotate);
         } else {
-        	driveHelper.commandDrive(commands.driveSpeed, commands.driveRotate);
+            driveHelper.commandDrive(commands.driveSpeed, commands.driveRotate);
         }
         
         if (commands.driveGear != null && commands.driveGear != HardwareAdapter.DRIVE.getGear()) {
-        	HardwareAdapter.DRIVE.setGear(commands.driveGear);
+            HardwareAdapter.DRIVE.setGear(commands.driveGear);
         }
         
         if (commands.fireCatapult) {

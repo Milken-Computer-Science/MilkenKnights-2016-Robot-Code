@@ -19,7 +19,7 @@ public class Catapult extends Subsystem implements Loopable {
     }
     
     private final MkCanTalon talon;
-    private final Solenoid ballHolder;
+    //private final Solenoid ballHolder;
     private final MkEncoder encoder;
     private final DigitalInput home;
     private final SynchronousPid pid;
@@ -57,7 +57,7 @@ public class Catapult extends Subsystem implements Loopable {
         pid.setOutputRange(Constants.Subsystems.Catapult.DEADBAND, 1);
 
         this.talon = talon;
-        this.ballHolder = ballHolder;
+        //this.ballHolder = ballHolder;
         this.encoder = encoder;
         this.home = home;
         

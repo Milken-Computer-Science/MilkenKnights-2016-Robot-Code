@@ -1,10 +1,7 @@
 package com.milkenknights.frc2016;
 
 import com.milkenknights.frc2016.auto.AutoMode;
-import com.milkenknights.frc2016.auto.modes.BreachAutoMode;
-import com.milkenknights.frc2016.auto.modes.DoNothingAutoMode;
 import com.milkenknights.frc2016.auto.modes.ReachAutoMode;
-import com.milkenknights.frc2016.auto.modes.TimedBreachAutoMode;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
 import com.milkenknights.frc2016.subsystems.Drive.DriveGear;
 import com.milkenknights.frc2016.subsystems.Intake.IntakeSpeed;

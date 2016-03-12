@@ -18,6 +18,7 @@ public abstract class DriveAbstract extends Subsystem implements Loopable {
         Pose getCurrentSetpoint();
 
         public boolean isOnTarget();
+        
         public double getError();
     }
 

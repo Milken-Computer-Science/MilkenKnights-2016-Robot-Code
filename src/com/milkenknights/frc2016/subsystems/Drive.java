@@ -85,13 +85,13 @@ public class Drive extends DriveAbstract {
         SmartDashboard.putNumber("Drive: Heading Speed", getPhysicalPose().headingVelocity);
         
         if (controller != null) {
-        	SmartDashboard.putNumber("Drive: Error", controller.getError());
+            SmartDashboard.putNumber("Drive: Error", controller.getError());
         }
     }
 
     @Override
     public void setOpenLoop(final MotorPairSignal signal) {
-    	controller = null;
+        controller = null;
         setDriveOutputs(signal);
     }
 
@@ -165,7 +165,7 @@ public class Drive extends DriveAbstract {
     }
     
     private void setDriveOutputs(final MotorPairSignal signal) {
-    	SmartDashboard.putString("Drive: Last Motor Outputs", signal.toString());
+        SmartDashboard.putString("Drive: Last Motor Outputs", signal.toString());
         leftMotor.set(signal.leftMotor);
         rightMotor.set(signal.rightMotor);
     }
