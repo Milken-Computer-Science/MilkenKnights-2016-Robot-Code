@@ -83,6 +83,10 @@ public class Drive extends DriveAbstract {
         SmartDashboard.putNumber("Drive: Left Speed", getPhysicalPose().leftVelocity);
         SmartDashboard.putNumber("Drive: Right Speed", getPhysicalPose().rightVelocity);
         SmartDashboard.putNumber("Drive: Heading Speed", getPhysicalPose().headingVelocity);
+        
+        if (controller != null) {
+        	SmartDashboard.putNumber("Drive: Error", controller.getError());
+        }
     }
 
     @Override
@@ -100,7 +104,6 @@ public class Drive extends DriveAbstract {
     public void setDistanceSetpoint(final double distance, final double velocity) {
         controller = new DriveStraightController(getPoseToContinueFrom(false), distance, 
                 Math.min(Constants.kDriveMaxSpeedInchesPerSec, Math.max(velocity, 0)));
-        System.out.println(controller);
     }
 
     @Override
@@ -133,7 +136,7 @@ public class Drive extends DriveAbstract {
      * Sets the gear of the drive train.
      * @param gear The gear to set to
      */
-    protected void setGear(final DriveGear gear) {
+    public void setGear(final DriveGear gear) {
         driveGear = gear;
         shifter.set(gear.shifter);
     }
@@ -162,6 +165,7 @@ public class Drive extends DriveAbstract {
     }
     
     private void setDriveOutputs(final MotorPairSignal signal) {
+    	SmartDashboard.putString("Drive: Last Motor Outputs", signal.toString());
         leftMotor.set(signal.leftMotor);
         rightMotor.set(signal.rightMotor);
     }

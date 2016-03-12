@@ -58,6 +58,10 @@ public class TurnInPlaceController implements Drive.DriveController {
     public boolean isOnTarget() {
         return mController.isOnTarget();
     }
+    
+    public double getError() {
+    	return mController.get();
+    }
 
     public double getHeadingGoal() {
         return mController.getGoal();

@@ -6,6 +6,7 @@ import com.milkenknights.frc2016.auto.modes.DoNothingAutoMode;
 import com.milkenknights.frc2016.auto.modes.ReachAutoMode;
 import com.milkenknights.frc2016.auto.modes.TimedBreachAutoMode;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
+import com.milkenknights.frc2016.subsystems.Drive.DriveGear;
 import com.milkenknights.frc2016.subsystems.Intake.IntakeSpeed;
 import com.milkenknights.util.MultiLooper;
 import com.milkenknights.util.SmartDashboardUpdater;
@@ -42,7 +43,7 @@ public class Robot extends IterativeRobot {
         autoMode = new ReachAutoMode();
         
         looper.addLoopable(HardwareAdapter.DRIVE);
-        //looper.addLoopable(HardwareAdapter.INTAKE);
+        looper.addLoopable(HardwareAdapter.INTAKE);
         //looper.addLoopable(HardwareAdapter.CATAPULT);
         
         smartDashboardUpdater.addSendable(HardwareAdapter.DRIVE);
@@ -63,6 +64,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         System.out.println("Start autonomousInit()");
+        HardwareAdapter.DRIVE.setGear(DriveGear.LOW);
         HardwareAdapter.DRIVE.reset();
         
         looper.start();

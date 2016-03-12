@@ -105,4 +105,9 @@ public class DrivePathController implements Drive.DriveController {
     public Pose getCurrentSetpoint() {
         return new Pose(followerLeft.getCurrentSegment().pos, 0, 0, 0, -followerLeft.getHeading(), 0);
     }
+
+	@Override
+	public double getError() {
+		return 0;
+	}
 }

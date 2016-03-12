@@ -112,7 +112,11 @@ public class Intake extends Subsystem implements Loopable {
 
     @Override
     public void update() {
-        arm.set(pid.calculate(armEncoder.getDistance()));
+    	if (position == IntakePosition.INTAKE && armOnTarget()) {
+    		arm.set(0.0);
+    	} else {
+    		arm.set(pid.calculate(armEncoder.getDistance()));
+    	}
         speedController.set(speed.speed);
     }
 

@@ -48,7 +48,6 @@ public class TrajectoryFollowingPositionController extends Controller {
     }
 
     public double get() {
-        SmartDashboard.putNumber("PID Result", m_result);
         return m_result;
     }
 

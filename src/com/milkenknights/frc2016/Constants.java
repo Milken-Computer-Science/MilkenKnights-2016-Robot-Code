@@ -5,14 +5,14 @@ public class Constants {
     public static double kControlLoopsDt = 0.005;
     
     // DriveStraightController gains
-    public static double kDriveMaxSpeedInchesPerSec = 50;
-    public static double kDriveMaxAccelInchesPerSec2 = 180;
-    public static double kDrivePositionKp = 0.05; //.7
+    public static double kDriveMaxSpeedInchesPerSec = 100;
+    public static double kDriveMaxAccelInchesPerSec2 = 200;
+    public static double kDrivePositionKp = 0.1; //.7
     public static double kDrivePositionKi = 0;
     public static double kDrivePositionKd = 0;
     public static double kDriveStraightKp = 0.0; //3
-    public static double kDriveStraightKi = 0;
-    public static double kDriveStraightKd = 0;
+    public static double kDriveStraightKi = 0.0;
+    public static double kDriveStraightKd = 0.0;
     public static double kDrivePositionKv = 0.008;
     public static double kDrivePositionKa = 0.0017;
     public static double kDriveOnTargetError = 0.75;
@@ -20,13 +20,13 @@ public class Constants {
 
     // TurnInPlaceController gains
     public static double kTurnMaxSpeedRadsPerSec = 5.25;
-    public static double kTurnMaxAccelRadsPerSec2 = 5.25;
-    public static double kTurnKp = 3.0;
-    public static double kTurnKi = 0.18;
-    public static double kTurnKd = 0.23;
+    public static double kTurnMaxAccelRadsPerSec2 = 3;
+    public static double kTurnKp = 0.05;
+    public static double kTurnKi = 0.0;
+    public static double kTurnKd = 0.0;
     public static double kTurnKv = 0.085;
     public static double kTurnKa = 0.075;
-    public static double kTurnOnTargetError = 0.0225;
+    public static double kTurnOnTargetError = 0.05;
     
     public class Dio {
         public static final int CATAPULT_HOME = 0;
