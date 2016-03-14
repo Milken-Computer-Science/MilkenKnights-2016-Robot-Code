@@ -24,11 +24,11 @@ public class Drive extends DriveAbstract {
     private AHRS gyro;
     
     private DriveController controller;
-    private DriveGear driveGear = DriveGear.LOW;
+    private DriveGear driveGear = DriveGear.HIGH;
     private final Pose cachedPose = new Pose(0, 0, 0, 0, 0, 0);
     
     public enum DriveGear {
-        LOW(false), HIGH(true);
+        LOW(true), HIGH(false);
         
         public final boolean shifter;
         DriveGear(final boolean shifter) {

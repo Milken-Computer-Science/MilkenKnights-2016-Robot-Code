@@ -45,17 +45,17 @@ public class OperatorInterface {
         }
         
         
-        if (HardwareAdapter.OPERATOR_STICK.getRawButton(7)) {
+        if (HardwareAdapter.OPERATOR_STICK.getRawButton(3)) {
             commands.intakePosition = IntakePosition.PROTECT;
-        } else if (HardwareAdapter.OPERATOR_STICK.getRawButton(6)) {
+        } else if (HardwareAdapter.OPERATOR_STICK.getRawButton(2)) {
             commands.intakePosition = IntakePosition.INTAKE;
-        } else if (HardwareAdapter.OPERATOR_STICK.getRawButton(10)) {
+        } else if (HardwareAdapter.OPERATOR_STICK.getRawButton(6)) {
             commands.intakePosition = IntakePosition.STORED;
         }
         
-        if (HardwareAdapter.OPERATOR_STICK.getRawButton(2)) {
+        if (HardwareAdapter.OPERATOR_STICK.getRawButton(4)) {
             commands.intakeSpeed = IntakeSpeed.INTAKE;
-        } else if (HardwareAdapter.OPERATOR_STICK.getRawButton(3)) {
+        } else if (HardwareAdapter.OPERATOR_STICK.getRawButton(5)) {
             commands.intakeSpeed = IntakeSpeed.OUTPUT;
         } else {
             commands.intakeSpeed = IntakeSpeed.NEUTRAL;

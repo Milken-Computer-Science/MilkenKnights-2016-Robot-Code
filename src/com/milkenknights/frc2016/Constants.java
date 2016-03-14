@@ -5,12 +5,12 @@ public class Constants {
     public static double kControlLoopsDt = 0.005;
     
     // DriveStraightController gains
-    public static double kDriveMaxSpeedInchesPerSec = 100;
+    public static double kDriveMaxSpeedInchesPerSec = 60;
     public static double kDriveMaxAccelInchesPerSec2 = 200;
     public static double kDrivePositionKp = 0.1; //.7
     public static double kDrivePositionKi = 0;
     public static double kDrivePositionKd = 0;
-    public static double kDriveStraightKp = 0.0; //3
+    public static double kDriveStraightKp = 0.2; //3
     public static double kDriveStraightKi = 0.0;
     public static double kDriveStraightKd = 0.0;
     public static double kDrivePositionKv = 0.008;
@@ -21,7 +21,7 @@ public class Constants {
     // TurnInPlaceController gains
     public static double kTurnMaxSpeedRadsPerSec = 5.25;
     public static double kTurnMaxAccelRadsPerSec2 = 3;
-    public static double kTurnKp = 0.05;
+    public static double kTurnKp = 0.2;
     public static double kTurnKi = 0.0;
     public static double kTurnKd = 0.0;
     public static double kTurnKv = 0.085;
@@ -117,7 +117,7 @@ public class Constants {
             public static final double GEAR_RATIO = -(14.0 / 64.0);
             
             public static final double ALLOWABLE_ERROR = 0.025;
-            public static final double DEADBAND = 0.15;
+            public static final double DEADBAND = 0.2;
             
             public static final double OFFSET = 0.15;
         }

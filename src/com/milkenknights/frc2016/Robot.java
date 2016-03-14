@@ -1,7 +1,7 @@
 package com.milkenknights.frc2016;
 
 import com.milkenknights.frc2016.auto.AutoMode;
-import com.milkenknights.frc2016.auto.modes.ReachAutoMode;
+import com.milkenknights.frc2016.auto.modes.RockWallAutoMode;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
 import com.milkenknights.frc2016.subsystems.Drive.DriveGear;
 import com.milkenknights.frc2016.subsystems.Intake.IntakeSpeed;
@@ -37,11 +37,11 @@ public class Robot extends IterativeRobot {
         behaviorManager = new BehaviorManager();
         operatorInterface = new OperatorInterface();
         
-        autoMode = new ReachAutoMode();
+        autoMode = new RockWallAutoMode();
         
         looper.addLoopable(HardwareAdapter.DRIVE);
-        looper.addLoopable(HardwareAdapter.INTAKE);
-        //looper.addLoopable(HardwareAdapter.CATAPULT);
+        //looper.addLoopable(HardwareAdapter.INTAKE);
+        looper.addLoopable(HardwareAdapter.CATAPULT);
         
         smartDashboardUpdater.addSendable(HardwareAdapter.DRIVE);
         smartDashboardUpdater.addSendable(HardwareAdapter.INTAKE);
@@ -61,7 +61,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         System.out.println("Start autonomousInit()");
-        HardwareAdapter.DRIVE.setGear(DriveGear.LOW);
+        HardwareAdapter.DRIVE.setGear(DriveGear.HIGH);
         HardwareAdapter.DRIVE.reset();
         
         looper.start();

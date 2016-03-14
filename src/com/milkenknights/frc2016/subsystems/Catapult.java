@@ -19,7 +19,7 @@ public class Catapult extends Subsystem implements Loopable {
     }
     
     private final MkCanTalon talon;
-    //private final Solenoid ballHolder;
+    private final Solenoid ballHolder;
     private final MkEncoder encoder;
     private final DigitalInput home;
     private final SynchronousPid pid;
@@ -38,6 +38,7 @@ public class Catapult extends Subsystem implements Loopable {
         super(name);
         
         talon.enableBrakeMode(true);
+        talon.setInverted(true);
         encoder.setDistancePerPulse(Constants.Subsystems.Catapult.GEAR_RATIO / encoder.getPulsesPerRevolution());
         
         home.requestInterrupts(new InterruptHandlerFunction<Object>() {
@@ -57,7 +58,7 @@ public class Catapult extends Subsystem implements Loopable {
         pid.setOutputRange(Constants.Subsystems.Catapult.DEADBAND, 1);
 
         this.talon = talon;
-        //this.ballHolder = ballHolder;
+        this.ballHolder = ballHolder;
         this.encoder = encoder;
         this.home = home;
         
@@ -100,10 +101,12 @@ public class Catapult extends Subsystem implements Loopable {
                 }
                 break;
             case READY:
+            	ballHolder.set(false);
                 talon.set(0.0);
                 break;
             case FIRE:
-                pid.setSetpoint(shotCount + 1 + Constants.Subsystems.Catapult.OFFSET);
+            	ballHolder.set(true);
+                pid.setSetpoint(shotCount + 1);
                 talon.set(pid.calculate(encoder.getDistance()));
                 if (pid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR)) {
                     shotCount++;
@@ -111,7 +114,7 @@ public class Catapult extends Subsystem implements Loopable {
                 }
                 break;
             case ZERO:
-                if (!zeroed) {
+            	if (!zeroed) {
                     talon.set(Constants.Subsystems.Catapult.DEADBAND);
                 } else {
                     home.disableInterrupts();
