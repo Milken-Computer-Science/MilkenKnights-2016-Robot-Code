@@ -6,11 +6,11 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class TimedOpenLoopController extends Controller {
 
-    protected double m_t0 = 0; // Time of control loop init
-    protected double m_t1 = 0; // Time to start deceling
-    protected double m_t2 = 0; // Time to end decel
-    protected double m_start_power = 0;
-    protected double m_end_power = 0;
+    protected final double initialTime; // Time of control loop init
+    protected final double decelTime; // Time to start deceling
+    protected final double endDecelTime; // Time to end decel
+    protected final double startPower;
+    protected final double endPower;
 
     /**
      * Create a new TimedOpenLoopController.
@@ -20,16 +20,19 @@ public class TimedOpenLoopController extends Controller {
      * @param endPower The power to have at the end
      * @param timeToDecel The time to spend decelerating
      */
-    public TimedOpenLoopController(double startPower, double timeFullOn, double endPower, double timeToDecel) {
-        m_t0 = Timer.getFPGATimestamp();
-        m_t1 = m_t0 + timeFullOn;
-        m_t2 = m_t1 + timeToDecel;
-        m_start_power = startPower;
-        m_end_power = endPower;
+    public TimedOpenLoopController(final double startPower, final double timeFullOn, final double endPower,
+            final double timeToDecel) {
+        super();
+        
+        initialTime = Timer.getFPGATimestamp();
+        decelTime = initialTime + timeFullOn;
+        endDecelTime = decelTime + timeToDecel;
+        this.startPower = startPower;
+        this.endPower = endPower;
     }
 
     public boolean expired() {
-        return Timer.getFPGATimestamp() > m_t2;
+        return Timer.getFPGATimestamp() > endDecelTime;
     }
 
     /**
@@ -38,26 +41,23 @@ public class TimedOpenLoopController extends Controller {
      * @return The power to send to the motor
      */
     public double update() {
-        double cur = Timer.getFPGATimestamp();
-        if (cur <= m_t1) {
-            return m_start_power;
-        } else if (cur > m_t1 && cur <= m_t2) {
+        double power;
+        final double cur = Timer.getFPGATimestamp();
+        if (cur <= decelTime) {
+            power = startPower;
+        } else if (cur > decelTime && cur <= endDecelTime) {
             // decel
-            double rel_t = cur - m_t1;
-            double slope = (m_end_power - m_start_power) / (m_t2 - m_t1);
-            return (m_start_power + (slope * rel_t));
+            final double slope = (endPower - startPower) / (endDecelTime - decelTime);
+            power = startPower + (slope * (cur - decelTime));
         } else {
-            return m_end_power;
+            power = endPower;
         }
-    }
-
-    @Override
-    public void reset() {
-        m_t0 = m_t1 = m_t2 = m_end_power = m_start_power = 0;
+        return power;
     }
 
     @Override
     public boolean isOnTarget() {
         return expired();
     }
+
 }

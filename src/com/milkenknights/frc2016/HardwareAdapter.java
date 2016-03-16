@@ -5,6 +5,7 @@ import com.milkenknights.frc2016.subsystems.Drive;
 import com.milkenknights.frc2016.subsystems.Intake;
 import com.milkenknights.util.GripHelper;
 import com.milkenknights.util.MkCanTalon;
+import com.milkenknights.util.MkJoystick;
 import com.milkenknights.util.hardware.S4T360;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -12,7 +13,6 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -27,8 +27,8 @@ public final class HardwareAdapter {
     
     public static final GripHelper GRIP;
 
-    public static final Joystick DRIVE_STICK;
-    public static final Joystick OPERATOR_STICK;
+    public static final MkJoystick DRIVE_STICK;
+    public static final MkJoystick OPERATOR_STICK;
     
     /**
      * Initialize the robot hardware.
@@ -67,8 +67,8 @@ public final class HardwareAdapter {
         
         GRIP = new GripHelper();
 
-        DRIVE_STICK = new Joystick(Constants.DriverStation.DRIVE_JOYSTICK);
-        OPERATOR_STICK = new Joystick(Constants.DriverStation.OPERATOR_JOYSTICK);
+        DRIVE_STICK = new MkJoystick(Constants.DriverStation.DRIVE_JOYSTICK);
+        OPERATOR_STICK = new MkJoystick(Constants.DriverStation.OPERATOR_JOYSTICK);
     }
     
     private HardwareAdapter() {

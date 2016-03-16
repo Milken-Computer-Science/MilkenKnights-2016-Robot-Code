@@ -3,69 +3,69 @@ package com.milkenknights.frc2016.subsystems.controllers;
 import com.milkenknights.util.Controller;
 import com.milkenknights.util.trajectory.TrajectoryFollower;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public class TrajectoryFollowingPositionController extends Controller {
-    TrajectoryFollower m_follower;
-    double m_goal;
-    double m_error;
-    double m_on_target_delta;
-    double m_result = 0;
+    TrajectoryFollower follower;
+    double goal;
+    double error;
+    double onTargetDelta;
+    double result = 0;
 
-    public TrajectoryFollowingPositionController(double kp, double ki,
-                                                 double kd, double kv, double ka, double on_target_delta,
-                                                 TrajectoryFollower.TrajectoryConfig config) {
-        m_follower = new TrajectoryFollower();
-        m_follower.configure(kp, ki, kd, kv, ka, config);
-        m_on_target_delta = on_target_delta;
+    /**
+     * Create a new TrajectoryFollowingPositionController.
+     * 
+     * @param kp The proportional constant
+     * @param ki The integral constant
+     * @param kd The derivative constant
+     * @param kv The velocity constant
+     * @param ka The acceleration constants
+     * @param onTargetDelta The distance to go
+     * @param config Configuration for the controller
+     */
+    public TrajectoryFollowingPositionController(final double kp, final double ki, final double kd, final double kv,
+            final double ka, final double onTargetDelta, final TrajectoryFollower.TrajectoryConfig config) {
+        follower = new TrajectoryFollower();
+        follower.configure(kp, ki, kd, kv, ka, config);
+        this.onTargetDelta = onTargetDelta;
     }
 
-    public void setGoal(TrajectoryFollower.TrajectorySetpoint current_state,
-                        double goal) {
-        m_goal = goal;
-        m_follower.setGoal(current_state, goal);
+    public void setGoal(TrajectoryFollower.TrajectorySetpoint currentState, double goal) {
+        this.goal = goal;
+        follower.setGoal(currentState, goal);
     }
 
     public double getGoal() {
-        return m_follower.getGoal();
+        return follower.getGoal();
     }
 
     public void setConfig(TrajectoryFollower.TrajectoryConfig config) {
-        m_follower.setConfig(config);
+        follower.setConfig(config);
     }
 
     public TrajectoryFollower.TrajectoryConfig getConfig() {
-        return m_follower.getConfig();
+        return follower.getConfig();
     }
 
     public void update(double position, double velocity) {
-        m_error = m_goal - position;
-        m_result = m_follower.calculate(position, velocity);
+        error = goal - position;
+        result = follower.calculate(position, velocity);
     }
 
     public TrajectoryFollower.TrajectorySetpoint getSetpoint() {
-        return m_follower.getCurrentSetpoint();
+        return follower.getCurrentSetpoint();
     }
 
     public double get() {
-        return m_result;
-    }
-
-    @Override
-    public void reset() {
-        m_result = 0;
-        m_error = 0;
-        m_follower.setGoal(m_follower.getCurrentSetpoint(), m_goal);
+        return result;
     }
 
     public boolean isFinishedTrajectory() {
-        return m_follower.isFinishedTrajectory();
+        return follower.isFinishedTrajectory();
     }
 
     @Override
     public boolean isOnTarget() {
-        return m_follower.isFinishedTrajectory()
-                && Math.abs(m_error) < m_on_target_delta;
+        return follower.isFinishedTrajectory()
+                && Math.abs(error) < onTargetDelta;
     }
 
 }

@@ -7,8 +7,6 @@ import com.milkenknights.frc2016.subsystems.Intake.IntakePosition;
 
 /**
  * This AutoMode will reach the OuterWorks and stop.
- * 
- * TODO: Test this AutoMode
  */
 public class RockWallAutoMode extends AutoMode {
 
@@ -17,8 +15,7 @@ public class RockWallAutoMode extends AutoMode {
         waitTime(0.25);
         HardwareAdapter.INTAKE.setPosition(IntakePosition.STORED);
         waitTime(1.0);
-        //HardwareAdapter.DRIVE.setDistanceSetpoint((25 * 12));
-        HardwareAdapter.DRIVE.setDistanceSetpoint((20 * 12));
+        HardwareAdapter.DRIVE.setDistanceSetpoint(20 * 12);
     }
 
 }
