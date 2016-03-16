@@ -22,32 +22,45 @@ public class Trajectory {
 
     public static class Segment {
 
-        public double pos, vel, acc, jerk, heading, dt, x, y;
+        public double pos;
+        public double vel;
+        public double acc;
+        public double jerk;
+        public double heading;
+        public double dt;
+        public double posX;
+        public double posY;
 
         public Segment() {
         }
 
-        public Segment(double pos, double vel, double acc, double jerk,
-                       double heading, double dt, double x, double y) {
+        /**
+         * Create a new path segment.
+         */
+        public Segment(final double pos, final double vel, final double acc, final double jerk, final double heading,
+                final double dt, final double posX, final double posY) {
             this.pos = pos;
             this.vel = vel;
             this.acc = acc;
             this.jerk = jerk;
             this.heading = heading;
             this.dt = dt;
-            this.x = x;
-            this.y = y;
+            this.posX = posX;
+            this.posY = posY;
         }
 
-        public Segment(Segment to_copy) {
-            pos = to_copy.pos;
-            vel = to_copy.vel;
-            acc = to_copy.acc;
-            jerk = to_copy.jerk;
-            heading = to_copy.heading;
-            dt = to_copy.dt;
-            x = to_copy.x;
-            y = to_copy.y;
+        /**
+         * Copy an existing segment.
+         */
+        public Segment(Segment toCopy) {
+            pos = toCopy.pos;
+            vel = toCopy.vel;
+            acc = toCopy.acc;
+            jerk = toCopy.jerk;
+            heading = toCopy.heading;
+            dt = toCopy.dt;
+            posX = toCopy.posX;
+            posY = toCopy.posY;
         }
 
         public String toString() {
@@ -56,35 +69,41 @@ public class Trajectory {
         }
     }
 
-    Segment[] segments_ = null;
-    boolean inverted_y_ = false;
+    Segment[] segments;
+    boolean invertedY;
 
-    public Trajectory(int length) {
-        segments_ = new Segment[length];
-        for (int i = 0; i < length; ++i) {
-            segments_[i] = new Segment();
+    /**
+     * Create a new Trajectory.
+     */
+    public Trajectory(final int length) {
+        segments = new Segment[length];
+        for (int i = 0; i < length; i++) {
+            segments[i] = new Segment();
         }
     }
 
-    public Trajectory(Segment[] segments) {
-        segments_ = segments;
+    public Trajectory(final Segment[] segments) {
+        this.segments = segments;
     }
 
-    public void setInvertedY(boolean inverted) {
-        inverted_y_ = inverted;
+    public void setInvertedY(final boolean inverted) {
+        invertedY = inverted;
     }
 
     public int getNumSegments() {
-        return segments_.length;
+        return segments.length;
     }
 
-    public Segment getSegment(int index) {
+    /**
+     * Get the segment at the provided index.
+     */
+    public Segment getSegment(final int index) {
         if (index < getNumSegments()) {
-            if (!inverted_y_) {
-                return segments_[index];
+            if (!invertedY) {
+                return segments[index];
             } else {
-                Segment segment = new Segment(segments_[index]);
-                segment.y *= -1.0;
+                Segment segment = new Segment(segments[index]);
+                segment.posY *= -1.0;
                 segment.heading = MkMath.boundAngle0to2PiRadians(2 * Math.PI - segment.heading);
                 return segment;
             }
@@ -93,53 +112,65 @@ public class Trajectory {
         }
     }
 
-    public void setSegment(int index, Segment segment) {
+    /**
+     * Set a segment in the array of segments. 
+     */
+    public void setSegment(final int index, final Segment segment) {
         if (index < getNumSegments()) {
-            segments_[index] = segment;
+            segments[index] = segment;
         }
     }
 
-    public void scale(double scaling_factor) {
-        for (int i = 0; i < getNumSegments(); ++i) {
-            segments_[i].pos *= scaling_factor;
-            segments_[i].vel *= scaling_factor;
-            segments_[i].acc *= scaling_factor;
-            segments_[i].jerk *= scaling_factor;
+    /**
+     * Scale the fields of every segment.
+     */
+    public void scale(final double scalingFactor) {
+        for (int i = 0; i < getNumSegments(); i++) {
+            segments[i].pos *= scalingFactor;
+            segments[i].vel *= scalingFactor;
+            segments[i].acc *= scalingFactor;
+            segments[i].jerk *= scalingFactor;
         }
     }
 
-    public void append(Trajectory to_append) {
-        Segment[] temp = new Segment[getNumSegments()
-                + to_append.getNumSegments()];
+    /**
+     * Append another Trajectory to this Trajectory. 
+     */
+    public void append(final Trajectory toAppend) {
+        Segment[] temp = new Segment[getNumSegments() + toAppend.getNumSegments()];
 
-        for (int i = 0; i < getNumSegments(); ++i) {
-            temp[i] = new Segment(segments_[i]);
+        for (int i = 0; i < getNumSegments(); i++) {
+            temp[i] = new Segment(segments[i]);
         }
-        for (int i = 0; i < to_append.getNumSegments(); ++i) {
-            temp[i + getNumSegments()] = new Segment(to_append.getSegment(i));
+        
+        for (int i = 0; i < toAppend.getNumSegments(); i++) {
+            temp[i + getNumSegments()] = new Segment(toAppend.getSegment(i));
         }
 
-        this.segments_ = temp;
+        this.segments = temp;
     }
 
+    /**
+     * Copy this Trajectory.
+     */
     public Trajectory copy() {
-        Trajectory cloned
-                = new Trajectory(getNumSegments());
-        cloned.segments_ = copySegments(this.segments_);
+        Trajectory cloned = new Trajectory(getNumSegments());
+        cloned.segments = copySegments(this.segments);
         return cloned;
     }
 
-    private Segment[] copySegments(Segment[] tocopy) {
-        Segment[] copied = new Segment[tocopy.length];
-        for (int i = 0; i < tocopy.length; ++i) {
-            copied[i] = new Segment(tocopy[i]);
+    private Segment[] copySegments(final Segment[] toCopy) {
+        Segment[] copied = new Segment[toCopy.length];
+        for (int i = 0; i < toCopy.length; i++) {
+            copied[i] = new Segment(toCopy[i]);
         }
         return copied;
     }
 
+    @Override
     public String toString() {
         String str = "Segment\tPos\tVel\tAcc\tJerk\tHeading\n";
-        for (int i = 0; i < getNumSegments(); ++i) {
+        for (int i = 0; i < getNumSegments(); i++) {
             Trajectory.Segment segment = getSegment(i);
             str += i + "\t";
             str += segment.pos + "\t";
@@ -157,13 +188,16 @@ public class Trajectory {
         return toString();
     }
 
+    /**
+     * The toString method but in Euclidean.
+     */
     public String toStringEuclidean() {
         String str = "Segment\tx\ty\tHeading\n";
-        for (int i = 0; i < getNumSegments(); ++i) {
+        for (int i = 0; i < getNumSegments(); i++) {
             Trajectory.Segment segment = getSegment(i);
             str += i + "\t";
-            str += segment.x + "\t";
-            str += segment.y + "\t";
+            str += segment.posX + "\t";
+            str += segment.posY + "\t";
             str += segment.heading + "\t";
             str += "\n";
         }

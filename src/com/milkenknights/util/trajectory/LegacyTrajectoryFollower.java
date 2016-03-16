@@ -7,50 +7,53 @@ package com.milkenknights.util.trajectory;
  */
 public class LegacyTrajectoryFollower {
 
-    private double kp_;
-    private double ki_;  // Not currently used, but might be in the future.
-    private double kd_;
-    private double kv_;
-    private double ka_;
-    private double last_error_;
-    private double current_heading = 0;
-    private int current_segment;
-    private Trajectory profile_;
+    private double kp;
+    private double kd;
+    private double kv;
+    private double ka;
+    private double lastError;
+    private double currentHeading = 0;
+    private int currentSegment;
+    private Trajectory profile;
     public String name;
 
     public LegacyTrajectoryFollower(final String name) {
         this.name = name;
     }
 
-    public void configure(final double kp, final double ki, final double kd, final double kv, final double ka) {
-        kp_ = kp;
-        ki_ = ki;
-        kd_ = kd;
-        kv_ = kv;
-        ka_ = ka;
+    /**
+     * Configure the constants for the Trajectory.
+     */
+    public void configure(final double kp, final double kd, final double kv, final double ka) {
+        this.kp = kp;
+        this.kd = kd;
+        this.kv = kv;
+        this.ka = ka;
     }
 
     public void reset() {
-        last_error_ = 0.0;
-        current_segment = 0;
+        lastError = 0.0;
+        currentSegment = 0;
     }
 
     public void setTrajectory(final Trajectory profile) {
-        profile_ = profile;
+        this.profile = profile;
     }
 
-    public double calculate(final double distance_so_far) {
+    /**
+     * Calculate controller result.
+     */
+    public double calculate(final double distanceSoFar) {
+        if (currentSegment < profile.getNumSegments()) {
+            final Trajectory.Segment segment = profile.getSegment(currentSegment);
+            final double error = segment.pos - distanceSoFar;
+            final double output = kp * error + kd * ((error - lastError)
+                    / segment.dt - segment.vel) + (kv * segment.vel
+                    + ka * segment.acc);
 
-        if (current_segment < profile_.getNumSegments()) {
-            final Trajectory.Segment segment = profile_.getSegment(current_segment);
-            final double error = segment.pos - distance_so_far;
-            final double output = kp_ * error + kd_ * ((error - last_error_)
-                    / segment.dt - segment.vel) + (kv_ * segment.vel
-                    + ka_ * segment.acc);
-
-            last_error_ = error;
-            current_heading = segment.heading;
-            current_segment++;
+            lastError = error;
+            currentHeading = segment.heading;
+            currentSegment++;
             return output;
         } else {
             return 0;
@@ -58,22 +61,22 @@ public class LegacyTrajectoryFollower {
     }
 
     public double getHeading() {
-        return current_heading;
+        return currentHeading;
     }
 
     public boolean isFinishedTrajectory() {
-        return current_segment >= profile_.getNumSegments();
+        return currentSegment >= profile.getNumSegments();
     }
 
     public Trajectory.Segment getCurrentSegment() {
-        return profile_.getSegment(current_segment);
+        return profile.getSegment(currentSegment);
     }
 
     public int getCurrentSegmentNumber() {
-        return current_segment;
+        return currentSegment;
     }
 
     public int getNumSegments() {
-        return profile_.getNumSegments();
+        return profile.getNumSegments();
     }
 }

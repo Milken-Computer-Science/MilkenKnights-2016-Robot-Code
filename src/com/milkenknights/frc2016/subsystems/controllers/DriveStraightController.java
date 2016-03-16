@@ -26,8 +26,8 @@ public final class DriveStraightController implements Drive.DriveController {
     public DriveStraightController(final Pose priorSetpoint, final double goalSetpoint, final double maxVelocity) {
         final TrajectoryFollower.TrajectoryConfig config = new TrajectoryFollower.TrajectoryConfig();
         config.dt = Constants.kControlLoopsDt;
-        config.max_acc = Constants.kDriveMaxAccelInchesPerSec2;
-        config.max_vel = maxVelocity;
+        config.maxAcc = Constants.kDriveMaxAccelInchesPerSec2;
+        config.maxVel = maxVelocity;
 
         distanceController = new TrajectoryFollowingPositionController(
                 Constants.kDrivePositionKp,

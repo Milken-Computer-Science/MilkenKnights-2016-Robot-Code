@@ -34,9 +34,9 @@ public final class DrivePathController implements Drive.DriveController {
     }
 
     private void init() {
-        followerLeft.configure(Constants.kDrivePositionKp, Constants.kDrivePositionKi, Constants.kDrivePositionKd,
+        followerLeft.configure(Constants.kDrivePositionKp, Constants.kDrivePositionKd,
                 Constants.kDrivePositionKv, Constants.kDrivePositionKa);
-        followerRight.configure(Constants.kDrivePositionKp, Constants.kDrivePositionKi, Constants.kDrivePositionKd,
+        followerRight.configure(Constants.kDrivePositionKp, Constants.kDrivePositionKd,
                 Constants.kDrivePositionKv, Constants.kDrivePositionKa);
     }
 

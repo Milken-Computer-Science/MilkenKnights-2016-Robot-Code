@@ -12,6 +12,9 @@ public class Path {
     protected final String name;
     protected boolean isGoLeft;
 
+    /**
+     * Create a new path.
+     */
     public Path(final String name, final Trajectory.Pair goLeftPair) {
         this.name = name;
         this.goLeftPair = goLeftPair;
@@ -22,12 +25,18 @@ public class Path {
         return name;
     }
 
+    /**
+     * Command the Trajectory to go left.
+     */
     public void goLeft() {
         isGoLeft = true;
         goLeftPair.left.setInvertedY(false);
         goLeftPair.right.setInvertedY(false);
     }
 
+    /**
+     * Command the Trajectory to go right.
+     */
     public void goRight() {
         isGoLeft = false;
         goLeftPair.left.setInvertedY(true);
@@ -42,12 +51,18 @@ public class Path {
         return isGoLeft ? goLeftPair.right : goLeftPair.left;
     }
 
+    /**
+     * Returns if a segment can be fliped.
+     */
     public boolean canFlip(final int segmentNum) {
         final Segment a = goLeftPair.right.getSegment(segmentNum);
         final Segment b = goLeftPair.left.getSegment(segmentNum);
         return a.pos == b.pos && a.vel == b.vel;
     }
 
+    /**
+     * Get the final heading.
+     */
     public double getEndHeading() {
         final int numSegments = getLeftWheelTrajectory().getNumSegments();
         final Segment lastSegment = getLeftWheelTrajectory().getSegment(numSegments - 1);

@@ -24,8 +24,8 @@ public class TurnInPlaceController implements Drive.DriveController {
     public TurnInPlaceController(final Pose poseToContinueFrom, final double destHeading, final double velocity) {
         final TrajectoryFollower.TrajectoryConfig config = new TrajectoryFollower.TrajectoryConfig();
         config.dt = Constants.kControlLoopsDt;
-        config.max_acc = Constants.kTurnMaxAccelRadsPerSec2;
-        config.max_vel = velocity;
+        config.maxAcc = Constants.kTurnMaxAccelRadsPerSec2;
+        config.maxVel = velocity;
         controller = new TrajectoryFollowingPositionController(
                 Constants.kTurnKp,
                 Constants.kTurnKi,
