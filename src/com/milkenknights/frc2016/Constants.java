@@ -2,31 +2,31 @@ package com.milkenknights.frc2016;
 
 public class Constants {
     
-    public static double kControlLoopsDt = 0.005;
+    public static final double kControlLoopsDt = 0.005;
     
     // DriveStraightController gains
-    public static double kDriveMaxSpeedInchesPerSec = 60;
-    public static double kDriveMaxAccelInchesPerSec2 = 200;
-    public static double kDrivePositionKp = 0.1; //.7
-    public static double kDrivePositionKi = 0;
-    public static double kDrivePositionKd = 0;
-    public static double kDriveStraightKp = 0.2; //3
-    public static double kDriveStraightKi = 0.0;
-    public static double kDriveStraightKd = 0.0;
-    public static double kDrivePositionKv = 0.008;
-    public static double kDrivePositionKa = 0.0017;
-    public static double kDriveOnTargetError = 0.75;
-    public static double kDrivePathHeadingFollowKp = 0.01;
+    public static final double kDriveMaxSpeedInchesPerSec = 60;
+    public static final double kDriveMaxAccelInchesPerSec2 = 200;
+    public static final double kDrivePositionKp = 0.1; //.7
+    public static final double kDrivePositionKi = 0.0;
+    public static final double kDrivePositionKd = 0.0;
+    public static final double kDriveStraightKp = 0.2; //3
+    public static final double kDriveStraightKi = 0.0;
+    public static final double kDriveStraightKd = 0.0;
+    public static final double kDrivePositionKv = 0.008;
+    public static final double kDrivePositionKa = 0.0017;
+    public static final double kDriveOnTargetError = 0.75;
+    public static final double kDrivePathHeadingFollowKp = 0.01;
 
     // TurnInPlaceController gains
-    public static double kTurnMaxSpeedRadsPerSec = 5.25;
-    public static double kTurnMaxAccelRadsPerSec2 = 3;
-    public static double kTurnKp = 0.2;
-    public static double kTurnKi = 0.0;
-    public static double kTurnKd = 0.0;
-    public static double kTurnKv = 0.085;
-    public static double kTurnKa = 0.075;
-    public static double kTurnOnTargetError = 0.05;
+    public static final double kTurnMaxSpeedRadsPerSec = 5.25;
+    public static final double kTurnMaxAccelRadsPerSec2 = 3;
+    public static final double kTurnKp = 0.2;
+    public static final double kTurnKi = 0.0;
+    public static final double kTurnKd = 0.0;
+    public static final double kTurnKv = 0.085;
+    public static final double kTurnKa = 0.075;
+    public static final double kTurnOnTargetError = 0.05;
     
     public class Dio {
         public static final int CATAPULT_HOME = 0;
