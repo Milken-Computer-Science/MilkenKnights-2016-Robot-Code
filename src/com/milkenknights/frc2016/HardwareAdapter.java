@@ -1,5 +1,6 @@
 package com.milkenknights.frc2016;
 
+import com.milkenknights.frc2016.subsystems.BallClamp;
 import com.milkenknights.frc2016.subsystems.Catapult;
 import com.milkenknights.frc2016.subsystems.Drive;
 import com.milkenknights.frc2016.subsystems.Intake;
@@ -22,6 +23,8 @@ public final class HardwareAdapter {
     public static final Drive DRIVE;
     public static final Intake INTAKE;
     public static final Catapult CATAPULT;
+    public static final BallClamp BALL_CLAMP;
+    
     public static final PowerDistributionPanel PDP;
     public static final Compressor COMPRESSOR;
     
@@ -50,7 +53,7 @@ public final class HardwareAdapter {
         final S4T360 intakeEncoder = new S4T360(Constants.Dio.INTAKE_A, Constants.Dio.INTAKE_B);
 
         final Solenoid driveShifter = new Solenoid(Constants.Pcm.ID, Constants.Pcm.DRIVE_SHIFTER);
-        final Solenoid ballHolder = new Solenoid(Constants.Pcm.ID, Constants.Pcm.BALL_HOLDER);
+        final Solenoid ballClamp = new Solenoid(Constants.Pcm.ID, Constants.Pcm.BALL_HOLDER);
         
         final MkCanTalon catapultTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.CATAPULT));
         final DigitalInput catapultHome = new DigitalInput(Constants.Dio.CATAPULT_HOME);
@@ -61,7 +64,9 @@ public final class HardwareAdapter {
         DRIVE = new Drive("Drive", driveLeftTalon, driveRightTalon, driveLeftEncoder, driveRightEncoder, 
                 driveShifter, gyro);
         INTAKE = new Intake("Intake", intakePositionTalon, intakeSpeedTalon, intakeEncoder);
-        CATAPULT = new Catapult("Catapult", catapultTalon, ballHolder, catapultEncoder, catapultHome);
+        CATAPULT = new Catapult("Catapult", catapultTalon, catapultEncoder, catapultHome);
+        BALL_CLAMP = new BallClamp("Ball Clamp", ballClamp);
+        
         PDP = new PowerDistributionPanel();
         COMPRESSOR = new Compressor(Constants.Pcm.ID);
         

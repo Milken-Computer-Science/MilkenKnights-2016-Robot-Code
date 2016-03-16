@@ -61,6 +61,7 @@ public class BehaviorManager {
     private void catapult(final Commands commands) {
         if (commands.fireCatapult && HardwareAdapter.CATAPULT.isZeroed()) {
             HardwareAdapter.CATAPULT.fire();
+            HardwareAdapter.BALL_CLAMP.open();
         }
     }
     

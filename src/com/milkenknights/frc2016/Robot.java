@@ -4,7 +4,6 @@ import com.milkenknights.frc2016.auto.AutoMode;
 import com.milkenknights.frc2016.auto.modes.RockWallAutoMode;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
 import com.milkenknights.frc2016.subsystems.Drive.DriveGear;
-import com.milkenknights.frc2016.subsystems.Intake.IntakeSpeed;
 import com.milkenknights.util.MultiLooper;
 import com.milkenknights.util.SmartDashboardUpdater;
 import com.milkenknights.util.drive.MotorPairSignal;
@@ -46,6 +45,7 @@ public class Robot extends IterativeRobot {
         smartDashboardUpdater.addSendable(HardwareAdapter.DRIVE);
         smartDashboardUpdater.addSendable(HardwareAdapter.INTAKE);
         smartDashboardUpdater.addSendable(HardwareAdapter.CATAPULT);
+        smartDashboardUpdater.addSendable(HardwareAdapter.BALL_CLAMP);
         smartDashboardUpdater.addSendable(HardwareAdapter.GRIP);
         
         visionLooper.start();
@@ -99,7 +99,6 @@ public class Robot extends IterativeRobot {
         looper.stop();
 
         HardwareAdapter.DRIVE.setOpenLoop(MotorPairSignal.NEUTRAL);
-        HardwareAdapter.INTAKE.setSpeed(IntakeSpeed.NEUTRAL);
         
         System.gc();
         System.out.println("End disabledInit()");

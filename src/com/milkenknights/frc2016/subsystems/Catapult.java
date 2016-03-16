@@ -9,7 +9,6 @@ import com.milkenknights.util.SynchronousPid;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.InterruptHandlerFunction;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Catapult extends Subsystem implements Loopable {
@@ -19,7 +18,6 @@ public class Catapult extends Subsystem implements Loopable {
     }
     
     private final MkCanTalon talon;
-    private final Solenoid ballHolder;
     private final MkEncoder encoder;
     private final DigitalInput home;
     private final SynchronousPid pid;
@@ -33,8 +31,7 @@ public class Catapult extends Subsystem implements Loopable {
      * @param name The name of the subsystem
      * @param talon The talon to control the catapult
      */
-    public Catapult(final String name, final MkCanTalon talon, final Solenoid ballHolder, final MkEncoder encoder,
-            final DigitalInput home) {
+    public Catapult(final String name, final MkCanTalon talon, final MkEncoder encoder, final DigitalInput home) {
         super(name);
         
         talon.enableBrakeMode(true);
@@ -58,7 +55,6 @@ public class Catapult extends Subsystem implements Loopable {
         pid.setOutputRange(Constants.Subsystems.Catapult.DEADBAND, 1);
 
         this.talon = talon;
-        this.ballHolder = ballHolder;
         this.encoder = encoder;
         this.home = home;
         
@@ -105,11 +101,9 @@ public class Catapult extends Subsystem implements Loopable {
                 }
                 break;
             case READY:
-                ballHolder.set(false);
                 talon.set(0.0);
                 break;
             case FIRE:
-                ballHolder.set(true);
                 pid.setSetpoint(shotCount + 1);
                 talon.set(pid.calculate(encoder.getDistance()));
                 if (pid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR)) {
