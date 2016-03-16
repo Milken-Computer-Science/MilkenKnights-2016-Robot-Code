@@ -39,6 +39,14 @@ public class Button {
         return joystick.getRawButton(rawButton);
     }
     
+    public int getRawButton() {
+        return rawButton;
+    }
+    
+    public Joystick getJoystick() {
+        return joystick;
+    }
+    
     /**
      * Update the last state of the button.
      */

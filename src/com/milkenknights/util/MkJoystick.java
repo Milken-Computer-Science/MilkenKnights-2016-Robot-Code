@@ -2,11 +2,11 @@ package com.milkenknights.util;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
-public abstract class MkJoystick extends Joystick {
+public class MkJoystick extends Joystick {
     
-    private final ArrayList<Button> buttons;
+    private final HashMap<Integer, Button> buttons;
     
     /**
      * Create a new MkJoystick.
@@ -14,17 +14,20 @@ public abstract class MkJoystick extends Joystick {
     public MkJoystick(final int port) {
         super(port);
         
-        buttons = new ArrayList<Button>();
-        for (int i = 1; i <= getNumberOfButtons(); i++) {
-            buttons.add(new Button(this, i));
-        }
-        buttons.trimToSize();
+        buttons = new HashMap<Integer, Button>();
     }
     
+    /**
+     * Gets a button of the joystick.  Creates a new Button object if one did not already exist. 
+     * 
+     * @param button The raw button number of the button to get
+     * @return The button
+     */
     public Button getButton(final int button) {
+        if (!buttons.containsKey(button)) {
+            buttons.put(button, new Button(this, button));
+        }
         return buttons.get(button);
     }
-    
-    public abstract int getNumberOfButtons();
 
 }
