@@ -161,15 +161,14 @@ public class TrajectoryFollower {
             setpoint.acc = nextState.acc;
 
         }
-        double error = setpoint.pos - position;
+        final double error = setpoint.pos - position;
         if (reset) {
             // Prevent jump in derivative term when we have been reset.
             reset = false;
             lastError = error;
             errorSum = 0;
         }
-        double output = kp * error + kd
-                * ((error - lastError) / dt - setpoint.vel)
+        double output = kp * error + kd * ((error - lastError) / dt - setpoint.vel)
                 + (kv * setpoint.vel + ka * setpoint.acc);
         if (output < 1.0 && output > -1.0) {
             // Only integrate error if the output isn't already saturated.

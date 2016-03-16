@@ -1,13 +1,12 @@
 package com.milkenknights.frc2016.subsystems.controllers;
 
-import static com.milkenknights.util.trajectory.TrajectoryFollower.TrajectorySetpoint;
-
 import com.milkenknights.frc2016.Constants;
 import com.milkenknights.frc2016.subsystems.Drive;
 import com.milkenknights.util.Pose;
 import com.milkenknights.util.SynchronousPid;
 import com.milkenknights.util.drive.MotorPairSignal;
 import com.milkenknights.util.trajectory.TrajectoryFollower;
+import com.milkenknights.util.trajectory.TrajectoryFollower.TrajectorySetpoint;
 
 public final class DriveStraightController implements Drive.DriveController {
 

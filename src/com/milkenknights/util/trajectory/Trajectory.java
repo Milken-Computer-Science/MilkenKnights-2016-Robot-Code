@@ -9,15 +9,22 @@ import com.milkenknights.util.MkMath;
  * @author Jared341
  */
 public class Trajectory {
+    
+    private static final String TAB = "\t";
+    private static final String NEWLINE = "\n";
+    
+    private Segment[] segments;
+    private boolean invertedY;
 
     public static class Pair {
-        public Pair(Trajectory left, Trajectory right) {
-            this.left = left;
-            this.right = right;
-        }
 
         public Trajectory left;
         public Trajectory right;
+        
+        public Pair(final Trajectory left, final Trajectory right) {
+            this.left = left;
+            this.right = right;
+        }
     }
 
     public static class Segment {
@@ -30,9 +37,6 @@ public class Trajectory {
         public double dt;
         public double posX;
         public double posY;
-
-        public Segment() {
-        }
 
         /**
          * Create a new path segment.
@@ -52,7 +56,7 @@ public class Trajectory {
         /**
          * Copy an existing segment.
          */
-        public Segment(Segment toCopy) {
+        public Segment(final Segment toCopy) {
             pos = toCopy.pos;
             vel = toCopy.vel;
             acc = toCopy.acc;
@@ -62,15 +66,16 @@ public class Trajectory {
             posX = toCopy.posX;
             posY = toCopy.posY;
         }
+        
+        public Segment() {
+            // Default
+        }
 
         public String toString() {
             return "pos: " + pos + "; vel: " + vel + "; acc: " + acc + "; jerk: "
                     + jerk + "; heading: " + heading;
         }
     }
-
-    Segment[] segments;
-    boolean invertedY;
 
     /**
      * Create a new Trajectory.
@@ -98,18 +103,20 @@ public class Trajectory {
      * Get the segment at the provided index.
      */
     public Segment getSegment(final int index) {
+        Segment segment;
         if (index < getNumSegments()) {
             if (!invertedY) {
-                return segments[index];
+                segment = segments[index];
             } else {
-                Segment segment = new Segment(segments[index]);
-                segment.posY *= -1.0;
-                segment.heading = MkMath.boundAngle0to2PiRadians(2 * Math.PI - segment.heading);
-                return segment;
+                Segment seg = new Segment(segments[index]);
+                seg.posY *= -1.0;
+                seg.heading = MkMath.boundAngle0to2PiRadians(2 * Math.PI - seg.heading);
+                segment = seg;
             }
         } else {
-            return new Segment();
+            segment = new Segment();
         }
+        return segment;
     }
 
     /**
@@ -154,7 +161,7 @@ public class Trajectory {
      * Copy this Trajectory.
      */
     public Trajectory copy() {
-        Trajectory cloned = new Trajectory(getNumSegments());
+        final Trajectory cloned = new Trajectory(getNumSegments());
         cloned.segments = copySegments(this.segments);
         return cloned;
     }
@@ -171,14 +178,14 @@ public class Trajectory {
     public String toString() {
         String str = "Segment\tPos\tVel\tAcc\tJerk\tHeading\n";
         for (int i = 0; i < getNumSegments(); i++) {
-            Trajectory.Segment segment = getSegment(i);
-            str += i + "\t";
-            str += segment.pos + "\t";
-            str += segment.vel + "\t";
-            str += segment.acc + "\t";
-            str += segment.jerk + "\t";
-            str += segment.heading + "\t";
-            str += "\n";
+            final Trajectory.Segment segment = getSegment(i);
+            str += i + TAB;
+            str += segment.pos + TAB;
+            str += segment.vel + TAB;
+            str += segment.acc + TAB;
+            str += segment.jerk + TAB;
+            str += segment.heading + TAB;
+            str += NEWLINE;
         }
 
         return str;
@@ -194,12 +201,12 @@ public class Trajectory {
     public String toStringEuclidean() {
         String str = "Segment\tx\ty\tHeading\n";
         for (int i = 0; i < getNumSegments(); i++) {
-            Trajectory.Segment segment = getSegment(i);
-            str += i + "\t";
-            str += segment.posX + "\t";
-            str += segment.posY + "\t";
-            str += segment.heading + "\t";
-            str += "\n";
+            final Trajectory.Segment segment = getSegment(i);
+            str += i + TAB;
+            str += segment.posX + TAB;
+            str += segment.posY + TAB;
+            str += segment.heading + TAB;
+            str += NEWLINE;
         }
 
         return str;

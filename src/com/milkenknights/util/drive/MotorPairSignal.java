@@ -6,10 +6,10 @@ package com.milkenknights.util.drive;
  */
 public class MotorPairSignal {
 
+    public static final MotorPairSignal NEUTRAL = new MotorPairSignal(0.0, 0.0);
+    
     public final double leftMotor;
     public final double rightMotor;
-    
-    public static final MotorPairSignal NEUTRAL = new MotorPairSignal(0.0, 0.0);
     
     /**
      * 

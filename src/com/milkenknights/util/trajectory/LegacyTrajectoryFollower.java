@@ -7,15 +7,16 @@ package com.milkenknights.util.trajectory;
  */
 public class LegacyTrajectoryFollower {
 
+    public final String name;
+    
     private double kp;
     private double kd;
     private double kv;
     private double ka;
     private double lastError;
-    private double currentHeading = 0;
+    private double currentHeading;
     private int currentSegment;
     private Trajectory profile;
-    public String name;
 
     public LegacyTrajectoryFollower(final String name) {
         this.name = name;
@@ -44,20 +45,18 @@ public class LegacyTrajectoryFollower {
      * Calculate controller result.
      */
     public double calculate(final double distanceSoFar) {
+        double output = 0;
         if (currentSegment < profile.getNumSegments()) {
             final Trajectory.Segment segment = profile.getSegment(currentSegment);
             final double error = segment.pos - distanceSoFar;
-            final double output = kp * error + kd * ((error - lastError)
-                    / segment.dt - segment.vel) + (kv * segment.vel
+            output = kp * error + kd * (error - lastError) / segment.dt - segment.vel + (kv * segment.vel
                     + ka * segment.acc);
 
             lastError = error;
             currentHeading = segment.heading;
             currentSegment++;
-            return output;
-        } else {
-            return 0;
         }
+        return output;
     }
 
     public double getHeading() {
