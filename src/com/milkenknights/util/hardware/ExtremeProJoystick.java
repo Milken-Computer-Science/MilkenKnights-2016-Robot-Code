@@ -9,7 +9,7 @@ public class ExtremeProJoystick extends MkJoystick {
     /**
      * Create a new ExtremeProJoystick.
      */
-    public ExtremeProJoystick(int port) {
+    public ExtremeProJoystick(final int port) {
         super(port);
     }
 

@@ -11,7 +11,7 @@ public abstract class MkJoystick extends Joystick {
     /**
      * Create a new MkJoystick.
      */
-    public MkJoystick(int port) {
+    public MkJoystick(final int port) {
         super(port);
         
         buttons = new ArrayList<Button>();

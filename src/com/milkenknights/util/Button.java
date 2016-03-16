@@ -17,7 +17,7 @@ public class Button {
      * Returns true if the button is pressed and this is the first time it is being run.
      */
     public boolean isPressed() {
-        boolean isPressed =  !lastState && joystick.getRawButton(rawButton);
+        final boolean isPressed =  !lastState && joystick.getRawButton(rawButton);
         update();
         return isPressed;
     }
@@ -26,7 +26,7 @@ public class Button {
      * Returns true when the button is released.
      */
     public boolean isReleased() {
-        boolean isPressed = lastState && joystick.getRawButton(rawButton);
+        final boolean isPressed = lastState && joystick.getRawButton(rawButton);
         update();
         return isPressed;
     }
