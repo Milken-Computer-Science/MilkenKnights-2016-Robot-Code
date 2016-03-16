@@ -31,7 +31,7 @@ public final class HardwareAdapter {
     public static final Joystick OPERATOR_STICK;
     
     /**
-     * Initalize the robot hardware.
+     * Initialize the robot hardware.
      */
     static {
         System.out.println("Init hardware");
