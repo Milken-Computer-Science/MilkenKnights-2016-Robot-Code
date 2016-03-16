@@ -4,10 +4,10 @@ import com.milkenknights.util.Controller;
 import com.milkenknights.util.trajectory.TrajectoryFollower;
 
 public class TrajectoryFollowingPositionController extends Controller {
-    private TrajectoryFollower follower;
+    private final TrajectoryFollower follower;
     private double goal;
     private double error;
-    private double onTargetDelta;
+    private final double onTargetDelta;
     private double result;
 
     /**

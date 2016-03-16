@@ -10,12 +10,12 @@ import com.milkenknights.util.trajectory.Trajectory.Segment;
 public class Path {
     protected final Trajectory.Pair goLeftPair;
     protected final String name;
-    protected boolean goLeft;
+    protected boolean isGoLeft;
 
     public Path(final String name, final Trajectory.Pair goLeftPair) {
         this.name = name;
         this.goLeftPair = goLeftPair;
-        this.goLeft = true;
+        this.isGoLeft = true;
     }
 
     public String getName() {
@@ -23,23 +23,23 @@ public class Path {
     }
 
     public void goLeft() {
-        goLeft = true;
+        isGoLeft = true;
         goLeftPair.left.setInvertedY(false);
         goLeftPair.right.setInvertedY(false);
     }
 
     public void goRight() {
-        goLeft = false;
+        isGoLeft = false;
         goLeftPair.left.setInvertedY(true);
         goLeftPair.right.setInvertedY(true);
     }
 
     public Trajectory getLeftWheelTrajectory() {
-        return goLeft ? goLeftPair.left : goLeftPair.right;
+        return isGoLeft ? goLeftPair.left : goLeftPair.right;
     }
 
     public Trajectory getRightWheelTrajectory() {
-        return goLeft ? goLeftPair.right : goLeftPair.left;
+        return isGoLeft ? goLeftPair.right : goLeftPair.left;
     }
 
     public boolean canFlip(final int segmentNum) {
