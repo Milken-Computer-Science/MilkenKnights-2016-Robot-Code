@@ -6,19 +6,18 @@ import com.milkenknights.util.drive.ArcadeDriveHelper;
 public class BehaviorManager {
     
     private final ArcadeDriveHelper driveHelper;
-    private boolean driveReversed = false;
+    private boolean driveReversed;
     
     public BehaviorManager() {
         driveHelper = new ArcadeDriveHelper(HardwareAdapter.DRIVE);
     }
     
     /**
-     * Update the robot subsystems with the latest commands. 
+     * Update the drive subsystem with the latest commands.
      * 
      * @param commands The commands
      */
-    public void update(final Commands commands) {
-
+    private void drive(final Commands commands) {
         if (commands.reverseDrive) {
             driveReversed = ! driveReversed;
         }
@@ -37,17 +36,42 @@ public class BehaviorManager {
         if (commands.driveGear != null && commands.driveGear != HardwareAdapter.DRIVE.getGear()) {
             HardwareAdapter.DRIVE.setGear(commands.driveGear);
         }
-        
-        if (commands.fireCatapult) {
-            HardwareAdapter.CATAPULT.fire();
-        }
-        
+    }
+    
+    /**
+     * Update the intake subsystem with the latest commands.
+     * 
+     * @param commands The commands
+     */
+    private void intake(final Commands commands) {
         if (commands.intakePosition != null && commands.intakePosition != HardwareAdapter.INTAKE.getPosition()) {
             HardwareAdapter.INTAKE.setPosition(commands.intakePosition);
         }
         
         if (commands.intakeSpeed != null && commands.intakeSpeed != HardwareAdapter.INTAKE.getSpeed()) {
             HardwareAdapter.INTAKE.setSpeed(commands.intakeSpeed);
-        }        
+        }
+    }
+    
+    /**
+     * Update the catapult subsystem with the latest commands.
+     * 
+     * @param commands The commands
+     */
+    private void catapult(final Commands commands) {
+        if (commands.fireCatapult && HardwareAdapter.CATAPULT.isZeroed()) {
+            HardwareAdapter.CATAPULT.fire();
+        }
+    }
+    
+    /**
+     * Update the robot subsystems with the latest commands. 
+     * 
+     * @param commands The commands
+     */
+    public void update(final Commands commands) {
+        drive(commands);
+        intake(commands);
+        catapult(commands);
     }
 }

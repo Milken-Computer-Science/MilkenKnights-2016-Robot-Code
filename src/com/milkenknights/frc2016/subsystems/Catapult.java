@@ -78,6 +78,10 @@ public class Catapult extends Subsystem implements Loopable {
     public CatapultState getState() {
         return state;
     }
+    
+    public boolean isZeroed() {
+        return zeroed;
+    }
 
     @Override
     public void updateSmartDashboard() {
@@ -101,11 +105,11 @@ public class Catapult extends Subsystem implements Loopable {
                 }
                 break;
             case READY:
-            	ballHolder.set(false);
+                ballHolder.set(false);
                 talon.set(0.0);
                 break;
             case FIRE:
-            	ballHolder.set(true);
+                ballHolder.set(true);
                 pid.setSetpoint(shotCount + 1);
                 talon.set(pid.calculate(encoder.getDistance()));
                 if (pid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR)) {
@@ -114,7 +118,7 @@ public class Catapult extends Subsystem implements Loopable {
                 }
                 break;
             case ZERO:
-            	if (!zeroed) {
+                if (!zeroed) {
                     talon.set(Constants.Subsystems.Catapult.DEADBAND);
                 } else {
                     home.disableInterrupts();

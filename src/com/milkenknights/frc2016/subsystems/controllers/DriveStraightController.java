@@ -11,17 +11,25 @@ import com.milkenknights.util.trajectory.TrajectoryFollower;
 
 public class DriveStraightController implements Drive.DriveController {
 
-    private TrajectoryFollowingPositionController mDistanceController;
-    private SynchronousPid mTurnPid;
-    private Pose mSetpointRelativePose;
+    private final TrajectoryFollowingPositionController distanceController;
+    private final SynchronousPid turnPid;
+    private final Pose setpointRelativePose;
 
-    public DriveStraightController(Pose priorSetpoint, double goalSetpoint, double maxVelocity) {
-        TrajectoryFollower.TrajectoryConfig config = new TrajectoryFollower.TrajectoryConfig();
+    /**
+     * Create a new DriveStraightController.  This will allow the program to calculate the PID for driving the robot in
+     * a straight line.  Calculates error by taking the average distance from both sides and using a gyro.
+     * 
+     * @param priorSetpoint The previous pose to continue from
+     * @param goalSetpoint The distance setpoint
+     * @param maxVelocity The maximum velocity to travel at
+     */
+    public DriveStraightController(final Pose priorSetpoint, final double goalSetpoint, final double maxVelocity) {
+        final TrajectoryFollower.TrajectoryConfig config = new TrajectoryFollower.TrajectoryConfig();
         config.dt = Constants.kControlLoopsDt;
         config.max_acc = Constants.kDriveMaxAccelInchesPerSec2;
         config.max_vel = maxVelocity;
 
-        mDistanceController = new TrajectoryFollowingPositionController(
+        distanceController = new TrajectoryFollowingPositionController(
                 Constants.kDrivePositionKp,
                 Constants.kDrivePositionKi,
                 Constants.kDrivePositionKd,
@@ -30,18 +38,18 @@ public class DriveStraightController implements Drive.DriveController {
                 Constants.kDriveOnTargetError,
                 config);
 
-        TrajectorySetpoint initialSetpoint = new TrajectorySetpoint();
+        final TrajectorySetpoint initialSetpoint = new TrajectorySetpoint();
         initialSetpoint.pos = encoderDistance(priorSetpoint);
         initialSetpoint.vel = encoderVelocity(priorSetpoint);
-        mDistanceController.setGoal(initialSetpoint, goalSetpoint);
+        distanceController.setGoal(initialSetpoint, goalSetpoint);
 
-        mTurnPid = new SynchronousPid();
-        mTurnPid.setPid(
+        turnPid = new SynchronousPid();
+        turnPid.setPid(
                 Constants.kDriveStraightKp,
                 Constants.kDriveStraightKi,
                 Constants.kDriveStraightKd);
-        mTurnPid.setSetpoint(priorSetpoint.getHeading());
-        mSetpointRelativePose = new Pose(
+        turnPid.setSetpoint(priorSetpoint.getHeading());
+        setpointRelativePose = new Pose(
                 priorSetpoint.getLeftDistance(),
                 priorSetpoint.getRightDistance(),
                 0,
@@ -51,46 +59,46 @@ public class DriveStraightController implements Drive.DriveController {
     }
 
     @Override
-    public MotorPairSignal update(Pose currentPose) {
-        mDistanceController.update(
+    public MotorPairSignal update(final Pose currentPose) {
+        distanceController.update(
                 (currentPose.getLeftDistance() + currentPose.getRightDistance()) / 2.0,
                 (currentPose.getLeftVelocity() + currentPose.getRightVelocity()) / 2.0);
-        double throttle = mDistanceController.get();
-        double turn = mTurnPid.calculate(currentPose.getHeading());
+        final double throttle = distanceController.get();
+        final double turn = turnPid.calculate(currentPose.getHeading());
 
         return new MotorPairSignal(throttle + turn, throttle - turn);
     }
 
     @Override
     public Pose getCurrentSetpoint() {
-        TrajectorySetpoint trajectorySetpoint = mDistanceController.getSetpoint();
-        double dist = trajectorySetpoint.pos;
-        double velocity = trajectorySetpoint.vel;
+        final TrajectorySetpoint trajectorySetpoint = distanceController.getSetpoint();
+        final double dist = trajectorySetpoint.pos;
+        final double velocity = trajectorySetpoint.vel;
         return new Pose(
-                mSetpointRelativePose.getLeftDistance() + dist,
-                mSetpointRelativePose.getRightDistance() + dist,
-                mSetpointRelativePose.getLeftVelocity() + velocity,
-                mSetpointRelativePose.getRightVelocity() + velocity,
-                mSetpointRelativePose.getHeading(),
-                mSetpointRelativePose.getHeadingVelocity());
+                setpointRelativePose.getLeftDistance() + dist,
+                setpointRelativePose.getRightDistance() + dist,
+                setpointRelativePose.getLeftVelocity() + velocity,
+                setpointRelativePose.getRightVelocity() + velocity,
+                setpointRelativePose.getHeading(),
+                setpointRelativePose.getHeadingVelocity());
     }
 
-    public static double encoderVelocity(Pose pose) {
+    public double encoderVelocity(final Pose pose) {
         return (pose.getLeftVelocity() + pose.getRightVelocity()) / 2.0;
     }
 
-    public static double encoderDistance(Pose pose) {
+    public double encoderDistance(final Pose pose) {
         return (pose.getLeftDistance() + pose.getRightDistance()) / 2.0;
     }
 
     @Override
     public boolean isOnTarget() {
-        return mDistanceController.isOnTarget();
+        return distanceController.isOnTarget();
     }
 
-	@Override
-	public double getError() {
-		return mDistanceController.get();
-	}
+    @Override
+    public double getError() {
+        return distanceController.get();
+    }
 
 }
