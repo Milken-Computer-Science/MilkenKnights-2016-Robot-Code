@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj.util.BoundaryException;
  * called by the user from his own thread)
  */
 public class SynchronousPid {
+    
+    public static final String BOUNDERY_EXCEPTION_MESSAGE = "Lower bound is greater than upper bound";
+    
     private double proportionalCoefficient; // factor for "proportional" control
     private double integralCoefficient;     // factor for "integral" control
     private double derivativeCoefficient;   // factor for "derivative" control
@@ -59,15 +62,14 @@ public class SynchronousPid {
             }
         }
 
-        if ((error * proportionalCoefficient < maximumOutput) && (error * proportionalCoefficient > minimumOutput)) {
+        if (error * proportionalCoefficient < maximumOutput && error * proportionalCoefficient > minimumOutput) {
             totalError += error;
         } else {
             totalError = 0;
         }
 
-        result = (proportionalCoefficient * error 
-                + integralCoefficient * totalError 
-                + derivativeCoefficient * (error - prevError));
+        result = proportionalCoefficient * error + integralCoefficient * totalError + derivativeCoefficient
+                * (error - prevError);
         prevError = error;
 
         if (result > maximumOutput) {
@@ -159,7 +161,7 @@ public class SynchronousPid {
      */
     public void setInputRange(final double minimumInput, final double maximumInput) {
         if (minimumInput > maximumInput) {
-            throw new BoundaryException("Lower bound is greater than upper bound");
+            throw new BoundaryException(BOUNDERY_EXCEPTION_MESSAGE);
         }
         this.minimumInput = minimumInput;
         this.maximumInput = maximumInput;
@@ -174,7 +176,7 @@ public class SynchronousPid {
      */
     public void setOutputRange(final double minimumOutput, final double maximumOutput) {
         if (minimumOutput > maximumOutput) {
-            throw new BoundaryException("Lower bound is greater than upper bound");
+            throw new BoundaryException(BOUNDERY_EXCEPTION_MESSAGE);
         }
         this.minimumOutput = minimumOutput;
         this.maximumOutput = maximumOutput;

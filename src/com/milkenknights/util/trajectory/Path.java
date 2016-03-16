@@ -8,44 +8,44 @@ import com.milkenknights.util.trajectory.Trajectory.Segment;
  * @author Jared341
  */
 public class Path {
-    protected Trajectory.Pair go_left_pair_;
-    protected String name_;
-    protected boolean go_left_;
+    protected final Trajectory.Pair goLeftPair;
+    protected final String name;
+    protected boolean goLeft;
 
-    public Path(final String name, final Trajectory.Pair go_left_pair) {
-        name_ = name;
-        go_left_pair_ = go_left_pair;
-        go_left_ = true;
+    public Path(final String name, final Trajectory.Pair goLeftPair) {
+        this.name = name;
+        this.goLeftPair = goLeftPair;
+        this.goLeft = true;
     }
 
     public String getName() {
-        return name_;
+        return name;
     }
 
     public void goLeft() {
-        go_left_ = true;
-        go_left_pair_.left.setInvertedY(false);
-        go_left_pair_.right.setInvertedY(false);
+        goLeft = true;
+        goLeftPair.left.setInvertedY(false);
+        goLeftPair.right.setInvertedY(false);
     }
 
     public void goRight() {
-        go_left_ = false;
-        go_left_pair_.left.setInvertedY(true);
-        go_left_pair_.right.setInvertedY(true);
+        goLeft = false;
+        goLeftPair.left.setInvertedY(true);
+        goLeftPair.right.setInvertedY(true);
     }
 
     public Trajectory getLeftWheelTrajectory() {
-        return (go_left_ ? go_left_pair_.left : go_left_pair_.right);
+        return goLeft ? goLeftPair.left : goLeftPair.right;
     }
 
     public Trajectory getRightWheelTrajectory() {
-        return (go_left_ ? go_left_pair_.right : go_left_pair_.left);
+        return goLeft ? goLeftPair.right : goLeftPair.left;
     }
 
     public boolean canFlip(final int segmentNum) {
-        final Segment a = go_left_pair_.right.getSegment(segmentNum);
-        final Segment b = go_left_pair_.left.getSegment(segmentNum);
-        return (a.pos == b.pos) && (a.vel == b.vel);
+        final Segment a = goLeftPair.right.getSegment(segmentNum);
+        final Segment b = goLeftPair.left.getSegment(segmentNum);
+        return a.pos == b.pos && a.vel == b.vel;
     }
 
     public double getEndHeading() {

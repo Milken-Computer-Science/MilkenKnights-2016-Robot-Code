@@ -56,7 +56,7 @@ public class MkCanTalon implements SpeedController {
      * Gets if the motor is inverted as either a positive or negative value.
      */
     private double sign() {
-        return (invert ? -1.0 : 1.0);
+        return invert ? -1.0 : 1.0;
     }
     
     /**

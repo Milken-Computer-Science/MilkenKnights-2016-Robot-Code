@@ -9,7 +9,7 @@ import com.milkenknights.util.SynchronousPid;
 import com.milkenknights.util.drive.MotorPairSignal;
 import com.milkenknights.util.trajectory.TrajectoryFollower;
 
-public class DriveStraightController implements Drive.DriveController {
+public final class DriveStraightController implements Drive.DriveController {
 
     private final TrajectoryFollowingPositionController distanceController;
     private final SynchronousPid turnPid;

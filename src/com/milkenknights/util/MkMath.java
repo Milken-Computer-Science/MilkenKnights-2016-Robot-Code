@@ -6,6 +6,8 @@ package com.milkenknights.util;
  */
 public final class MkMath {
     
+    public static final double DEGREES_IN_A_CIRCLE = 360.0;
+    
     private MkMath() {
         // This is a utility class
     }
@@ -41,11 +43,11 @@ public final class MkMath {
     public static double boundAngle0to360Degrees(final double angle) {
         double boundedAngle = angle;
         // Naive algorithm
-        while (boundedAngle >= 360.0) {
-            boundedAngle -= 360.0;
+        while (boundedAngle >= DEGREES_IN_A_CIRCLE) {
+            boundedAngle -= DEGREES_IN_A_CIRCLE;
         }
         while (boundedAngle < 0.0) {
-            boundedAngle += 360.0;
+            boundedAngle += DEGREES_IN_A_CIRCLE;
         }
         return boundedAngle;
     }
@@ -57,11 +59,11 @@ public final class MkMath {
     public static double boundAngleNeg180to180Degrees(final double angle) {
         double boundedAngle = angle;
         // Naive algorithm
-        while (boundedAngle >= 180.0) {
-            boundedAngle -= 360.0;
+        while (boundedAngle >= DEGREES_IN_A_CIRCLE / 2.0) {
+            boundedAngle -= DEGREES_IN_A_CIRCLE;
         }
-        while (boundedAngle < -180.0) {
-            boundedAngle += 360.0;
+        while (boundedAngle < -DEGREES_IN_A_CIRCLE / 2.0) {
+            boundedAngle += DEGREES_IN_A_CIRCLE;
         }
         return boundedAngle;
     }

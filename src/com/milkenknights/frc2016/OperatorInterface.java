@@ -18,7 +18,12 @@ public class OperatorInterface {
      */
     public Commands getCommands() {
         reset();
-        
+        getDriverCommands();
+        getOperatorCommands();
+        return commands;
+    }
+    
+    private void getDriverCommands() {
         commands.driveSpeed = -HardwareAdapter.DRIVE_STICK.getY();
         commands.driveRotate = -HardwareAdapter.DRIVE_STICK.getTwist() * 1.5;
         
@@ -35,7 +40,9 @@ public class OperatorInterface {
         if (HardwareAdapter.DRIVE_STICK.getButton(8).isPressed()) {
             commands.reverseDrive = true;
         }
-        
+    }
+    
+    private void getOperatorCommands() {
         if (HardwareAdapter.OPERATOR_STICK.getButton(3).isPressed()) {
             commands.intakePosition = IntakePosition.PROTECT;
         } else if (HardwareAdapter.OPERATOR_STICK.getButton(2).isPressed()) {
@@ -51,7 +58,5 @@ public class OperatorInterface {
         } else {
             commands.intakeSpeed = IntakeSpeed.NEUTRAL;
         }
-        
-        return commands;
     }
 }

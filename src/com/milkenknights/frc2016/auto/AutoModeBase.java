@@ -5,6 +5,12 @@ import com.milkenknights.frc2016.auto.actions.Action;
 
 import edu.wpi.first.wpilibj.Timer;
 
+import java.util.concurrent.TimeUnit;
+
+
+/**
+ * Base class for an AutoMode.
+ */
 public abstract class AutoModeBase implements Runnable {
     
     private Thread thread;
@@ -74,7 +80,7 @@ public abstract class AutoModeBase implements Runnable {
         while (isActiveWithThrow() && !action.isFinished()) {
             action.update();
             try {
-                Thread.sleep((long) (Constants.Auto.ACTION_UPDATE_PERIOD * 1000.0));
+                Thread.sleep((long) (Constants.Auto.ACTION_UPDATE_PERIOD * TimeUnit.SECONDS.toMillis(1)));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

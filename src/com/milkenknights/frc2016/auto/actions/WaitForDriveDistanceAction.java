@@ -28,7 +28,7 @@ public class WaitForDriveDistanceAction extends TimeoutAction {
     public boolean isFinished() {
         final Pose pose = HardwareAdapter.DRIVE.getPhysicalPose();
         final double avg = (pose.getLeftDistance() + pose.getRightDistance()) / 2.0;
-        return (positive ? avg >= distance : avg <= distance) || super.isFinished();
+        return positive ? avg >= distance : avg <= distance || super.isFinished();
     }
     
 }

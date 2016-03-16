@@ -15,7 +15,7 @@ import com.milkenknights.util.trajectory.Trajectory;
  *
  * @author Tom Bottiglieri
  */
-public class DrivePathController implements Drive.DriveController {
+public final class DrivePathController implements Drive.DriveController {
     
     protected Trajectory trajectory;
     protected LegacyTrajectoryFollower followerLeft = new LegacyTrajectoryFollower("left");
@@ -24,7 +24,7 @@ public class DrivePathController implements Drive.DriveController {
     protected double heading;
     protected double turn = -Constants.kDrivePathHeadingFollowKp;
 
-    public DrivePathController(Path path) {
+    public DrivePathController(final Path path) {
         init();
         loadProfile(path.getLeftWheelTrajectory(), path.getRightWheelTrajectory(), 1.0, 0.0);
     }
@@ -34,16 +34,14 @@ public class DrivePathController implements Drive.DriveController {
     }
 
     private void init() {
-        followerLeft.configure(Constants.kDrivePositionKp,
-                Constants.kDrivePositionKi, Constants.kDrivePositionKd,
+        followerLeft.configure(Constants.kDrivePositionKp, Constants.kDrivePositionKi, Constants.kDrivePositionKd,
                 Constants.kDrivePositionKv, Constants.kDrivePositionKa);
-        followerRight.configure(Constants.kDrivePositionKp,
-                Constants.kDrivePositionKi, Constants.kDrivePositionKd,
+        followerRight.configure(Constants.kDrivePositionKp, Constants.kDrivePositionKi, Constants.kDrivePositionKd,
                 Constants.kDrivePositionKv, Constants.kDrivePositionKa);
     }
 
-    private void loadProfile(Trajectory leftProfile, Trajectory rightProfile,
-                             double direction, double heading) {
+    private void loadProfile(final Trajectory leftProfile, final Trajectory rightProfile, final double direction,
+            final double heading) {
         reset();
         followerLeft.setTrajectory(leftProfile);
         followerRight.setTrajectory(rightProfile);
@@ -51,8 +49,7 @@ public class DrivePathController implements Drive.DriveController {
         this.heading = heading;
     }
 
-    public void loadProfileNoReset(Trajectory leftProfile,
-                                   Trajectory rightProfile) {
+    public void loadProfileNoReset(final Trajectory leftProfile, final Trajectory rightProfile) {
         followerLeft.setTrajectory(leftProfile);
         followerRight.setTrajectory(rightProfile);
     }
@@ -70,35 +67,31 @@ public class DrivePathController implements Drive.DriveController {
         return followerLeft.getNumSegments();
     }
 
-    public void setTrajectory(Trajectory t) {
-        this.trajectory = t;
-    }
-
-    public double getGoal() {
-        return 0;
+    public void setTrajectory(final Trajectory trajectory) {
+        this.trajectory = trajectory;
     }
 
     @Override
-    public MotorPairSignal update(Pose pose) {
-        if (isOnTarget()) {
-            return new MotorPairSignal(0, 0);
-        } else {
-            double distanceL = direction * pose.getLeftDistance();
-            double distanceR = direction * pose.getRightDistance();
+    public MotorPairSignal update(final Pose pose) {
+        MotorPairSignal signal = MotorPairSignal.NEUTRAL;
+        if (!isOnTarget()) {
+            final double distanceL = direction * pose.getLeftDistance();
+            final double distanceR = direction * pose.getRightDistance();
 
-            double speedLeft = direction * followerLeft.calculate(distanceL);
-            double speedRight = direction * followerRight.calculate(distanceR);
+            final double speedLeft = direction * followerLeft.calculate(distanceL);
+            final double speedRight = direction * followerRight.calculate(distanceR);
 
-            double goalHeading = followerLeft.getHeading();
-            double observedHeading = -pose.getHeading();
+            final double goalHeading = followerLeft.getHeading();
+            final double observedHeading = -pose.getHeading();
 
-            double angleDiffRads = MkMath.getDifferenceInAngleRadians(
+            final double angleDiffRads = MkMath.getDifferenceInAngleRadians(
                     observedHeading, goalHeading);
-            double angleDiff = Math.toDegrees(angleDiffRads);
+            final double angleDiff = Math.toDegrees(angleDiffRads);
 
-            double turn = this.turn * angleDiff;
-            return new MotorPairSignal(speedLeft + turn, speedRight - turn);
+            final double turn = this.turn * angleDiff;
+            signal = new MotorPairSignal(speedLeft + turn, speedRight - turn);
         }
+        return signal;
     }
 
     @Override
@@ -106,8 +99,8 @@ public class DrivePathController implements Drive.DriveController {
         return new Pose(followerLeft.getCurrentSegment().pos, 0, 0, 0, -followerLeft.getHeading(), 0);
     }
 
-	@Override
-	public double getError() {
-		return 0;
-	}
+    @Override
+    public double getError() {
+        return 0;
+    }
 }

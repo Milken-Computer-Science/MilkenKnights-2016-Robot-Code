@@ -2,6 +2,7 @@ package com.milkenknights.util;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A Looper is an easy way to create a timed task the gets
@@ -53,7 +54,7 @@ public class Looper {
     public void start() {
         if (looperUpdater == null) {
             looperUpdater = new Timer("Looper - " + this.name);
-            looperUpdater.schedule(new UpdaterTask(this), 0L, (long) (this.period * 1000));
+            looperUpdater.schedule(new UpdaterTask(this), 0L, (long) (this.period * TimeUnit.SECONDS.toMillis(1)));
         }
     }
 

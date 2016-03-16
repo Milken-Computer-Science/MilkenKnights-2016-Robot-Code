@@ -4,11 +4,11 @@ import com.milkenknights.util.Controller;
 import com.milkenknights.util.trajectory.TrajectoryFollower;
 
 public class TrajectoryFollowingPositionController extends Controller {
-    TrajectoryFollower follower;
-    double goal;
-    double error;
-    double onTargetDelta;
-    double result = 0;
+    private TrajectoryFollower follower;
+    private double goal;
+    private double error;
+    private double onTargetDelta;
+    private double result;
 
     /**
      * Create a new TrajectoryFollowingPositionController.
@@ -23,12 +23,14 @@ public class TrajectoryFollowingPositionController extends Controller {
      */
     public TrajectoryFollowingPositionController(final double kp, final double ki, final double kd, final double kv,
             final double ka, final double onTargetDelta, final TrajectoryFollower.TrajectoryConfig config) {
+        super();
+        
         follower = new TrajectoryFollower();
         follower.configure(kp, ki, kd, kv, ka, config);
         this.onTargetDelta = onTargetDelta;
     }
 
-    public void setGoal(TrajectoryFollower.TrajectorySetpoint currentState, double goal) {
+    public void setGoal(final TrajectoryFollower.TrajectorySetpoint currentState, final double goal) {
         this.goal = goal;
         follower.setGoal(currentState, goal);
     }
@@ -37,7 +39,7 @@ public class TrajectoryFollowingPositionController extends Controller {
         return follower.getGoal();
     }
 
-    public void setConfig(TrajectoryFollower.TrajectoryConfig config) {
+    public void setConfig(final TrajectoryFollower.TrajectoryConfig config) {
         follower.setConfig(config);
     }
 
@@ -45,7 +47,7 @@ public class TrajectoryFollowingPositionController extends Controller {
         return follower.getConfig();
     }
 
-    public void update(double position, double velocity) {
+    public void update(final double position, final double velocity) {
         error = goal - position;
         result = follower.calculate(position, velocity);
     }

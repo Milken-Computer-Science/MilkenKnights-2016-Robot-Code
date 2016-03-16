@@ -27,6 +27,6 @@ public abstract class DriveHelper {
     protected abstract void driveMode(double leftThrottle, double rightThrottle);
 
     public final double handleDeadband(final double val, final double deadband) {
-        return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
+        return Math.abs(val) > Math.abs(deadband) ? val : 0.0;
     }
 }

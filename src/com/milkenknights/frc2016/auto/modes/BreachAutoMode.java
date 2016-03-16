@@ -6,9 +6,7 @@ import com.milkenknights.frc2016.auto.AutoModeEndedException;
 import com.milkenknights.frc2016.subsystems.Intake.IntakePosition;
 
 /**
- * This AutoMode will breach the OuterWorks, aim, and fire.
- * 
- * TODO: Test this AutoMode
+ * This AutoMode will breach the OuterWorks.
  */
 public class BreachAutoMode extends AutoMode {
 
