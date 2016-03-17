@@ -48,10 +48,10 @@ public class Constants {
     }
     
     public class CanTalon {
-        public static final int DRIVE_LEFT_1 = 12;
-        public static final int DRIVE_LEFT_2 = 10;
-        public static final int DRIVE_RIGHT_1 = 9;
-        public static final int DRIVE_RIGHT_2 = 11;
+        public static final int DRIVE_LEFT_1 = 11; // 12
+        public static final int DRIVE_LEFT_2 = 10; // 10
+        public static final int DRIVE_RIGHT_1 = 9; // 9
+        public static final int DRIVE_RIGHT_2 = 12; // 11
         public static final int CATAPULT = 8;
         public static final int INTAKE_ARM = 7;
         public static final int INTAKE_SPEED = 3;
@@ -66,6 +66,8 @@ public class Constants {
     public class DriverStation {
         public static final int DRIVE_JOYSTICK = 0;
         public static final int OPERATOR_JOYSTICK = 1;
+        
+        public static final double TWIST_MULTIPLIER = 1.5;
     }
     
     public class Vision {
