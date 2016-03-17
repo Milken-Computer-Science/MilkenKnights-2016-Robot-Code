@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class IntakeSpeed extends Subsystem {
     
     private MkCanTalon talon;
-    private IntakeSpeedState speed;
+    private IntakeSpeedState speed = IntakeSpeedState.NEUTRAL;
     
     public enum IntakeSpeedState {
         NEUTRAL(0), INTAKE(Constants.Subsystems.Intake.Speed.INTAKE), OUTPUT(Constants.Subsystems.Intake.Speed.OUTPUT);

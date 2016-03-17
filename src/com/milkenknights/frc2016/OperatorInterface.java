@@ -25,7 +25,7 @@ public class OperatorInterface {
     
     private void getDriverCommands() {
         commands.driveSpeed = -HardwareAdapter.DRIVE_STICK.getY();
-        commands.driveRotate = -HardwareAdapter.DRIVE_STICK.getTwist() * 1.5;
+        commands.driveRotate = -HardwareAdapter.DRIVE_STICK.getTwist() * Constants.DriverStation.TWIST_MULTIPLIER;
         
         if (HardwareAdapter.DRIVE_STICK.getButton(1).isHeld() && HardwareAdapter.DRIVE_STICK.getButton(2).isHeld()) {
             commands.fireCatapult = true;

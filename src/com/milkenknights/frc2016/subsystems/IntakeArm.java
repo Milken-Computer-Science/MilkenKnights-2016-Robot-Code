@@ -83,7 +83,7 @@ public class IntakeArm extends Subsystem implements Loopable {
 
     @Override
     public void update() {
-        if (position == IntakePosition.INTAKE && armOnTarget()) {
+        if (position == IntakePosition.INTAKE && pid.getError() >= -Constants.Subsystems.Intake.Arm.ALLOWABLE_ERROR) {
             arm.set(0.0);
         } else {
             arm.set(pid.calculate(armEncoder.getDistance()));
