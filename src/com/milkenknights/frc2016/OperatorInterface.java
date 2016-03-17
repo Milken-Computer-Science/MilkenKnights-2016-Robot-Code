@@ -2,8 +2,8 @@ package com.milkenknights.frc2016;
 
 import com.milkenknights.frc2016.behavior.Commands;
 import com.milkenknights.frc2016.subsystems.Drive.DriveGear;
-import com.milkenknights.frc2016.subsystems.Intake.IntakePosition;
-import com.milkenknights.frc2016.subsystems.Intake.IntakeSpeed;
+import com.milkenknights.frc2016.subsystems.IntakeArm.IntakePosition;
+import com.milkenknights.frc2016.subsystems.IntakeSpeed.IntakeSpeedState;
 
 public class OperatorInterface {
 
@@ -52,11 +52,11 @@ public class OperatorInterface {
         }
         
         if (HardwareAdapter.OPERATOR_STICK.getButton(4).isHeld()) {
-            commands.intakeSpeed = IntakeSpeed.INTAKE;
+            commands.intakeSpeed = IntakeSpeedState.INTAKE;
         } else if (HardwareAdapter.OPERATOR_STICK.getButton(5).isHeld()) {
-            commands.intakeSpeed = IntakeSpeed.OUTPUT;
+            commands.intakeSpeed = IntakeSpeedState.OUTPUT;
         } else {
-            commands.intakeSpeed = IntakeSpeed.NEUTRAL;
+            commands.intakeSpeed = IntakeSpeedState.NEUTRAL;
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.milkenknights.frc2016.behavior;
 
 import com.milkenknights.frc2016.subsystems.Drive.DriveGear;
-import com.milkenknights.frc2016.subsystems.Intake.IntakePosition;
-import com.milkenknights.frc2016.subsystems.Intake.IntakeSpeed;
+import com.milkenknights.frc2016.subsystems.IntakeArm.IntakePosition;
+import com.milkenknights.frc2016.subsystems.IntakeSpeed.IntakeSpeedState;
 
 public class Commands {
     
@@ -13,6 +13,6 @@ public class Commands {
     public boolean alignRobot;
     public boolean fireCatapult;
     public IntakePosition intakePosition;
-    public IntakeSpeed intakeSpeed;
+    public IntakeSpeedState intakeSpeed;
     
 }

@@ -44,12 +44,12 @@ public class BehaviorManager {
      * @param commands The commands
      */
     private void intake(final Commands commands) {
-        if (commands.intakePosition != null && commands.intakePosition != HardwareAdapter.INTAKE.getPosition()) {
-            HardwareAdapter.INTAKE.setPosition(commands.intakePosition);
+        if (commands.intakePosition != null && commands.intakePosition != HardwareAdapter.INTAKE_ARM.getPosition()) {
+            HardwareAdapter.INTAKE_ARM.setPosition(commands.intakePosition);
         }
         
-        if (commands.intakeSpeed != null && commands.intakeSpeed != HardwareAdapter.INTAKE.getSpeed()) {
-            HardwareAdapter.INTAKE.setSpeed(commands.intakeSpeed);
+        if (commands.intakeSpeed != null && commands.intakeSpeed != HardwareAdapter.INTAKE_SPEED.getSpeed()) {
+            HardwareAdapter.INTAKE_SPEED.setSpeed(commands.intakeSpeed);
         }
     }
     

@@ -13,7 +13,7 @@ public class WaitForIntakeArmAction extends TimeoutAction {
     
     @Override
     public boolean isFinished() {
-        return HardwareAdapter.INTAKE.armOnTarget() || super.isFinished();
+        return HardwareAdapter.INTAKE_ARM.armOnTarget() || super.isFinished();
     }
 
 }

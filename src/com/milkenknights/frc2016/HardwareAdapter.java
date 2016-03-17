@@ -3,7 +3,8 @@ package com.milkenknights.frc2016;
 import com.milkenknights.frc2016.subsystems.BallClamp;
 import com.milkenknights.frc2016.subsystems.Catapult;
 import com.milkenknights.frc2016.subsystems.Drive;
-import com.milkenknights.frc2016.subsystems.Intake;
+import com.milkenknights.frc2016.subsystems.IntakeArm;
+import com.milkenknights.frc2016.subsystems.IntakeSpeed;
 import com.milkenknights.util.GripHelper;
 import com.milkenknights.util.MkCanTalon;
 import com.milkenknights.util.MkJoystick;
@@ -21,7 +22,8 @@ import edu.wpi.first.wpilibj.Solenoid;
 public final class HardwareAdapter {
 
     public static final Drive DRIVE;
-    public static final Intake INTAKE;
+    public static final IntakeArm INTAKE_ARM;
+    public static final IntakeSpeed INTAKE_SPEED;
     public static final Catapult CATAPULT;
     public static final BallClamp BALL_CLAMP;
     
@@ -63,7 +65,8 @@ public final class HardwareAdapter {
 
         DRIVE = new Drive("Drive", driveLeftTalon, driveRightTalon, driveLeftEncoder, driveRightEncoder, 
                 driveShifter, gyro);
-        INTAKE = new Intake("Intake", intakePositionTalon, intakeSpeedTalon, intakeEncoder);
+        INTAKE_ARM = new IntakeArm("Intake Arm", intakePositionTalon, intakeEncoder);
+        INTAKE_SPEED = new IntakeSpeed("Intake Speed", intakeSpeedTalon);
         CATAPULT = new Catapult("Catapult", catapultTalon, catapultEncoder, catapultHome);
         BALL_CLAMP = new BallClamp("Ball Clamp", ballClamp);
         

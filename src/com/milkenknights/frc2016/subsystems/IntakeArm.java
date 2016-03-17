@@ -9,8 +9,8 @@ import com.milkenknights.util.SynchronousPid;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Intake extends Subsystem implements Loopable {
-    
+public class IntakeArm extends Subsystem implements Loopable {
+
     public enum IntakePosition {
         INTAKE(Constants.Subsystems.Intake.Arm.INTAKE),
         PROTECT(Constants.Subsystems.Intake.Arm.PROTECT),
@@ -22,20 +22,9 @@ public class Intake extends Subsystem implements Loopable {
         }
     }
     
-    public enum IntakeSpeed {
-        NEUTRAL(0), INTAKE(Constants.Subsystems.Intake.Speed.INTAKE), OUTPUT(Constants.Subsystems.Intake.Speed.OUTPUT);
-        
-        public final double speed;
-        private IntakeSpeed(final double speed) {
-            this.speed = speed;
-        }
-    }
-    
     private MkCanTalon arm;
-    private MkCanTalon speedController;
     private MkEncoder armEncoder;
     private IntakePosition position = IntakePosition.STORED;
-    private IntakeSpeed speed = IntakeSpeed.NEUTRAL;
     private SynchronousPid pid;
     
     /**
@@ -43,10 +32,8 @@ public class Intake extends Subsystem implements Loopable {
      * 
      * @param name The name of the subsystem
      * @param armController The MkCanTalon used to move the arm
-     * @param speedController The MkCanTalon used to control the intake
      */
-    public Intake(final String name, final MkCanTalon armController, final MkCanTalon speedController,
-            final MkEncoder armEncoder) {
+    public IntakeArm(final String name, final MkCanTalon armController, final MkEncoder armEncoder) {
         super(name);
         
         armEncoder.setDistancePerPulse(Constants.Subsystems.Intake.Arm.GEAR_RATIO
@@ -59,15 +46,7 @@ public class Intake extends Subsystem implements Loopable {
                 Constants.Subsystems.Intake.Arm.MAXIMUM_OUTPUT);
         
         this.arm = armController;
-        this.speedController = speedController;
         this.armEncoder = armEncoder;
-    }
-
-    /**
-     * Set the speed of the intake.
-     */
-    public void setSpeed(final IntakeSpeed speed) {
-        this.speed = speed;
     }
     
     /**
@@ -87,13 +66,6 @@ public class Intake extends Subsystem implements Loopable {
     }
     
     /**
-     * Get the speed the intake is trying to maintain.
-     */
-    public IntakeSpeed getSpeed() {
-        return speed;
-    }
-    
-    /**
      * Get if the arm is on target.
      */
     public boolean armOnTarget() {
@@ -103,7 +75,6 @@ public class Intake extends Subsystem implements Loopable {
     @Override
     public void updateSmartDashboard() {
         SmartDashboard.putString("Intake Arm State", position.toString());
-        SmartDashboard.putString("Intake Speed State", speed.toString());
         SmartDashboard.putNumber("Intake Arm PID Result", pid.calculate(armEncoder.getDistance()));
         SmartDashboard.putNumber("Intake Arm Count", armEncoder.get());
         SmartDashboard.putNumber("Intake Arm Distance", armEncoder.getDistance());
@@ -117,7 +88,6 @@ public class Intake extends Subsystem implements Loopable {
         } else {
             arm.set(pid.calculate(armEncoder.getDistance()));
         }
-        speedController.set(speed.speed);
     }
 
 }
