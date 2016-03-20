@@ -27,12 +27,6 @@ public class OperatorInterface {
         commands.driveSpeed = -HardwareAdapter.DRIVE_STICK.getY();
         commands.driveRotate = -HardwareAdapter.DRIVE_STICK.getTwist() * Constants.DriverStation.TWIST_MULTIPLIER;
         
-        if (HardwareAdapter.DRIVE_STICK.getButton(1).isHeld() && HardwareAdapter.DRIVE_STICK.getButton(2).isHeld()) {
-            commands.fireCatapult = true;
-        } else {
-            commands.fireCatapult = false;
-        }
-        
         if (HardwareAdapter.DRIVE_STICK.getButton(7).isPressed()) {
             commands.driveGear = HardwareAdapter.DRIVE.getGear() == DriveGear.HIGH ? DriveGear.LOW : DriveGear.HIGH;
         }
@@ -57,6 +51,13 @@ public class OperatorInterface {
             commands.intakeSpeed = IntakeSpeedState.OUTPUT;
         } else {
             commands.intakeSpeed = IntakeSpeedState.NEUTRAL;
+        }
+        
+        if (HardwareAdapter.OPERATOR_STICK.getButton(1).isHeld()
+                && HardwareAdapter.OPERATOR_STICK.getButton(7).isHeld()) {
+            commands.fireCatapult = true;
+        } else {
+            commands.fireCatapult = false;
         }
     }
 }
