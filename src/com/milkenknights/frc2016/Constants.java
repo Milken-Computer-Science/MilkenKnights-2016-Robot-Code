@@ -10,7 +10,7 @@ public class Constants {
     public static final double kDrivePositionKp = 0.1; //.7
     public static final double kDrivePositionKi = 0.0;
     public static final double kDrivePositionKd = 0.0;
-    public static final double kDriveStraightKp = 0.2; //3
+    public static final double kDriveStraightKp = 0.1; //3
     public static final double kDriveStraightKi = 0.0;
     public static final double kDriveStraightKd = 0.0;
     public static final double kDrivePositionKv = 0.008;
@@ -116,12 +116,12 @@ public class Constants {
         }
 
         public class Catapult {
-            public static final double GEAR_RATIO = -(14.0 / 64.0);
+            public static final double GEAR_RATIO = 14.0 / 64.0;
             
             public static final double ALLOWABLE_ERROR = 0.025;
-            public static final double DEADBAND = 0.2;
+            public static final double DEADBAND = 0.1;
             
-            public static final double OFFSET = 0.15;
+            public static final double OFFSET = 0.155;
         }
         
     }
