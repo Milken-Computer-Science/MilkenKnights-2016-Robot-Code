@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
         
         looper.addLoopable(HardwareAdapter.DRIVE);
         //looper.addLoopable(HardwareAdapter.INTAKE);
-        //looper.addLoopable(HardwareAdapter.CATAPULT);
+        looper.addLoopable(HardwareAdapter.CATAPULT);
         
         smartDashboardUpdater.addSendable(HardwareAdapter.DRIVE);
         smartDashboardUpdater.addSendable(HardwareAdapter.INTAKE_ARM);
@@ -62,6 +62,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         System.out.println("Start autonomousInit()");
+        HardwareAdapter.COMPRESSOR.stop();
         HardwareAdapter.DRIVE.setGear(DriveGear.HIGH);
         HardwareAdapter.DRIVE.reset();
         
@@ -77,6 +78,7 @@ public class Robot extends IterativeRobot {
     public void teleopInit() {
         System.out.println("Start teleopInit()");
         
+        HardwareAdapter.COMPRESSOR.start();
         HardwareAdapter.DRIVE.reset();
         
         looper.start();
@@ -99,6 +101,7 @@ public class Robot extends IterativeRobot {
         autoMode.stop();
         looper.stop();
 
+        HardwareAdapter.COMPRESSOR.stop();
         HardwareAdapter.DRIVE.setOpenLoop(MotorPairSignal.NEUTRAL);
         
         System.gc();
