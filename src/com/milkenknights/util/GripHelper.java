@@ -72,6 +72,15 @@ public class GripHelper implements MkSendable, ITableListener {
         final double[] area = source.getNumberArray("area", new double[0]);
         final double[] solidity = source.getNumberArray("solidity", new double[0]);
         
+        if (!(area.length == centerX.length
+                && area.length == centerY.length
+                && area.length == width.length
+                && area.length == height.length
+                && area.length == solidity.length)) {
+            System.out.println("GRIP array length mismatch");
+            return;
+        }
+        
         if (area.length > 0) {
             int index = 0;
             double largest = 0;
