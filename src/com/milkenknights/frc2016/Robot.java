@@ -1,7 +1,7 @@
 package com.milkenknights.frc2016;
 
 import com.milkenknights.frc2016.auto.AutoMode;
-import com.milkenknights.frc2016.auto.modes.RockWallAutoMode;
+import com.milkenknights.frc2016.auto.modes.ReachAutoMode;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
 import com.milkenknights.frc2016.subsystems.Drive.DriveGear;
 import com.milkenknights.util.MultiLooper;
@@ -36,7 +36,7 @@ public class Robot extends IterativeRobot {
         behaviorManager = new BehaviorManager();
         operatorInterface = new OperatorInterface();
         
-        autoMode = new RockWallAutoMode();
+        autoMode = new ReachAutoMode();
         
         looper.addLoopable(HardwareAdapter.DRIVE);
         //looper.addLoopable(HardwareAdapter.INTAKE);
