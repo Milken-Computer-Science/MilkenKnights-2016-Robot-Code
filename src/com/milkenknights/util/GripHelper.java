@@ -60,7 +60,8 @@ public class GripHelper implements MkSendable, ITableListener {
      * @return The angle from -180.0 to 180.0
      */
     public double getAngleToTarget() {
-        return (2 * (cachedTarget.centerX / matSize.getNumber("x", 1)) - 1) * Constants.Vision.HORIZONTAL_FOV / 2.0;
+        return ((2 * (cachedTarget.centerX / matSize.getNumber("x", 1)) - 1) * Constants.Vision.HORIZONTAL_FOV / 2.0)
+                + Constants.Vision.OFFSET;
     }
     
     @Override
@@ -77,7 +78,6 @@ public class GripHelper implements MkSendable, ITableListener {
                 && area.length == width.length
                 && area.length == height.length
                 && area.length == solidity.length)) {
-            System.out.println("GRIP array length mismatch");
             return;
         }
         

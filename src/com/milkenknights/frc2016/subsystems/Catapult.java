@@ -8,7 +8,6 @@ import com.milkenknights.util.Subsystem;
 import com.milkenknights.util.SynchronousPid;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.InterruptHandlerFunction;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Catapult extends Subsystem implements Loopable {
@@ -21,9 +20,9 @@ public class Catapult extends Subsystem implements Loopable {
     private final MkEncoder encoder;
     private final DigitalInput home;
     private final SynchronousPid positionPid;
+    private final SynchronousPid velocityPid;
     private CatapultState state;
     private int shotCount;
-    private boolean zeroed;
 
     /**
      * Create a new catapult subsystem.
@@ -38,21 +37,15 @@ public class Catapult extends Subsystem implements Loopable {
         talon.setInverted(true);
         encoder.setDistancePerPulse(Constants.Subsystems.Catapult.GEAR_RATIO / encoder.getPulsesPerRevolution());
         
-        home.requestInterrupts(new InterruptHandlerFunction<Object>() {
-            @Override
-            public void interruptFired(final int arg0, final Object arg1) {
-                zeroed = true;
-                encoder.reset();
-                System.out.println("Catapult Zeroed!");
-            }
-            
-        });
-        home.setUpSourceEdge(false, true);
-        home.enableInterrupts();
-        
         positionPid = new SynchronousPid();
-        positionPid.setPid(3, 0, 0);
-        positionPid.setOutputRange(Constants.Subsystems.Catapult.DEADBAND, 1);
+        positionPid.setPid(3.25, 0, 0);
+        positionPid.setOutputRange(Constants.Subsystems.Catapult.DEADBAND, 1.0);
+        
+        velocityPid = new SynchronousPid();
+        velocityPid.setPid(0.5, 0.0, 0.0);
+        velocityPid.setFeedForward(Constants.Subsystems.Catapult.DEADBAND);
+        velocityPid.setOutputRange(0, 1.0);
+        velocityPid.setSumOutput(true);
 
         this.talon = talon;
         this.encoder = encoder;
@@ -74,19 +67,15 @@ public class Catapult extends Subsystem implements Loopable {
     public CatapultState getState() {
         return state;
     }
-    
-    public boolean isZeroed() {
-        return zeroed;
-    }
 
     @Override
     public void updateSmartDashboard() {
         SmartDashboard.putString("Catapult State", state.toString());
         SmartDashboard.putNumber("Catapult Count", encoder.getDistance());
+        SmartDashboard.putNumber("Catapult Speed", encoder.getRate());
         SmartDashboard.putNumber("Catapult Error", positionPid.getError());
         SmartDashboard.putNumber("Catapult PID Result", positionPid.calculate(encoder.getDistance()));
         SmartDashboard.putBoolean("Catapult Banner", home.get());
-        SmartDashboard.putBoolean("Catapult Zeroed", zeroed);
         SmartDashboard.putBoolean("Catapult Home", !home.get());
     }
 
@@ -112,11 +101,13 @@ public class Catapult extends Subsystem implements Loopable {
                 }
                 break;
             case ZERO:
-                if (!zeroed) {
-                    talon.set(Constants.Subsystems.Catapult.DEADBAND);
+                if (home.get()) {
+                    velocityPid.setSetpoint(0.3);
+                    talon.set(velocityPid.calculate(encoder.getRate()));
                 } else {
-                    home.disableInterrupts();
-                    talon.set(-1.0);
+                    encoder.reset();
+                    System.out.println("Catapult Zeroed!");
+                    talon.set(0.0);
                     setState(CatapultState.RETRACT);
                 }
                 break;

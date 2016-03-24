@@ -2,12 +2,10 @@ package com.milkenknights.frc2016;
 
 public class Constants {
     
-    public static final double kControlLoopsDt = 0.005;
-    
     // DriveStraightController gains
-    public static final double kDriveMaxSpeedInchesPerSec = 60;
+    public static final double kDriveMaxSpeedInchesPerSec = 140;
     public static final double kDriveMaxAccelInchesPerSec2 = 200;
-    public static final double kDrivePositionKp = 0.1; //.7
+    public static final double kDrivePositionKp = 2.0; //.7
     public static final double kDrivePositionKi = 0.0;
     public static final double kDrivePositionKd = 0.0;
     public static final double kDriveStraightKp = 0.1; //3
@@ -17,16 +15,6 @@ public class Constants {
     public static final double kDrivePositionKa = 0.0017;
     public static final double kDriveOnTargetError = 0.75;
     public static final double kDrivePathHeadingFollowKp = 0.01;
-
-    // TurnInPlaceController gains
-    public static final double kTurnMaxSpeedRadsPerSec = 5.25;
-    public static final double kTurnMaxAccelRadsPerSec2 = 3;
-    public static final double kTurnKp = 0.2;
-    public static final double kTurnKi = 0.0;
-    public static final double kTurnKd = 0.0;
-    public static final double kTurnKv = 0.085;
-    public static final double kTurnKa = 0.075;
-    public static final double kTurnOnTargetError = 0.05;
     
     public class Dio {
         public static final int CATAPULT_HOME = 0;
@@ -40,11 +28,16 @@ public class Constants {
         public static final int INTAKE_B = 17; // ENC 3
     }
     
+    public class Analog {
+        public static final int PRESSURE_TRANSDUCER = 0;
+    }
+    
     public class Pcm {
         public static final int ID = 1;
 
         public static final int DRIVE_SHIFTER = 0;
         public static final int BALL_HOLDER = 1;
+        public static final int LED_RING = 7;
     }
     
     public class CanTalon {
@@ -58,7 +51,7 @@ public class Constants {
     }
     
     public class ControlLoops {
-        public static final double CONTROLLERS_PERIOD = 1 / 100.0;
+        public static final double CONTROLLERS_PERIOD = 1 / 200.0;
         public static final double VISION_PERIOD = 1 / 25.0;
         public static final double SMARTDASHBOARD_UPDATER_PERIOD = 1 / 50.0;
     }
@@ -76,6 +69,8 @@ public class Constants {
         public static final String MAT_SIZE_TABLE_ID = "matSize";
         
         public static final double HORIZONTAL_FOV  = 67; // TODO: Find this value
+        
+        public static final double OFFSET = -5.0;
     }
     
     public class Auto {
@@ -88,6 +83,13 @@ public class Constants {
             public static final double WHEEL_DIAMETER = 7.67;
             
             public static final double GEAR_RATIO = 20.0 / 64.0 / 3.0;
+            
+            public static final double MAXIMUM_SPEED = 140.0;
+            
+            public static final double TURN_KP = 1.0;
+            public static final double TURN_KI = 0.0;
+            public static final double TURN_KD = 0.0;
+            public static final double TURN_ALLOWABLE_ERROR = 3.0;
         }
         
         public class Intake {
@@ -106,7 +108,6 @@ public class Constants {
                 public static final double MAXIMUM_OUTPUT = 0.50;
                 
                 public static final double ALLOWABLE_ERROR = 0.125; // TODO: Find this value
-                
             }
             
             public class Speed {

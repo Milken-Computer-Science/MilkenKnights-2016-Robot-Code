@@ -30,9 +30,7 @@ public abstract class DriveAbstract extends Subsystem implements Loopable {
 
     public abstract void setTurnSetpoint(double heading);
 
-    public abstract void setTurnSetpoint(double heading, double velocity);
-
-    public abstract void reset();
+    public abstract void resetEncoders();
 
     public abstract Pose getPhysicalPose();
 

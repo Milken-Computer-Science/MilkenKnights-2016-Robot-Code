@@ -63,11 +63,14 @@ public class TrajectoryFollowingPositionController extends Controller {
     public boolean isFinishedTrajectory() {
         return follower.isFinishedTrajectory();
     }
+    
+    public double getError() {
+        return error;
+    }
 
     @Override
     public boolean isOnTarget() {
-        return follower.isFinishedTrajectory()
-                && Math.abs(error) < onTargetDelta;
+        return follower.isFinishedTrajectory() && Math.abs(error) < onTargetDelta;
     }
 
 }

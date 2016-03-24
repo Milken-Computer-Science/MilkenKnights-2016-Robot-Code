@@ -27,6 +27,14 @@ public class OperatorInterface {
         commands.driveSpeed = -HardwareAdapter.DRIVE_STICK.getY();
         commands.driveRotate = -HardwareAdapter.DRIVE_STICK.getTwist() * Constants.DriverStation.TWIST_MULTIPLIER;
         
+        if (HardwareAdapter.DRIVE_STICK.getButton(1).isPressed()) {
+            commands.alignRobot = Commands.AlignRobot.START;
+        } else if (HardwareAdapter.DRIVE_STICK.getButton(1).isHeld()) {
+            commands.alignRobot = Commands.AlignRobot.CONTINUE;
+        } else {
+            commands.alignRobot = Commands.AlignRobot.STOP;
+        }
+        
         if (HardwareAdapter.DRIVE_STICK.getButton(7).isPressed()) {
             commands.driveGear = HardwareAdapter.DRIVE.getGear() == DriveGear.HIGH ? DriveGear.LOW : DriveGear.HIGH;
         }

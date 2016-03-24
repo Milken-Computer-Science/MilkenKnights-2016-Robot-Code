@@ -3,74 +3,51 @@ package com.milkenknights.frc2016.subsystems.controllers;
 import com.milkenknights.frc2016.Constants;
 import com.milkenknights.frc2016.subsystems.Drive;
 import com.milkenknights.util.Pose;
+import com.milkenknights.util.SynchronousPid;
 import com.milkenknights.util.drive.MotorPairSignal;
-import com.milkenknights.util.trajectory.TrajectoryFollower;
 
 /**
  * Controls the robot to turn in place.
  */
 public class TurnInPlaceController implements Drive.DriveController {
-    private final TrajectoryFollowingPositionController controller;
-    private final Pose setpointRelativePose;
+    private final SynchronousPid pid;
 
     /**
      * Create a new TurnInPlaceController.  This will allow the program to calculate the percent to command the motors
      * to turn in place without translating. 
      * 
-     * @param poseToContinueFrom The pose to continue from
      * @param destHeading The final heading
-     * @param velocity The maximum velocity to travel at in rads/s
      */
-    public TurnInPlaceController(final Pose poseToContinueFrom, final double destHeading, final double velocity) {
-        final TrajectoryFollower.TrajectoryConfig config = new TrajectoryFollower.TrajectoryConfig();
-        config.dt = Constants.kControlLoopsDt;
-        config.maxAcc = Constants.kTurnMaxAccelRadsPerSec2;
-        config.maxVel = velocity;
-        controller = new TrajectoryFollowingPositionController(
-                Constants.kTurnKp,
-                Constants.kTurnKi,
-                Constants.kTurnKd,
-                Constants.kTurnKv,
-                Constants.kTurnKa,
-                Constants.kTurnOnTargetError,
-                config);
-        final TrajectoryFollower.TrajectorySetpoint initialSetpoint = new TrajectoryFollower.TrajectorySetpoint();
-        initialSetpoint.pos = poseToContinueFrom.getHeading();
-        initialSetpoint.vel = poseToContinueFrom.getHeadingVelocity();
-        controller.setGoal(initialSetpoint, destHeading);
-
-        setpointRelativePose = poseToContinueFrom;
+    public TurnInPlaceController(final double destHeading) {
+        pid = new SynchronousPid();
+        pid.setPid(Constants.Subsystems.Drive.TURN_KP,
+                Constants.Subsystems.Drive.TURN_KI,
+                Constants.Subsystems.Drive.TURN_KD);
+        pid.setOutputRange(-Constants.Subsystems.Drive.MAXIMUM_SPEED, Constants.Subsystems.Drive.MAXIMUM_SPEED);
+        pid.setSetpoint(destHeading);
     }
 
     @Override
     public MotorPairSignal update(final Pose pose) {
-        controller.update(pose.getHeading(), pose.getHeadingVelocity());
-        final double turn = controller.get();
+        final double turn = pid.calculate(pose.heading);
         return new MotorPairSignal(turn, -turn);
     }
 
     @Override
     public Pose getCurrentSetpoint() {
-        final TrajectoryFollower.TrajectorySetpoint setpoint = controller.getSetpoint();
-        return new Pose(
-                setpointRelativePose.getLeftDistance(),
-                setpointRelativePose.getRightDistance(),
-                setpointRelativePose.getLeftVelocity(),
-                setpointRelativePose.getRightVelocity(),
-                setpoint.pos,
-                setpoint.vel);
+        return null;
     }
 
     @Override
     public boolean isOnTarget() {
-        return controller.isOnTarget();
+        return pid.onTarget(Constants.Subsystems.Drive.TURN_ALLOWABLE_ERROR);
     }
     
     public double getError() {
-        return controller.get();
+        return pid.getError();
     }
 
     public double getHeadingGoal() {
-        return controller.getGoal();
+        return pid.getSetpoint();
     }
 }

@@ -10,9 +10,13 @@ public class Commands {
     public double driveRotate;
     public DriveGear driveGear;
     public boolean reverseDrive;
-    public boolean alignRobot;
+    public AlignRobot alignRobot;
     public boolean fireCatapult;
     public IntakePosition intakePosition;
     public IntakeSpeedState intakeSpeed;
+    
+    public enum AlignRobot {
+        START, STOP, CONTINUE
+    }
     
 }

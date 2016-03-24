@@ -7,13 +7,14 @@ import com.milkenknights.frc2016.subsystems.IntakeArm;
 import com.milkenknights.frc2016.subsystems.IntakeSpeed;
 import com.milkenknights.util.GripHelper;
 import com.milkenknights.util.MkCanTalon;
+import com.milkenknights.util.MkCompressor;
 import com.milkenknights.util.MkJoystick;
+import com.milkenknights.util.MkPressureTransducer;
 import com.milkenknights.util.hardware.S4T360;
+import com.milkenknights.util.hardware.SsiTechnologiesPressureTransducer;
 
 import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
@@ -27,8 +28,9 @@ public final class HardwareAdapter {
     public static final Catapult CATAPULT;
     public static final BallClamp BALL_CLAMP;
     
+    public static final Solenoid LED_RING;
     public static final PowerDistributionPanel PDP;
-    public static final Compressor COMPRESSOR;
+    public static final MkCompressor COMPRESSOR;
     
     public static final GripHelper GRIP;
 
@@ -56,12 +58,14 @@ public final class HardwareAdapter {
 
         final Solenoid driveShifter = new Solenoid(Constants.Pcm.ID, Constants.Pcm.DRIVE_SHIFTER);
         final Solenoid ballClamp = new Solenoid(Constants.Pcm.ID, Constants.Pcm.BALL_HOLDER);
+        LED_RING = new Solenoid(Constants.Pcm.ID, Constants.Pcm.LED_RING);
         
         final MkCanTalon catapultTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.CATAPULT));
         final DigitalInput catapultHome = new DigitalInput(Constants.Dio.CATAPULT_HOME);
 
         final AHRS gyro = new AHRS(SPI.Port.kOnboardCS1);
-        //private static final AnalogInput kPressureTrannsducer;
+        final  MkPressureTransducer pressureTransducer
+            = new SsiTechnologiesPressureTransducer(Constants.Analog.PRESSURE_TRANSDUCER);
 
         DRIVE = new Drive("Drive", driveLeftTalon, driveRightTalon, driveLeftEncoder, driveRightEncoder, 
                 driveShifter, gyro);
@@ -71,7 +75,7 @@ public final class HardwareAdapter {
         BALL_CLAMP = new BallClamp("Ball Clamp", ballClamp);
         
         PDP = new PowerDistributionPanel();
-        COMPRESSOR = new Compressor(Constants.Pcm.ID);
+        COMPRESSOR = new MkCompressor(Constants.Pcm.ID, pressureTransducer);
         
         GRIP = new GripHelper();
 

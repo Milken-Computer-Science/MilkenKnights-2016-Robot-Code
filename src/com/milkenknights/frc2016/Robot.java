@@ -1,6 +1,7 @@
 package com.milkenknights.frc2016;
 
 import com.milkenknights.frc2016.auto.AutoMode;
+import com.milkenknights.frc2016.auto.modes.BreachAutoMode;
 import com.milkenknights.frc2016.auto.modes.ReachAutoMode;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
 import com.milkenknights.frc2016.subsystems.Drive.DriveGear;
@@ -36,7 +37,7 @@ public class Robot extends IterativeRobot {
         behaviorManager = new BehaviorManager();
         operatorInterface = new OperatorInterface();
         
-        autoMode = new ReachAutoMode();
+        autoMode = new BreachAutoMode();
         
         looper.addLoopable(HardwareAdapter.DRIVE);
         //looper.addLoopable(HardwareAdapter.INTAKE);
@@ -52,8 +53,9 @@ public class Robot extends IterativeRobot {
         visionLooper.start();
         smartDashboardUpdater.start();
         
+        HardwareAdapter.LED_RING.set(true);
         HardwareAdapter.GRIP.register();
-        HardwareAdapter.DRIVE.reset();
+        HardwareAdapter.DRIVE.resetEncoders();
         System.out.println("End robotInit()");
     }
 
@@ -64,7 +66,8 @@ public class Robot extends IterativeRobot {
         System.out.println("Start autonomousInit()");
         HardwareAdapter.COMPRESSOR.stop();
         HardwareAdapter.DRIVE.setGear(DriveGear.HIGH);
-        HardwareAdapter.DRIVE.reset();
+        HardwareAdapter.DRIVE.resetEncoders();
+        HardwareAdapter.DRIVE.resetGyro();
         
         looper.start();
         autoMode.start();
@@ -79,7 +82,7 @@ public class Robot extends IterativeRobot {
         System.out.println("Start teleopInit()");
         
         HardwareAdapter.COMPRESSOR.start();
-        HardwareAdapter.DRIVE.reset();
+        HardwareAdapter.DRIVE.resetEncoders();
         
         looper.start();
         System.out.println("End teleopInit()");

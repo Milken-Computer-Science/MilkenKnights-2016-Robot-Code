@@ -2,10 +2,13 @@ package com.milkenknights.frc2016.subsystems;
 
 import com.milkenknights.frc2016.Constants;
 import com.milkenknights.frc2016.subsystems.controllers.DriveStraightController;
+import com.milkenknights.frc2016.subsystems.controllers.TimedOpenLoopController;
+import com.milkenknights.frc2016.subsystems.controllers.TimedVelocityController;
 import com.milkenknights.frc2016.subsystems.controllers.TurnInPlaceController;
 import com.milkenknights.util.MkCanTalon;
 import com.milkenknights.util.MkEncoder;
 import com.milkenknights.util.Pose;
+import com.milkenknights.util.SynchronousPid;
 import com.milkenknights.util.drive.DriveAbstract;
 import com.milkenknights.util.drive.MotorPairSignal;
 
@@ -27,6 +30,8 @@ public class Drive extends DriveAbstract {
     private DriveController controller;
     private DriveGear driveGear = DriveGear.HIGH;
     private final Pose cachedPose = new Pose(0, 0, 0, 0, 0, 0);
+    private final SynchronousPid leftVelocityPid;
+    private final SynchronousPid rightVelocityPid;
     
     public enum DriveGear {
         LOW(true), HIGH(false);
@@ -52,6 +57,13 @@ public class Drive extends DriveAbstract {
             final MkEncoder leftEncoder, final MkEncoder rightEncoder, final Solenoid shifter, final AHRS gyro) {
         super(name);
         
+        leftMotor.setInverted(true);
+        
+        leftEncoder.setDistancePerPulse(-Math.PI * Constants.Subsystems.Drive.WHEEL_DIAMETER
+                * Constants.Subsystems.Drive.GEAR_RATIO / leftEncoder.getPulsesPerRevolution());
+        rightEncoder.setDistancePerPulse(Math.PI * Constants.Subsystems.Drive.WHEEL_DIAMETER
+                * Constants.Subsystems.Drive.GEAR_RATIO / rightEncoder.getPulsesPerRevolution());
+        
         this.leftMotor = leftMotor;
         this.rightMotor = rightMotor;
         this.leftEncoder = leftEncoder;
@@ -59,20 +71,23 @@ public class Drive extends DriveAbstract {
         this.shifter = shifter;
         this.gyro = gyro;
         
-        this.leftMotor.setInverted(true);
+        leftVelocityPid = new SynchronousPid();
+        rightVelocityPid = new SynchronousPid();
         
-        this.leftEncoder.setDistancePerPulse(-Math.PI * Constants.Subsystems.Drive.WHEEL_DIAMETER
-                * Constants.Subsystems.Drive.GEAR_RATIO / leftEncoder.getPulsesPerRevolution());
-        this.rightEncoder.setDistancePerPulse(Math.PI * Constants.Subsystems.Drive.WHEEL_DIAMETER
-                * Constants.Subsystems.Drive.GEAR_RATIO / rightEncoder.getPulsesPerRevolution());
+        //leftVelocityPid.setSumOutput(true);
+        //rightVelocityPid.setSumOutput(true);
+        
+        leftVelocityPid.setPid(0.025, 0.0005, 0.0);
+        rightVelocityPid.setPid(0.025, 0.0005, 0.0);
     }
 
     @Override
     public void update() {        
         if (controller == null) {
             return;
+        } else {
+            setDriveSpeed(controller.update(getPhysicalPose()));
         }
-        setDriveOutputs(controller.update(getPhysicalPose()));
     }
 
     @Override
@@ -87,6 +102,7 @@ public class Drive extends DriveAbstract {
         
         if (controller != null) {
             SmartDashboard.putNumber("Drive: Error", controller.getError());
+            SmartDashboard.putBoolean("Drive: Controller on target", controller.isOnTarget());
         }
     }
 
@@ -109,13 +125,11 @@ public class Drive extends DriveAbstract {
 
     @Override
     public void setTurnSetpoint(final double heading) {
-        setTurnSetpoint(heading, Constants.kTurnMaxSpeedRadsPerSec);
+        controller = new TurnInPlaceController(heading);
     }
-
-    @Override
-    public void setTurnSetpoint(final double heading, final double velocity) {
-        controller = new TurnInPlaceController(getPoseToContinueFrom(true), heading, 
-                Math.min(Constants.kTurnMaxSpeedRadsPerSec, Math.max(velocity, 0)));
+    
+    public void driveAtSpeed(double speed, double time) {
+        controller = new TimedVelocityController(speed, time, 0, 0);
     }
     
     /**
@@ -150,19 +164,36 @@ public class Drive extends DriveAbstract {
     public DriveGear getGear() {
         return driveGear;
     }
+    
+    public void resetGyro() {
+        gyro.reset();
+    }
 
     @Override
-    public void reset() {
+    public void resetEncoders() {
         leftEncoder.reset();
         rightEncoder.reset();
-        gyro.reset();
     }
 
     @Override
     public Pose getPhysicalPose() {
         cachedPose.reset(leftEncoder.getDistance(), rightEncoder.getDistance(), leftEncoder.getRate(),
-                rightEncoder.getRate(), gyro.getYaw(), gyro.getRate());
+                rightEncoder.getRate(), gyro.getAngle(), gyro.getRate());
         return cachedPose;
+    }
+    
+    private void setDriveSpeed(final MotorPairSignal signal) {
+        leftVelocityPid.setSetpoint((signal.leftMotor));
+        rightVelocityPid.setSetpoint((signal.rightMotor));
+        
+//        if (leftVelocityPid.getSetpoint() / 140 >= 1) {
+//            leftVelocityPid.resetIntegrator();
+//            rightVelocityPid.resetIntegrator();
+//        }
+        
+        setDriveOutputs(new MotorPairSignal(
+                leftVelocityPid.calculate(getPhysicalPose().leftVelocity) + leftVelocityPid.getSetpoint() / 140,
+                rightVelocityPid.calculate(getPhysicalPose().rightVelocity) + rightVelocityPid.getSetpoint() / 140));
     }
     
     private void setDriveOutputs(final MotorPairSignal signal) {
@@ -170,10 +201,9 @@ public class Drive extends DriveAbstract {
         leftMotor.set(signal.leftMotor);
         rightMotor.set(signal.rightMotor);
     }
-    
+
     private Pose getPoseToContinueFrom(final boolean forTurnController) {
         Pose poseToContinueFrom = getPhysicalPose();
-        System.out.println(controller);
         if (!forTurnController && controller instanceof TurnInPlaceController) {
             final Pose poseToUse = getPhysicalPose();
             poseToUse.heading = ((TurnInPlaceController) controller).getHeadingGoal();

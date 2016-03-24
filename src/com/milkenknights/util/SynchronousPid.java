@@ -15,6 +15,7 @@ public class SynchronousPid {
     private double proportionalCoefficient; // factor for "proportional" control
     private double integralCoefficient;     // factor for "integral" control
     private double derivativeCoefficient;   // factor for "derivative" control
+    private double feedForward;
     private double maximumOutput = 1.0;     // |maximum output|
     private double minimumOutput = -1.0;    // |minimum output|
     private double maximumInput;      // maximum input - limit setpoint to this
@@ -26,6 +27,8 @@ public class SynchronousPid {
     private double error;
     private double result;
     private double lastInput = Double.NaN;
+    private double lastOutput;
+    private boolean totalOutput;
 
     /**
      * Allocate a PID object with the given constants for P, I, D.
@@ -69,7 +72,7 @@ public class SynchronousPid {
         }
 
         result = proportionalCoefficient * error + integralCoefficient * totalError + derivativeCoefficient
-                * (error - prevError);
+                * (error - prevError) + feedForward;
         prevError = error;
 
         if (result > maximumOutput) {
@@ -77,6 +80,13 @@ public class SynchronousPid {
         } else if (result < minimumOutput) {
             result = minimumOutput;
         }
+        
+        lastOutput = result;
+        
+        if (totalOutput) {
+            result += lastOutput;
+        }
+        
         return result;
     }
 
@@ -93,6 +103,10 @@ public class SynchronousPid {
         this.proportionalCoefficient = proportionalCoefficient;
         this.integralCoefficient = integralCoefficient;
         this.derivativeCoefficient = derivativeCoefficient;
+    }
+    
+    public void setFeedForward(final double feedForward) {
+        this.feedForward = feedForward;
     }
 
     /**
@@ -151,6 +165,10 @@ public class SynchronousPid {
      */
     public void setContinuous() {
         this.setContinuous(true);
+    }
+    
+    public void setSumOutput(boolean sum) {
+        totalOutput = sum;
     }
 
     /**

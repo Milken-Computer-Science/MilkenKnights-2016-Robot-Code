@@ -22,11 +22,11 @@ public class BehaviorManager {
             driveReversed = ! driveReversed;
         }
 
-        if (commands.alignRobot) {
-            if (HardwareAdapter.GRIP.getAngleToTarget() != HardwareAdapter.DRIVE.getTurnSetpoint()) {
-                HardwareAdapter.DRIVE.setTurnSetpoint(HardwareAdapter.GRIP.getAngleToTarget()
+        if (commands.alignRobot == Commands.AlignRobot.CONTINUE) {
+            // Just continuing our turn
+        } else if (commands.alignRobot == Commands.AlignRobot.START) {
+            HardwareAdapter.DRIVE.setTurnSetpoint(HardwareAdapter.GRIP.getAngleToTarget()
                         + HardwareAdapter.DRIVE.getPhysicalPose().heading);
-            }
         } else if (driveReversed) {
             driveHelper.commandDrive(-commands.driveSpeed, commands.driveRotate);
         } else {
@@ -59,7 +59,7 @@ public class BehaviorManager {
      * @param commands The commands
      */
     private void catapult(final Commands commands) {
-        if (commands.fireCatapult && HardwareAdapter.CATAPULT.isZeroed()) {
+        if (commands.fireCatapult /**&& HardwareAdapter.CATAPULT.isZeroed()**/) {
             HardwareAdapter.CATAPULT.fire();
             HardwareAdapter.BALL_CLAMP.open();
         }

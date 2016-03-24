@@ -13,8 +13,10 @@ public class ReachAutoMode extends AutoMode {
     protected void routine() throws AutoModeEndedException {
         waitTime(0.25);
         
-        HardwareAdapter.DRIVE.setDistanceSetpoint(42);
-        waitForDrive(10.0);
+        //HardwareAdapter.DRIVE.driveAtSpeed(50, 3);
+        //HardwareAdapter.DRIVE.setDistanceSetpoint(42 * 8);
+        HardwareAdapter.DRIVE.setTurnSetpoint(180);
+        waitForDrive(15.0);
     }
 
 }
