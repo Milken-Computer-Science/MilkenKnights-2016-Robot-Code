@@ -72,7 +72,7 @@ public class SynchronousPid {
         }
 
         result = proportionalCoefficient * error + integralCoefficient * totalError + derivativeCoefficient
-                * (error - prevError) + feedForward;
+                * (error - prevError);
         prevError = error;
 
         if (result > maximumOutput) {
@@ -87,7 +87,7 @@ public class SynchronousPid {
             result += lastOutput;
         }
         
-        return result;
+        return result + feedForward;
     }
 
     /**
