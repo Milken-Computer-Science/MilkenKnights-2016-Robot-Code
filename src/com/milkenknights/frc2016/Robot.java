@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
         autoMode = new BreachAutoMode();
         
         looper.addLoopable(HardwareAdapter.DRIVE);
-        //looper.addLoopable(HardwareAdapter.INTAKE);
+        looper.addLoopable(HardwareAdapter.INTAKE_ARM);
         looper.addLoopable(HardwareAdapter.CATAPULT);
         
         smartDashboardUpdater.addSendable(HardwareAdapter.DRIVE);

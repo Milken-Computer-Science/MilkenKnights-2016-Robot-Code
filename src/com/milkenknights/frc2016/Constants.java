@@ -101,11 +101,11 @@ public class Constants {
                 public static final double PROTECT = -0.1717;
                 public static final double STORED = 0.0;
                 
-                public static final double P = 7.5;
+                public static final double P = 10;
                 public static final double I = 0.0;
                 public static final double D = 0.0;
                 
-                public static final double MAXIMUM_OUTPUT = 0.50;
+                public static final double MAXIMUM_OUTPUT = 0.75;
                 
                 public static final double ALLOWABLE_ERROR = 0.125; // TODO: Find this value
             }
