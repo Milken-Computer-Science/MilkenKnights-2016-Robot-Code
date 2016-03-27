@@ -58,7 +58,6 @@ public final class HardwareAdapter {
 
         final Solenoid driveShifter = new Solenoid(Constants.Pcm.ID, Constants.Pcm.DRIVE_SHIFTER);
         final Solenoid ballClamp = new Solenoid(Constants.Pcm.ID, Constants.Pcm.BALL_HOLDER);
-        LED_RING = new Solenoid(Constants.Pcm.ID, Constants.Pcm.LED_RING);
         
         final MkCanTalon catapultTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.CATAPULT));
         final DigitalInput catapultHome = new DigitalInput(Constants.Dio.CATAPULT_HOME);
@@ -74,6 +73,7 @@ public final class HardwareAdapter {
         CATAPULT = new Catapult("Catapult", catapultTalon, catapultEncoder, catapultHome);
         BALL_CLAMP = new BallClamp("Ball Clamp", ballClamp);
         
+        LED_RING = new Solenoid(Constants.Pcm.ID, Constants.Pcm.LED_RING);
         PDP = new PowerDistributionPanel();
         COMPRESSOR = new MkCompressor(Constants.Pcm.ID, pressureTransducer);
         

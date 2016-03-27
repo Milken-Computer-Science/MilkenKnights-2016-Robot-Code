@@ -1,7 +1,7 @@
 package com.milkenknights.frc2016;
 
 import com.milkenknights.frc2016.auto.AutoMode;
-import com.milkenknights.frc2016.auto.modes.BreachAutoMode;
+import com.milkenknights.frc2016.auto.AutoModeChooser;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
 import com.milkenknights.frc2016.subsystems.Drive.DriveGear;
 import com.milkenknights.util.MultiLooper;
@@ -24,8 +24,9 @@ public class Robot extends IterativeRobot {
     
     private BehaviorManager behaviorManager;
     private OperatorInterface operatorInterface;
-    
-    private AutoMode autoMode;
+
+    private AutoMode autoMode;    
+    private AutoModeChooser autoModeChooser;
 
     /**
      * This function is run when the robot is first started up and should be used for any initialization code.
@@ -36,7 +37,7 @@ public class Robot extends IterativeRobot {
         behaviorManager = new BehaviorManager();
         operatorInterface = new OperatorInterface();
         
-        autoMode = new BreachAutoMode();
+        autoModeChooser = new AutoModeChooser();
         
         looper.addLoopable(HardwareAdapter.DRIVE);
         looper.addLoopable(HardwareAdapter.INTAKE_ARM);
@@ -47,10 +48,12 @@ public class Robot extends IterativeRobot {
         smartDashboardUpdater.addSendable(HardwareAdapter.INTAKE_SPEED);
         smartDashboardUpdater.addSendable(HardwareAdapter.CATAPULT);
         smartDashboardUpdater.addSendable(HardwareAdapter.BALL_CLAMP);
+        smartDashboardUpdater.addSendable(HardwareAdapter.COMPRESSOR);
         smartDashboardUpdater.addSendable(HardwareAdapter.GRIP);
         
         visionLooper.start();
         smartDashboardUpdater.start();
+        autoModeChooser.start();
         
         HardwareAdapter.LED_RING.set(true);
         HardwareAdapter.GRIP.register();
@@ -67,6 +70,8 @@ public class Robot extends IterativeRobot {
         HardwareAdapter.DRIVE.setGear(DriveGear.HIGH);
         HardwareAdapter.DRIVE.resetEncoders();
         HardwareAdapter.DRIVE.resetGyro();
+        
+        autoMode = autoModeChooser.getSelected();
         
         looper.start();
         autoMode.start();
@@ -100,7 +105,10 @@ public class Robot extends IterativeRobot {
     public void disabledInit() {
         System.out.println("Start disabledInit()");
         
-        autoMode.stop();
+        if (autoMode != null) {
+            autoMode.stop();
+            autoMode = null;
+        }
         looper.stop();
 
         HardwareAdapter.COMPRESSOR.stop();

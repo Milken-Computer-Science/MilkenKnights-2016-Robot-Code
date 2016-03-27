@@ -8,7 +8,7 @@ import com.milkenknights.frc2016.subsystems.IntakeArm.IntakePosition;
 /**
  * This AutoMode will breach the OuterWorks.
  */
-public class BreachAutoMode extends AutoMode {
+public class LowBarAutoMode extends AutoMode {
 
     @Override
     protected void routine() throws AutoModeEndedException {
