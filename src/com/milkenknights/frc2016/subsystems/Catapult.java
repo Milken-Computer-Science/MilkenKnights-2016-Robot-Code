@@ -84,7 +84,8 @@ public class Catapult extends Subsystem implements Loopable {
         switch (state) {
             case RETRACT:
                 positionPid.setSetpoint(shotCount + Constants.Subsystems.Catapult.OFFSET);
-                talon.set(positionPid.calculate(encoder.getDistance()));
+                velocityPid.setSetpoint(positionPid.calculate(encoder.getDistance()));
+                talon.set(velocityPid.calculate(encoder.getRate()));
                 if (positionPid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR) || positionPid.getError() < 0) {
                     state = CatapultState.READY;
                 }
@@ -94,7 +95,8 @@ public class Catapult extends Subsystem implements Loopable {
                 break;
             case FIRE:
                 positionPid.setSetpoint(Constants.Subsystems.Catapult.OFFSET + shotCount + 1);
-                talon.set(positionPid.calculate(encoder.getDistance()));
+                velocityPid.setSetpoint(positionPid.calculate(encoder.getDistance()));
+                talon.set(velocityPid.calculate(encoder.getRate()));
                 if (positionPid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR)) {
                     shotCount++;
                     state = CatapultState.RETRACT;
