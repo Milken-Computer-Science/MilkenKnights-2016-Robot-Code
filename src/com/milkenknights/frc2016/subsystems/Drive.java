@@ -2,7 +2,6 @@ package com.milkenknights.frc2016.subsystems;
 
 import com.milkenknights.frc2016.Constants;
 import com.milkenknights.frc2016.subsystems.controllers.DriveStraightController;
-import com.milkenknights.frc2016.subsystems.controllers.TimedOpenLoopController;
 import com.milkenknights.frc2016.subsystems.controllers.TimedVelocityController;
 import com.milkenknights.frc2016.subsystems.controllers.TurnInPlaceController;
 import com.milkenknights.util.MkCanTalon;
@@ -185,11 +184,6 @@ public class Drive extends DriveAbstract {
     private void setDriveSpeed(final MotorPairSignal signal) {
         leftVelocityPid.setSetpoint((signal.leftMotor));
         rightVelocityPid.setSetpoint((signal.rightMotor));
-        
-//        if (leftVelocityPid.getSetpoint() / 140 >= 1) {
-//            leftVelocityPid.resetIntegrator();
-//            rightVelocityPid.resetIntegrator();
-//        }
         
         setDriveOutputs(new MotorPairSignal(
                 leftVelocityPid.calculate(getPhysicalPose().leftVelocity) + leftVelocityPid.getSetpoint() / 140,

@@ -1,6 +1,5 @@
 package com.milkenknights.frc2016.auto.modes;
 
-import com.milkenknights.frc2016.Constants;
 import com.milkenknights.frc2016.HardwareAdapter;
 import com.milkenknights.frc2016.auto.AutoMode;
 import com.milkenknights.frc2016.auto.AutoModeEndedException;
@@ -15,8 +14,8 @@ public class BreachAutoMode extends AutoMode {
     protected void routine() throws AutoModeEndedException {
         waitTime(0.25);
         
-//        HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.INTAKE);
-//        waitForIntake(0.5);
+        HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.INTAKE);
+        waitForIntake(0.5);
         
         HardwareAdapter.DRIVE.setDistanceSetpoint(175, 50);
         waitForDrive(3.0);
@@ -30,13 +29,6 @@ public class BreachAutoMode extends AutoMode {
         
         HardwareAdapter.CATAPULT.fire();
         waitTime(0.25);
-        
-        HardwareAdapter.DRIVE.setTurnSetpoint(10.0);
-        waitForDrive(2.0);
-        
-        HardwareAdapter.DRIVE.resetEncoders();
-        HardwareAdapter.DRIVE.setDistanceSetpoint(-150, 50);
-        waitForDrive(3.0);
     }
 
 }

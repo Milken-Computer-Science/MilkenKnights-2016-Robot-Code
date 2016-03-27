@@ -68,7 +68,7 @@ public class Constants {
         public static final String TARGETS_TABLE_ID = "targets";
         public static final String MAT_SIZE_TABLE_ID = "matSize";
         
-        public static final double HORIZONTAL_FOV  = 67; // TODO: Find this value
+        public static final double HORIZONTAL_FOV  = 67.0; // TODO: Find this value
         
         public static final double OFFSET = -5.0;
     }
@@ -101,7 +101,7 @@ public class Constants {
                 public static final double PROTECT = -0.1717;
                 public static final double STORED = 0.0;
                 
-                public static final double P = 10;
+                public static final double P = 10.0;
                 public static final double I = 0.0;
                 public static final double D = 0.0;
                 
@@ -111,8 +111,8 @@ public class Constants {
             }
             
             public class Speed {
-                public static final double INTAKE = 1;
-                public static final double OUTPUT = -1;
+                public static final double INTAKE = 1.0;
+                public static final double OUTPUT = -1.0;
             }
         }
 
