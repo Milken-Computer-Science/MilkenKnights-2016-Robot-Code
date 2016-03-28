@@ -191,8 +191,8 @@ public final class Drive extends DriveAbstract {
     }
     
     private void setDriveSpeed(final MotorPairSignal signal) {
-        leftVelocityPid.setSetpoint((signal.leftMotor));
-        rightVelocityPid.setSetpoint((signal.rightMotor));
+        leftVelocityPid.setSetpoint(signal.leftMotor);
+        rightVelocityPid.setSetpoint(signal.rightMotor);
         
         setDriveOutputs(new MotorPairSignal(
                 leftVelocityPid.calculate(getPhysicalPose().leftVelocity),

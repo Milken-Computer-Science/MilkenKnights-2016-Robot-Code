@@ -5,12 +5,12 @@ import com.milkenknights.util.MkSendable;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class SsiTechnologiesPressureTransducer extends MkPressureTransducer implements MkSendable {
+public final class SsiTechnologiesPressureTransducer extends MkPressureTransducer implements MkSendable {
     
     public static final double SCALE_FACTOR = 50;
     public static final double OFFSET = -25;
 
-    public SsiTechnologiesPressureTransducer(int arg0) {
+    public SsiTechnologiesPressureTransducer(final int arg0) {
         super(arg0);
     }
     
