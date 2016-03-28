@@ -48,7 +48,7 @@ public class TimedVelocityController implements Drive.DriveController {
      * @return The power to send to the motor
      */
     @Override
-    public MotorPairSignal update(Pose pose) {
+    public MotorPairSignal update(final Pose pose) {
         double power;
         final double cur = Timer.getFPGATimestamp();
         if (cur <= decelTime) {

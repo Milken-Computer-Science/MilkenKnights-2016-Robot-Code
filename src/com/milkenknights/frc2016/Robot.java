@@ -1,7 +1,7 @@
 package com.milkenknights.frc2016;
 
 import com.milkenknights.frc2016.auto.AutoMode;
-import com.milkenknights.frc2016.auto.modes.LowBarAutoMode;
+import com.milkenknights.frc2016.auto.modes.DoNothingAutoMode;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
 import com.milkenknights.frc2016.subsystems.Drive.DriveGear;
 import com.milkenknights.util.MultiLooper;
@@ -48,11 +48,11 @@ public class Robot extends IterativeRobot {
         smartDashboardUpdater.addSendable(HardwareAdapter.BALL_CLAMP);
         smartDashboardUpdater.addSendable(HardwareAdapter.COMPRESSOR);
         smartDashboardUpdater.addSendable(HardwareAdapter.GRIP);
+        smartDashboardUpdater.addSendable(HardwareAdapter.LIGHT_MANAGER);
         
         visionLooper.start();
         smartDashboardUpdater.start();
         
-        HardwareAdapter.LED_RING.set(true);
         HardwareAdapter.GRIP.register();
         HardwareAdapter.DRIVE.resetEncoders();
         HardwareAdapter.DRIVE.resetGyro();
@@ -64,12 +64,15 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
         System.out.println("Start autonomousInit()");
+        
         HardwareAdapter.COMPRESSOR.stop();
+        HardwareAdapter.LIGHT_MANAGER.setGreenLedRing();
         HardwareAdapter.DRIVE.setGear(DriveGear.HIGH);
         HardwareAdapter.DRIVE.resetEncoders();
         HardwareAdapter.DRIVE.resetGyro();
         
-        autoMode = new LowBarAutoMode();
+        //autoMode = new LowBarAutoMode();
+        autoMode = new DoNothingAutoMode();
         
         looper.start();
         autoMode.start();
@@ -84,6 +87,7 @@ public class Robot extends IterativeRobot {
         System.out.println("Start teleopInit()");
         
         HardwareAdapter.COMPRESSOR.start();
+        HardwareAdapter.LIGHT_MANAGER.setFlashlight();
         HardwareAdapter.DRIVE.resetEncoders();
         HardwareAdapter.DRIVE.resetGyro();
         
@@ -111,6 +115,7 @@ public class Robot extends IterativeRobot {
         looper.stop();
 
         HardwareAdapter.COMPRESSOR.stop();
+        HardwareAdapter.LIGHT_MANAGER.off();
         HardwareAdapter.DRIVE.setOpenLoop(MotorPairSignal.NEUTRAL);
         
         System.gc();

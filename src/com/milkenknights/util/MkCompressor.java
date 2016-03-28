@@ -1,5 +1,7 @@
 package com.milkenknights.util;
 
+import com.milkenknights.frc2016.Constants;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -9,13 +11,15 @@ public class MkCompressor extends Compressor implements MkSendable, Loopable {
     
     @SuppressWarnings("unused")
     private MkCompressor() {
+        super();
+        
         pressureTransducer = null;
     }
 
     /**
      * Create a new compressor.
      */
-    public MkCompressor(int id, MkPressureTransducer pressureTransducer) {
+    public MkCompressor(final int id, final MkPressureTransducer pressureTransducer) {
         super(id);
         this.pressureTransducer = pressureTransducer;
     }
@@ -33,9 +37,9 @@ public class MkCompressor extends Compressor implements MkSendable, Loopable {
 
     @Override
     public void update() {
-        if (getStoredPressure() > 115.0) {
+        if (getStoredPressure() > Constants.Pcm.HIGH_PRESSURE) {
             this.stop();
-        } else if (getStoredPressure() < 70.0) {
+        } else if (getStoredPressure() < Constants.Pcm.LOW_PRESSURE) {
             this.start();
         }
     }

@@ -23,6 +23,7 @@ public class Catapult extends Subsystem implements Loopable {
     private final SynchronousPid velocityPid;
     private CatapultState state;
     private int shotCount;
+    private boolean zeroed;
 
     /**
      * Create a new catapult subsystem.
@@ -38,20 +39,24 @@ public class Catapult extends Subsystem implements Loopable {
         encoder.setDistancePerPulse(Constants.Subsystems.Catapult.GEAR_RATIO / encoder.getPulsesPerRevolution());
         
         positionPid = new SynchronousPid();
-        positionPid.setPid(3.0, 0, 0);
-        positionPid.setOutputRange(Constants.Subsystems.Catapult.DEADBAND, 1.0);
+        positionPid.setPid(Constants.Subsystems.Catapult.POSITION_KP,
+                Constants.Subsystems.Catapult.POSITION_KI,
+                Constants.Subsystems.Catapult.POSITION_KD);
+        positionPid.setOutputRange(0.0, 1.0);
         
         velocityPid = new SynchronousPid();
-        velocityPid.setPid(0.001, 0.0, 0.0);
+        velocityPid.setPid(Constants.Subsystems.Catapult.VELOCITY_KP,
+                Constants.Subsystems.Catapult.VELOCITY_KI,
+                Constants.Subsystems.Catapult.VELOCITY_KD);
         velocityPid.enableMaxVelocityFeedForward(Constants.Subsystems.Catapult.MAX_VELOCITY);
         velocityPid.setOutputRange(0, 1.0);
-        velocityPid.setSumOutput(true);
+        velocityPid.sumOutput();
 
         this.talon = talon;
         this.encoder = encoder;
         this.home = home;
         
-        setState(CatapultState.ZERO);
+        setState(CatapultState.READY);
     }
     
     /**
@@ -83,7 +88,7 @@ public class Catapult extends Subsystem implements Loopable {
     public void update() {
         switch (state) {
             case RETRACT:
-                positionPid.setSetpoint(shotCount + Constants.Subsystems.Catapult.OFFSET);
+                positionPid.setSetpoint(shotCount + Constants.Subsystems.Catapult.READY_OFFSET);
                 velocityPid.setSetpoint(positionPid.calculate(encoder.getDistance()));
                 talon.set(velocityPid.calculate(encoder.getRate()));
                 if (positionPid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR) || positionPid.getError() < 0) {
@@ -91,10 +96,15 @@ public class Catapult extends Subsystem implements Loopable {
                 }
                 break;
             case READY:
-                talon.set(0.0);
+                velocityPid.setSetpoint(0.0);
+                talon.set(velocityPid.calculate(encoder.getRate()));
                 break;
             case FIRE:
-                positionPid.setSetpoint(Constants.Subsystems.Catapult.OFFSET + shotCount + 1);
+                if (!zeroed) {
+                    state = CatapultState.ZERO;
+                    break;
+                }
+                positionPid.setSetpoint(Constants.Subsystems.Catapult.READY_OFFSET + shotCount + 1);
                 velocityPid.setSetpoint(positionPid.calculate(encoder.getDistance()));
                 talon.set(velocityPid.calculate(encoder.getRate()));
                 if (positionPid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR)) {
@@ -104,13 +114,14 @@ public class Catapult extends Subsystem implements Loopable {
                 break;
             case ZERO:
                 if (home.get()) {
-                    velocityPid.setSetpoint(0.3);
+                    velocityPid.setSetpoint(Constants.Subsystems.Catapult.RESET_SPEED);
                     talon.set(velocityPid.calculate(encoder.getRate()));
                 } else {
                     encoder.reset();
                     System.out.println("Catapult Zeroed!");
                     talon.set(0.0);
                     setState(CatapultState.RETRACT);
+                    zeroed = true;
                 }
                 break;
             default:

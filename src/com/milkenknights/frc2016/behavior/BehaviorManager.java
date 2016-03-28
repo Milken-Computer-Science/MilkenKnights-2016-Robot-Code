@@ -24,14 +24,12 @@ public class BehaviorManager {
             driveReversed = ! driveReversed;
         }
 
-        if (commands.alignRobot == Commands.AlignRobot.CONTINUE) {
-            // Just continuing our turn
-        } else if (commands.alignRobot == Commands.AlignRobot.START) {
+        if (commands.alignRobot == Commands.AlignRobot.START) {
             HardwareAdapter.DRIVE.setTurnSetpoint(HardwareAdapter.GRIP.getAngleToTarget()
                         + HardwareAdapter.DRIVE.getPhysicalPose().heading);
-        } else if (driveReversed) {
+        } else if (driveReversed && commands.alignRobot != Commands.AlignRobot.CONTINUE) {
             driveHelper.commandDrive(-commands.driveSpeed, commands.driveRotate);
-        } else {
+        } else if (commands.alignRobot != Commands.AlignRobot.CONTINUE) {
             driveHelper.commandDrive(commands.driveSpeed, commands.driveRotate);
         }
         
@@ -46,6 +44,10 @@ public class BehaviorManager {
      * @param commands The commands
      */
     private void intake(final Commands commands) {
+        if (commands.zeroIntakeArm && HardwareAdapter.CATAPULT.getState() == Catapult.CatapultState.READY) {
+            HardwareAdapter.INTAKE_ARM.zero();
+        }
+        
         if (commands.intakePosition != null && commands.intakePosition != HardwareAdapter.INTAKE_ARM.getPosition()) {
             if (commands.intakePosition != IntakeArm.IntakePosition.STORED) {
                 HardwareAdapter.INTAKE_ARM.setPosition(commands.intakePosition);
@@ -66,11 +68,13 @@ public class BehaviorManager {
      * @param commands The commands
      */
     private void catapult(final Commands commands) {
-        if (commands.fireCatapult && HardwareAdapter.CATAPULT.getState() != Catapult.CatapultState.ZERO
-                && HardwareAdapter.INTAKE_ARM.getPosition() != IntakeArm.IntakePosition.STORED
-                && HardwareAdapter.INTAKE_ARM.isOnTarget()) {
-            HardwareAdapter.CATAPULT.fire();
-            HardwareAdapter.BALL_CLAMP.open();
+        if (commands.fireCatapult && HardwareAdapter.CATAPULT.getState() != Catapult.CatapultState.ZERO) {
+            if (HardwareAdapter.INTAKE_ARM.getPosition() == IntakeArm.IntakePosition.STORED) {
+                HardwareAdapter.INTAKE_ARM.setPosition(IntakeArm.IntakePosition.PROTECT);
+            } else if (HardwareAdapter.INTAKE_ARM.isOnTarget()) {
+                HardwareAdapter.CATAPULT.fire();
+                HardwareAdapter.BALL_CLAMP.open();
+            }
         }
     }
     

@@ -67,5 +67,9 @@ public class OperatorInterface {
         } else {
             commands.fireCatapult = false;
         }
+        
+        if (HardwareAdapter.OPERATOR_STICK.getButton(11).isPressed()) {
+            commands.zeroIntakeArm = true;
+        }
     }
 }

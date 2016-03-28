@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 
 public abstract class MkPressureTransducer extends AnalogInput {
 
-    public MkPressureTransducer(int arg0) {
+    public MkPressureTransducer(final int arg0) {
         super(arg0);
     }
 

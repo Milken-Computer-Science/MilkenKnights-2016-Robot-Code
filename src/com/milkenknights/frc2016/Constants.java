@@ -34,9 +34,13 @@ public class Constants {
     
     public class Pcm {
         public static final int ID = 1;
+        
+        public static final double HIGH_PRESSURE = 115.0;
+        public static final double LOW_PRESSURE = 70.0;
 
         public static final int DRIVE_SHIFTER = 0;
         public static final int BALL_HOLDER = 1;
+        public static final int FLASHLIGHT = 6;
         public static final int LED_RING = 7;
     }
     
@@ -81,10 +85,13 @@ public class Constants {
         
         public class Drive {
             public static final double WHEEL_DIAMETER = 7.67;
-            
             public static final double GEAR_RATIO = 20.0 / 64.0 / 3.0;
             
             public static final double MAXIMUM_SPEED = 140.0;
+            
+            public static final double VELOCITY_KP = 0.001;
+            public static final double VELOCITY_KI = 0.0;
+            public static final double VELOCITY_KD = 0.0;
             
             public static final double TURN_KP = 2.5;
             public static final double TURN_KI = 0.0;
@@ -97,8 +104,8 @@ public class Constants {
             public class Arm {
                 public static final double GEAR_RATIO = 16.0 / 44.0;
                 
-                public static final double INTAKE = -0.35;
-                public static final double PROTECT = -0.18;
+                public static final double INTAKE = -0.34;
+                public static final double PROTECT = -0.2;
                 public static final double STORED = 0.0;
                 
                 public static final double P = 10.0;
@@ -106,8 +113,13 @@ public class Constants {
                 public static final double D = 0.0;
                 
                 public static final double MAXIMUM_OUTPUT = 0.75;
+                public static final double DRIFT_POWER = 0.04;
+                public static final double ZERO_POWER = 0.20;
+                public static final double ZERO_CURRENT = 3.0;
                 
-                public static final double ALLOWABLE_ERROR = 0.125; // TODO: Find this value
+                public static final double ZEROED_RATE = 0.05;
+                public static final double ALLOWABLE_ERROR = 0.025;
+                public static final double INTAKE_POSITION_DRIFT = 0.075;
             }
             
             public class Speed {
@@ -120,9 +132,17 @@ public class Constants {
             public static final double GEAR_RATIO = 14.0 / 64.0;
             
             public static final double ALLOWABLE_ERROR = 0.025;
-            public static final double DEADBAND = 0.1;
+            public static final double RESET_SPEED = 0.3;
             public static final double MAX_VELOCITY = 0.8;
-            public static final double OFFSET = 0.155;
+            public static final double READY_OFFSET = 0.15;
+            
+            public static final double VELOCITY_KP = 0.001;
+            public static final double VELOCITY_KI = 0.0;
+            public static final double VELOCITY_KD = 0.0;
+            
+            public static final double POSITION_KP = 3.0;
+            public static final double POSITION_KI = 0.0;
+            public static final double POSITION_KD = 0.0;
         }
         
     }

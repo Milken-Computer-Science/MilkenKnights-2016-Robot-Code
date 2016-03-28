@@ -110,7 +110,10 @@ public class SynchronousPid {
         this.derivativeCoefficient = derivativeCoefficient;
     }
     
-    public void enableMaxVelocityFeedForward(double maxVelocity) {
+    /**
+     * Enable maximum velocity feed forward.  This will feed forward setpoint / maxVelocity.  Useful for velocity PID.
+     */
+    public void enableMaxVelocityFeedForward(final double maxVelocity) {
         maxVelocityFeedForward = true;
         this.maxVelocity = maxVelocity;
     }
@@ -173,8 +176,12 @@ public class SynchronousPid {
         this.setContinuous(true);
     }
     
-    public void setSumOutput(boolean sum) {
-        totalOutput = sum;
+    /**
+     * Set the PID controller to sum every previous result of the controller and return that.  Useful for velocity PID
+     * control.  The does not sum the feed forward term.
+     */
+    public void sumOutput() {
+        totalOutput = true;
     }
 
     /**

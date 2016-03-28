@@ -76,11 +76,15 @@ public class Drive extends DriveAbstract {
         leftVelocityPid.enableMaxVelocityFeedForward(Constants.Subsystems.Drive.MAXIMUM_SPEED);
         rightVelocityPid.enableMaxVelocityFeedForward(Constants.Subsystems.Drive.MAXIMUM_SPEED);
         
-        leftVelocityPid.setSumOutput(true);
-        rightVelocityPid.setSumOutput(true);
+        leftVelocityPid.sumOutput();
+        rightVelocityPid.sumOutput();
         
-        leftVelocityPid.setPid(0.001, 0.0, 0.0);
-        rightVelocityPid.setPid(0.001, 0.0, 0.0);
+        leftVelocityPid.setPid(Constants.Subsystems.Drive.VELOCITY_KP,
+                Constants.Subsystems.Drive.VELOCITY_KI,
+                Constants.Subsystems.Drive.VELOCITY_KD);
+        rightVelocityPid.setPid(Constants.Subsystems.Drive.VELOCITY_KP,
+                Constants.Subsystems.Drive.VELOCITY_KI,
+                Constants.Subsystems.Drive.VELOCITY_KD);
     }
 
     @Override
@@ -132,7 +136,7 @@ public class Drive extends DriveAbstract {
         controller = new TurnInPlaceController(heading);
     }
     
-    public void driveAtSpeed(double speed, double time) {
+    public void driveAtSpeed(final double speed, final double time) {
         controller = new TimedVelocityController(speed, time, 0, 0);
     }
     
