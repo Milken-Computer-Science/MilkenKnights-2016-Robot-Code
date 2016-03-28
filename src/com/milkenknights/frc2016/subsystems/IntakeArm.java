@@ -9,7 +9,7 @@ import com.milkenknights.util.SynchronousPid;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class IntakeArm extends Subsystem implements Loopable {
+public final class IntakeArm extends Subsystem implements Loopable {
 
     public enum IntakePosition {
         INTAKE(Constants.Subsystems.Intake.Arm.INTAKE),

@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * described in the IterativeRobot documentation. If you change the name of this class or the package after creating
  * this project, you must also update the manifest file in the resource directory.
  */
-public class Robot extends IterativeRobot {
+public final class Robot extends IterativeRobot {
     
     private final MultiLooper looper = new MultiLooper("Controllers", Constants.ControlLoops.CONTROLLERS_PERIOD);
     private final MultiLooper visionLooper = new MultiLooper("Vision", Constants.ControlLoops.VISION_PERIOD);

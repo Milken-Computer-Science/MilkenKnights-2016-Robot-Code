@@ -6,7 +6,7 @@ import com.milkenknights.util.Subsystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class IntakeSpeed extends Subsystem {
+public final class IntakeSpeed extends Subsystem {
     
     private MkCanTalon talon;
     private IntakeSpeedState speed = IntakeSpeedState.NEUTRAL;

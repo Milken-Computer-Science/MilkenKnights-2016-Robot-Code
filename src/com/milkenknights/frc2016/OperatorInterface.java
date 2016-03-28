@@ -5,7 +5,7 @@ import com.milkenknights.frc2016.subsystems.Drive.DriveGear;
 import com.milkenknights.frc2016.subsystems.IntakeArm.IntakePosition;
 import com.milkenknights.frc2016.subsystems.IntakeSpeed.IntakeSpeedState;
 
-public class OperatorInterface {
+public final class OperatorInterface {
 
     private Commands commands = new Commands();
     

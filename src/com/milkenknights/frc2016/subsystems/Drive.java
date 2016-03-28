@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Drive extends DriveAbstract {
+public final class Drive extends DriveAbstract {
         
     private MkCanTalon leftMotor;
     private MkCanTalon rightMotor;

@@ -5,7 +5,7 @@ import com.milkenknights.util.Subsystem;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class BallClamp extends Subsystem {
+public final class BallClamp extends Subsystem {
     
     private Solenoid solenoid;
     

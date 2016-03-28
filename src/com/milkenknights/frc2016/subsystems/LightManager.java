@@ -5,10 +5,10 @@ import com.milkenknights.util.Subsystem;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class LightManager extends Subsystem {
+public final class LightManager extends Subsystem {
 
-    final Solenoid flashlight;
-    final Solenoid greenLedRing;
+    private final Solenoid flashlight;
+    private final Solenoid greenLedRing;
     
     /**
      * Create a new light manager.

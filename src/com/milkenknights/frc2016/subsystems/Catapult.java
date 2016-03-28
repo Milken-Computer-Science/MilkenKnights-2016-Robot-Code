@@ -10,7 +10,7 @@ import com.milkenknights.util.SynchronousPid;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Catapult extends Subsystem implements Loopable {
+public final class Catapult extends Subsystem implements Loopable {
     
     public enum CatapultState {
         RETRACT, READY, FIRE, ZERO

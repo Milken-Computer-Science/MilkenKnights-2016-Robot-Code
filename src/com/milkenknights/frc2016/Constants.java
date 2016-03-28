@@ -1,6 +1,6 @@
 package com.milkenknights.frc2016;
 
-public class Constants {
+public final class Constants {
     
     // DriveStraightController gains
     public static final double kDriveMaxSpeedInchesPerSec = 140;
