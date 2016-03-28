@@ -86,7 +86,7 @@ public class Constants {
             
             public static final double MAXIMUM_SPEED = 140.0;
             
-            public static final double TURN_KP = 2.0;
+            public static final double TURN_KP = 2.5;
             public static final double TURN_KI = 0.0;
             public static final double TURN_KD = 0.0;
             public static final double TURN_ALLOWABLE_ERROR = 3.0;
@@ -121,7 +121,7 @@ public class Constants {
             
             public static final double ALLOWABLE_ERROR = 0.025;
             public static final double DEADBAND = 0.1;
-            
+            public static final double MAX_VELOCITY = 0.8;
             public static final double OFFSET = 0.155;
         }
         

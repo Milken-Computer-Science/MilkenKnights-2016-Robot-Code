@@ -15,7 +15,7 @@ public class SynchronousPid {
     private double proportionalCoefficient; // factor for "proportional" control
     private double integralCoefficient;     // factor for "integral" control
     private double derivativeCoefficient;   // factor for "derivative" control
-    private double feedForward;
+    private double maxVelocity;
     private double maximumOutput = 1.0;     // |maximum output|
     private double minimumOutput = -1.0;    // |minimum output|
     private double maximumInput;      // maximum input - limit setpoint to this
@@ -29,6 +29,7 @@ public class SynchronousPid {
     private double lastInput = Double.NaN;
     private double lastOutput;
     private boolean totalOutput;
+    private boolean maxVelocityFeedForward;
 
     /**
      * Allocate a PID object with the given constants for P, I, D.
@@ -81,13 +82,17 @@ public class SynchronousPid {
             result = minimumOutput;
         }
         
-        lastOutput = result;
-        
         if (totalOutput) {
             result += lastOutput;
         }
         
-        return result + feedForward;
+        lastOutput = result;
+        
+        if (maxVelocityFeedForward) {
+            result += setpoint / maxVelocity;
+        }
+        
+        return result;
     }
 
     /**
@@ -105,8 +110,9 @@ public class SynchronousPid {
         this.derivativeCoefficient = derivativeCoefficient;
     }
     
-    public void setFeedForward(final double feedForward) {
-        this.feedForward = feedForward;
+    public void enableMaxVelocityFeedForward(double maxVelocity) {
+        maxVelocityFeedForward = true;
+        this.maxVelocity = maxVelocity;
     }
 
     /**

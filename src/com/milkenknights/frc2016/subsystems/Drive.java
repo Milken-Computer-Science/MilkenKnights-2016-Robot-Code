@@ -73,11 +73,14 @@ public class Drive extends DriveAbstract {
         leftVelocityPid = new SynchronousPid();
         rightVelocityPid = new SynchronousPid();
         
-        //leftVelocityPid.setSumOutput(true);
-        //rightVelocityPid.setSumOutput(true);
+        leftVelocityPid.enableMaxVelocityFeedForward(Constants.Subsystems.Drive.MAXIMUM_SPEED);
+        rightVelocityPid.enableMaxVelocityFeedForward(Constants.Subsystems.Drive.MAXIMUM_SPEED);
         
-        leftVelocityPid.setPid(0.025, 0.0005, 0.0);
-        rightVelocityPid.setPid(0.025, 0.0005, 0.0);
+        leftVelocityPid.setSumOutput(true);
+        rightVelocityPid.setSumOutput(true);
+        
+        leftVelocityPid.setPid(0.001, 0.0, 0.0);
+        rightVelocityPid.setPid(0.001, 0.0, 0.0);
     }
 
     @Override
@@ -188,8 +191,8 @@ public class Drive extends DriveAbstract {
         rightVelocityPid.setSetpoint((signal.rightMotor));
         
         setDriveOutputs(new MotorPairSignal(
-                leftVelocityPid.calculate(getPhysicalPose().leftVelocity) + leftVelocityPid.getSetpoint() / 140,
-                rightVelocityPid.calculate(getPhysicalPose().rightVelocity) + rightVelocityPid.getSetpoint() / 140));
+                leftVelocityPid.calculate(getPhysicalPose().leftVelocity),
+                rightVelocityPid.calculate(getPhysicalPose().rightVelocity)));
     }
     
     private void setDriveOutputs(final MotorPairSignal signal) {

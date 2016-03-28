@@ -38,12 +38,12 @@ public class Catapult extends Subsystem implements Loopable {
         encoder.setDistancePerPulse(Constants.Subsystems.Catapult.GEAR_RATIO / encoder.getPulsesPerRevolution());
         
         positionPid = new SynchronousPid();
-        positionPid.setPid(3.25, 0, 0);
+        positionPid.setPid(3.0, 0, 0);
         positionPid.setOutputRange(Constants.Subsystems.Catapult.DEADBAND, 1.0);
         
         velocityPid = new SynchronousPid();
-        velocityPid.setPid(0.5, 0.0, 0.0);
-        velocityPid.setFeedForward(Constants.Subsystems.Catapult.DEADBAND);
+        velocityPid.setPid(0.001, 0.0, 0.0);
+        velocityPid.enableMaxVelocityFeedForward(Constants.Subsystems.Catapult.MAX_VELOCITY);
         velocityPid.setOutputRange(0, 1.0);
         velocityPid.setSumOutput(true);
 
