@@ -1,6 +1,8 @@
 package com.milkenknights.frc2016.behavior;
 
 import com.milkenknights.frc2016.HardwareAdapter;
+import com.milkenknights.frc2016.subsystems.Catapult;
+import com.milkenknights.frc2016.subsystems.IntakeArm;
 import com.milkenknights.util.drive.ArcadeDriveHelper;
 
 public class BehaviorManager {
@@ -45,7 +47,12 @@ public class BehaviorManager {
      */
     private void intake(final Commands commands) {
         if (commands.intakePosition != null && commands.intakePosition != HardwareAdapter.INTAKE_ARM.getPosition()) {
-            HardwareAdapter.INTAKE_ARM.setPosition(commands.intakePosition);
+            if (commands.intakePosition != IntakeArm.IntakePosition.STORED) {
+                HardwareAdapter.INTAKE_ARM.setPosition(commands.intakePosition);
+            } else if (commands.intakePosition == IntakeArm.IntakePosition.STORED
+                    && HardwareAdapter.CATAPULT.getState() == Catapult.CatapultState.READY) {
+                HardwareAdapter.INTAKE_ARM.setPosition(commands.intakePosition);
+            }
         }
         
         if (commands.intakeSpeed != null && commands.intakeSpeed != HardwareAdapter.INTAKE_SPEED.getSpeed()) {
@@ -59,7 +66,9 @@ public class BehaviorManager {
      * @param commands The commands
      */
     private void catapult(final Commands commands) {
-        if (commands.fireCatapult /**&& HardwareAdapter.CATAPULT.isZeroed()**/) {
+        if (commands.fireCatapult && HardwareAdapter.CATAPULT.getState() != Catapult.CatapultState.ZERO
+                && HardwareAdapter.INTAKE_ARM.getPosition() != IntakeArm.IntakePosition.STORED
+                && HardwareAdapter.INTAKE_ARM.isOnTarget()) {
             HardwareAdapter.CATAPULT.fire();
             HardwareAdapter.BALL_CLAMP.open();
         }

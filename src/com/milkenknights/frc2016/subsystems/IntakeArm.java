@@ -68,7 +68,7 @@ public class IntakeArm extends Subsystem implements Loopable {
     /**
      * Get if the arm is on target.
      */
-    public boolean armOnTarget() {
+    public boolean isOnTarget() {
         return pid.onTarget(Constants.Subsystems.Intake.Arm.ALLOWABLE_ERROR);
     }
 

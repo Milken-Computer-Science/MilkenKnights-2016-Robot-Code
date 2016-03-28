@@ -84,8 +84,10 @@ public class Drive extends DriveAbstract {
     public void update() {        
         if (controller == null) {
             return;
-        } else {
+        } else if (controller instanceof TurnInPlaceController) {
             setDriveSpeed(controller.update(getPhysicalPose()));
+        } else {
+            setDriveOutputs(controller.update(getPhysicalPose()));
         }
     }
 
@@ -165,7 +167,7 @@ public class Drive extends DriveAbstract {
     }
     
     public void resetGyro() {
-        gyro.reset();
+        gyro.zeroYaw();
     }
 
     @Override

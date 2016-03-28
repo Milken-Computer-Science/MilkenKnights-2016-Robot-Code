@@ -14,7 +14,7 @@ public class ReachAutoMode extends AutoMode {
         waitTime(0.25);
         
         //HardwareAdapter.DRIVE.driveAtSpeed(50, 3);
-        //HardwareAdapter.DRIVE.setDistanceSetpoint(42 * 8);
+        //HardwareAdapter.DRIVE.setDistanceSetpoint(5 * 12);
         HardwareAdapter.DRIVE.setTurnSetpoint(180);
         waitForDrive(15.0);
     }

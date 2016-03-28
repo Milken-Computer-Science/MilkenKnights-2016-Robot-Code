@@ -5,7 +5,7 @@ public class Constants {
     // DriveStraightController gains
     public static final double kDriveMaxSpeedInchesPerSec = 140;
     public static final double kDriveMaxAccelInchesPerSec2 = 200;
-    public static final double kDrivePositionKp = 2.0; //.7
+    public static final double kDrivePositionKp = 0.3; //.7
     public static final double kDrivePositionKi = 0.0;
     public static final double kDrivePositionKd = 0.0;
     public static final double kDriveStraightKp = 0.1; //3
@@ -70,7 +70,7 @@ public class Constants {
         
         public static final double HORIZONTAL_FOV  = 67.0; // TODO: Find this value
         
-        public static final double OFFSET = -5.0;
+        public static final double OFFSET = -7.0;
     }
     
     public class Auto {
@@ -86,7 +86,7 @@ public class Constants {
             
             public static final double MAXIMUM_SPEED = 140.0;
             
-            public static final double TURN_KP = 1.0;
+            public static final double TURN_KP = 2.0;
             public static final double TURN_KI = 0.0;
             public static final double TURN_KD = 0.0;
             public static final double TURN_ALLOWABLE_ERROR = 3.0;
@@ -98,7 +98,7 @@ public class Constants {
                 public static final double GEAR_RATIO = 16.0 / 44.0;
                 
                 public static final double INTAKE = -0.35;
-                public static final double PROTECT = -0.1717;
+                public static final double PROTECT = -0.18;
                 public static final double STORED = 0.0;
                 
                 public static final double P = 10.0;
