@@ -17,7 +17,7 @@ public final class Catapult extends Subsystem implements Loopable {
     }
     
     private enum ZeroState {
-        RETRACT, REVERSE, ZEROED
+        RETRACT, REVERSE, ZERO, ZEROED
     }
     
     private final MkCanTalon talon;
@@ -60,6 +60,7 @@ public final class Catapult extends Subsystem implements Loopable {
         this.encoder = encoder;
         this.home = home;
         
+        zeroState = ZeroState.RETRACT;
         setState(CatapultState.READY);
     }
     
@@ -128,14 +129,21 @@ public final class Catapult extends Subsystem implements Loopable {
                         break;
                     case REVERSE:
                         if (home.get()) {
+                            zeroState = ZeroState.ZERO;
+                            break;
+                        }
+                        velocityPid.setSetpoint(-Constants.Subsystems.Catapult.SLOW_RETRACT_SPEED);
+                        talon.set(velocityPid.calculate(encoder.getRate()));
+                        break;
+                    case ZERO:
+                        if (!home.get()) {
                             encoder.reset();
                             zeroState = ZeroState.ZEROED;
                             System.out.println("Catapult Zeroed!");
-                            talon.set(0.0);
                             setState(CatapultState.RETRACT);
                             break;
                         }
-                        velocityPid.setSetpoint(Constants.Subsystems.Catapult.REVERSE_SPEED);
+                        velocityPid.setSetpoint(Constants.Subsystems.Catapult.SLOW_RETRACT_SPEED);
                         talon.set(velocityPid.calculate(encoder.getRate()));
                         break;
                     case ZEROED:
