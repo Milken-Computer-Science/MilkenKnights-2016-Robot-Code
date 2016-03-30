@@ -16,6 +16,10 @@ public final class Catapult extends Subsystem implements Loopable {
         RETRACT, READY, FIRE, ZERO
     }
     
+    private enum ZeroState {
+        RETRACT, REVERSE, ZEROED
+    }
+    
     private final MkCanTalon talon;
     private final MkEncoder encoder;
     private final DigitalInput home;
@@ -23,7 +27,7 @@ public final class Catapult extends Subsystem implements Loopable {
     private final SynchronousPid velocityPid;
     private CatapultState state;
     private int shotCount;
-    private boolean zeroed;
+    private ZeroState zeroState;
 
     /**
      * Create a new catapult subsystem.
@@ -100,7 +104,7 @@ public final class Catapult extends Subsystem implements Loopable {
                 talon.set(velocityPid.calculate(encoder.getRate()));
                 break;
             case FIRE:
-                if (!zeroed) {
+                if (zeroState != ZeroState.ZEROED) {
                     state = CatapultState.ZERO;
                     break;
                 }
@@ -113,15 +117,31 @@ public final class Catapult extends Subsystem implements Loopable {
                 }
                 break;
             case ZERO:
-                if (home.get()) {
-                    velocityPid.setSetpoint(Constants.Subsystems.Catapult.RESET_SPEED);
-                    talon.set(velocityPid.calculate(encoder.getRate()));
-                } else {
-                    encoder.reset();
-                    System.out.println("Catapult Zeroed!");
-                    talon.set(0.0);
-                    setState(CatapultState.RETRACT);
-                    zeroed = true;
+                switch (zeroState) {
+                    case RETRACT:
+                        if (!home.get()) {
+                            zeroState = ZeroState.REVERSE;
+                            break;
+                        }
+                        velocityPid.setSetpoint(Constants.Subsystems.Catapult.RETRACT_SPEED);
+                        talon.set(velocityPid.calculate(encoder.getRate()));
+                        break;
+                    case REVERSE:
+                        if (home.get()) {
+                            encoder.reset();
+                            zeroState = ZeroState.ZEROED;
+                            System.out.println("Catapult Zeroed!");
+                            talon.set(0.0);
+                            setState(CatapultState.RETRACT);
+                            break;
+                        }
+                        velocityPid.setSetpoint(Constants.Subsystems.Catapult.REVERSE_SPEED);
+                        talon.set(velocityPid.calculate(encoder.getRate()));
+                        break;
+                    case ZEROED:
+                        break;
+                    default:
+                        break;
                 }
                 break;
             default:
