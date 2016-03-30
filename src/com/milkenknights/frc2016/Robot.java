@@ -1,7 +1,7 @@
 package com.milkenknights.frc2016;
 
 import com.milkenknights.frc2016.auto.AutoMode;
-import com.milkenknights.frc2016.auto.modes.DoNothingAutoMode;
+import com.milkenknights.frc2016.auto.AutoModeChooser;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
 import com.milkenknights.frc2016.subsystems.Drive.DriveGear;
 import com.milkenknights.util.MultiLooper;
@@ -24,6 +24,7 @@ public final class Robot extends IterativeRobot {
     
     private BehaviorManager behaviorManager;
     private OperatorInterface operatorInterface;
+    private AutoModeChooser autoModeChooser;
 
     private AutoMode autoMode;
 
@@ -35,6 +36,7 @@ public final class Robot extends IterativeRobot {
         
         behaviorManager = new BehaviorManager();
         operatorInterface = new OperatorInterface();
+        autoModeChooser = new AutoModeChooser(HardwareAdapter.OPERATOR_STICK.getButton(9));
         
         looper.addLoopable(HardwareAdapter.DRIVE);
         looper.addLoopable(HardwareAdapter.INTAKE_ARM);
@@ -46,9 +48,10 @@ public final class Robot extends IterativeRobot {
         smartDashboardUpdater.addSendable(HardwareAdapter.INTAKE_SPEED);
         smartDashboardUpdater.addSendable(HardwareAdapter.CATAPULT);
         smartDashboardUpdater.addSendable(HardwareAdapter.BALL_CLAMP);
+        smartDashboardUpdater.addSendable(HardwareAdapter.LIGHT_MANAGER);
         smartDashboardUpdater.addSendable(HardwareAdapter.COMPRESSOR);
         smartDashboardUpdater.addSendable(HardwareAdapter.GRIP);
-        smartDashboardUpdater.addSendable(HardwareAdapter.LIGHT_MANAGER);
+        smartDashboardUpdater.addSendable(autoModeChooser);
         
         visionLooper.start();
         smartDashboardUpdater.start();
@@ -71,8 +74,7 @@ public final class Robot extends IterativeRobot {
         HardwareAdapter.DRIVE.resetEncoders();
         HardwareAdapter.DRIVE.resetGyro();
         
-        //autoMode = new LowBarAutoMode();
-        autoMode = new DoNothingAutoMode();
+        autoMode = autoModeChooser.getAutoMode();
         
         looper.start();
         autoMode.start();
@@ -87,7 +89,7 @@ public final class Robot extends IterativeRobot {
         System.out.println("Start teleopInit()");
         
         HardwareAdapter.COMPRESSOR.start();
-        HardwareAdapter.LIGHT_MANAGER.setFlashlight();
+        HardwareAdapter.LIGHT_MANAGER.setGreenLedRing();
         HardwareAdapter.DRIVE.resetEncoders();
         HardwareAdapter.DRIVE.resetGyro();
         

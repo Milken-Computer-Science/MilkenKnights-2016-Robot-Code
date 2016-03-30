@@ -109,7 +109,7 @@ public final class IntakeArm extends Subsystem implements Loopable {
                     && Math.abs(arm.getCurrent()) >= Constants.Subsystems.Intake.Arm.ZERO_CURRENT) {
                 armEncoder.reset();
                 zeroed = true;
-                System.out.println("Catapult Zeroed!");
+                System.out.println("Intake Zeroed!");
             }
             arm.set(Constants.Subsystems.Intake.Arm.ZERO_POWER);
         }

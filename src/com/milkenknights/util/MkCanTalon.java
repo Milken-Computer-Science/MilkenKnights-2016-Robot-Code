@@ -14,6 +14,7 @@ public class MkCanTalon implements SpeedController {
 
     private CANTalon[] controllers = {};
     private boolean invert;
+    private boolean print;
     
     /**
      * A constructor for a single MKSpeedController object.
@@ -93,6 +94,10 @@ public class MkCanTalon implements SpeedController {
 
     @Override
     public final void set(final double speed) {
+        if (print) {
+            System.out.println(speed);
+        }
+        
         for (final CANTalon controller : controllers) {
             controller.set(speed * sign());
         }
@@ -114,6 +119,10 @@ public class MkCanTalon implements SpeedController {
         for (final CANTalon controller : controllers) {
             controller.enableBrakeMode(brake);
         }
+    }
+    
+    public final void print(final boolean print) {
+        this.print = print;
     }
     
     public void stopMotor() {

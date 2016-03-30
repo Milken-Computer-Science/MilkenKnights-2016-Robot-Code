@@ -72,9 +72,9 @@ public final class Constants {
         public static final String TARGETS_TABLE_ID = "targets";
         public static final String MAT_SIZE_TABLE_ID = "matSize";
         
-        public static final double HORIZONTAL_FOV  = 67.0; // TODO: Find this value
+        public static final double HORIZONTAL_FOV  = 54.0;
         
-        public static final double OFFSET = -7.0;
+        public static final double OFFSET = -35.0;
     }
     
     public class Auto {
@@ -89,14 +89,16 @@ public final class Constants {
             
             public static final double MAXIMUM_SPEED = 140.0;
             
-            public static final double VELOCITY_KP = 0.001;
+            public static final double VELOCITY_OUTPUT_RANGE = 0.2;
+            
+            public static final double VELOCITY_KP = 0.001; // .002
             public static final double VELOCITY_KI = 0.0;
             public static final double VELOCITY_KD = 0.0;
             
-            public static final double TURN_KP = 2.5;
+            public static final double TURN_KP = 4.0; //5.0
             public static final double TURN_KI = 0.0;
-            public static final double TURN_KD = 0.0;
-            public static final double TURN_ALLOWABLE_ERROR = 3.0;
+            public static final double TURN_KD = 0.1;
+            public static final double TURN_ALLOWABLE_ERROR = 2.0;
         }
         
         public class Intake {
@@ -104,7 +106,7 @@ public final class Constants {
             public class Arm {
                 public static final double GEAR_RATIO = 16.0 / 44.0;
                 
-                public static final double INTAKE = -0.34;
+                public static final double INTAKE = -0.38;
                 public static final double PROTECT = -0.2;
                 public static final double STORED = 0.0;
                 
@@ -113,7 +115,7 @@ public final class Constants {
                 public static final double D = 0.0;
                 
                 public static final double MAXIMUM_OUTPUT = 0.75;
-                public static final double DRIFT_POWER = 0.04;
+                public static final double DRIFT_POWER = 0.10;
                 public static final double ZERO_POWER = 0.20;
                 public static final double ZERO_CURRENT = 3.0;
                 
@@ -132,11 +134,11 @@ public final class Constants {
             public static final double GEAR_RATIO = 14.0 / 64.0;
             
             public static final double ALLOWABLE_ERROR = 0.025;
-            public static final double RESET_SPEED = 0.3;
-            public static final double MAX_VELOCITY = 0.8;
-            public static final double READY_OFFSET = 0.15;
+            public static final double RESET_SPEED = 0.1;
+            public static final double MAX_VELOCITY = 0.75;
+            public static final double READY_OFFSET = 0.1;
             
-            public static final double VELOCITY_KP = 0.001;
+            public static final double VELOCITY_KP = 0.005;
             public static final double VELOCITY_KI = 0.0;
             public static final double VELOCITY_KD = 0.0;
             

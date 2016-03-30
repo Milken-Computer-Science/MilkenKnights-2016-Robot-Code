@@ -60,8 +60,7 @@ public class GripHelper implements MkSendable, ITableListener {
      * @return The angle from -180.0 to 180.0
      */
     public double getAngleToTarget() {
-        return ((2 * (cachedTarget.centerX / matSize.getNumber("x", 1)) - 1) * Constants.Vision.HORIZONTAL_FOV / 2.0)
-                + Constants.Vision.OFFSET;
+        return ((2 * (cachedTarget.centerX / matSize.getNumber("x", 1)) - 1) * Constants.Vision.HORIZONTAL_FOV / 2.0);
     }
     
     @Override
@@ -92,8 +91,8 @@ public class GripHelper implements MkSendable, ITableListener {
             }
             
             try {
-                cachedTarget.reset(centerX[index], centerY[index], width[index], height[index], area[index],
-                    solidity[index]);
+                cachedTarget.reset(centerX[index] + Constants.Vision.OFFSET, centerY[index], width[index],
+                        height[index], area[index], solidity[index]);
             } catch (ArrayIndexOutOfBoundsException exception) {
                 exception.printStackTrace();
             }

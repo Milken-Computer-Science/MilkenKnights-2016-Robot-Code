@@ -27,6 +27,8 @@ public class BehaviorManager {
         if (commands.alignRobot == Commands.AlignRobot.START) {
             HardwareAdapter.DRIVE.setTurnSetpoint(HardwareAdapter.GRIP.getAngleToTarget()
                         + HardwareAdapter.DRIVE.getPhysicalPose().heading);
+            System.out.println("Aligning Robot to:" + (HardwareAdapter.GRIP.getAngleToTarget()
+                        + HardwareAdapter.DRIVE.getPhysicalPose().heading));
         } else if (driveReversed && commands.alignRobot != Commands.AlignRobot.CONTINUE) {
             driveHelper.commandDrive(-commands.driveSpeed, commands.driveRotate);
         } else if (commands.alignRobot != Commands.AlignRobot.CONTINUE) {

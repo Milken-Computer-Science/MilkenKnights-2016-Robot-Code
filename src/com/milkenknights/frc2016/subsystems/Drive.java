@@ -79,6 +79,11 @@ public final class Drive extends DriveAbstract {
         leftVelocityPid.sumOutput();
         rightVelocityPid.sumOutput();
         
+        leftVelocityPid.setOutputRange(-Constants.Subsystems.Drive.VELOCITY_OUTPUT_RANGE,
+                Constants.Subsystems.Drive.VELOCITY_OUTPUT_RANGE);
+        rightVelocityPid.setOutputRange(-Constants.Subsystems.Drive.VELOCITY_OUTPUT_RANGE,
+                Constants.Subsystems.Drive.VELOCITY_OUTPUT_RANGE);
+        
         leftVelocityPid.setPid(Constants.Subsystems.Drive.VELOCITY_KP,
                 Constants.Subsystems.Drive.VELOCITY_KI,
                 Constants.Subsystems.Drive.VELOCITY_KD);

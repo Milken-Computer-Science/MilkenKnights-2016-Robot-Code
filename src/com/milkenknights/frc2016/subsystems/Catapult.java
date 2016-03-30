@@ -42,16 +42,16 @@ public final class Catapult extends Subsystem implements Loopable {
         positionPid.setPid(Constants.Subsystems.Catapult.POSITION_KP,
                 Constants.Subsystems.Catapult.POSITION_KI,
                 Constants.Subsystems.Catapult.POSITION_KD);
-        positionPid.setOutputRange(0.0, 1.0);
+        positionPid.setOutputRange(-1.0, 1.0);
         
         velocityPid = new SynchronousPid();
         velocityPid.setPid(Constants.Subsystems.Catapult.VELOCITY_KP,
                 Constants.Subsystems.Catapult.VELOCITY_KI,
                 Constants.Subsystems.Catapult.VELOCITY_KD);
         velocityPid.enableMaxVelocityFeedForward(Constants.Subsystems.Catapult.MAX_VELOCITY);
-        velocityPid.setOutputRange(0, 1.0);
+        velocityPid.setOutputRange(-1.0, 1.0);
         velocityPid.sumOutput();
-
+        
         this.talon = talon;
         this.encoder = encoder;
         this.home = home;
@@ -96,7 +96,7 @@ public final class Catapult extends Subsystem implements Loopable {
                 }
                 break;
             case READY:
-                velocityPid.setSetpoint(0.0);
+                velocityPid.setSetpoint(positionPid.calculate(encoder.getDistance()));
                 talon.set(velocityPid.calculate(encoder.getRate()));
                 break;
             case FIRE:

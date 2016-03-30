@@ -75,15 +75,15 @@ public class SynchronousPid {
         result = proportionalCoefficient * error + integralCoefficient * totalError + derivativeCoefficient
                 * (error - prevError);
         prevError = error;
+        
+        if (totalOutput) {
+            result += lastOutput;
+        }
 
         if (result > maximumOutput) {
             result = maximumOutput;
         } else if (result < minimumOutput) {
             result = minimumOutput;
-        }
-        
-        if (totalOutput) {
-            result += lastOutput;
         }
         
         lastOutput = result;
