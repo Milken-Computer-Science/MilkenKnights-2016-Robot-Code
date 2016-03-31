@@ -14,6 +14,7 @@ public class LowBarAutoMode extends AutoMode {
     protected void routine() throws AutoModeEndedException {
         waitTime(0.25);
         
+        HardwareAdapter.DRIVE.setDistanceSetpoint(40, 50);
         HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.INTAKE);
         waitForIntake(0.5);
         

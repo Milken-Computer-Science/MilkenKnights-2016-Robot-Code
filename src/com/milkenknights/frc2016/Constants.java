@@ -107,7 +107,7 @@ public final class Constants {
                 public static final double GEAR_RATIO = 16.0 / 44.0;
                 
                 public static final double INTAKE = -0.38;
-                public static final double PROTECT = -0.2;
+                public static final double PROTECT = -0.225;
                 public static final double STORED = 0.0;
                 
                 public static final double P = 10.0;
@@ -131,7 +131,7 @@ public final class Constants {
         }
 
         public class Catapult {
-            public static final double GEAR_RATIO = 14.0 / 64.0;
+            public static final double GEAR_RATIO = -14.0 / 64.0;
             
             public static final double ALLOWABLE_ERROR = 0.025;
             public static final double RETRACT_SPEED = 0.4;

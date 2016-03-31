@@ -2,6 +2,7 @@ package com.milkenknights.frc2016;
 
 import com.milkenknights.frc2016.auto.AutoMode;
 import com.milkenknights.frc2016.auto.AutoModeChooser;
+import com.milkenknights.frc2016.auto.modes.LowBarAutoMode;
 import com.milkenknights.frc2016.behavior.BehaviorManager;
 import com.milkenknights.frc2016.subsystems.Drive.DriveGear;
 import com.milkenknights.util.MultiLooper;
@@ -68,7 +69,7 @@ public final class Robot extends IterativeRobot {
     public void autonomousInit() {
         System.out.println("Start autonomousInit()");
         
-        HardwareAdapter.COMPRESSOR.stop();
+        HardwareAdapter.COMPRESSOR.start();
         HardwareAdapter.LIGHT_MANAGER.setGreenLedRing();
         HardwareAdapter.DRIVE.setGear(DriveGear.HIGH);
         HardwareAdapter.DRIVE.resetEncoders();

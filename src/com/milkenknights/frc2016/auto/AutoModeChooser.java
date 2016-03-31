@@ -35,7 +35,7 @@ public final class AutoModeChooser implements MkSendable {
      */
     public AutoMode getAutoMode() {
         try {
-            return autoModes.get(count).newInstance();
+            return autoModes.get(count % autoModes.size()).newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
