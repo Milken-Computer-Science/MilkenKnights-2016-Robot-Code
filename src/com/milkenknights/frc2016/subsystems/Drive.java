@@ -190,6 +190,14 @@ public final class Drive extends DriveAbstract {
 
     @Override
     public Pose getPhysicalPose() {
+    	double leftDistance = leftEncoder.getDistance();
+    	double rightDistance = rightEncoder.getDistance();
+    	
+    	if (leftDistance + 6 > rightDistance) {
+    		rightDistance = leftDistance;
+    	} else if (rightDistance + 6 > leftDistance) {
+    		leftDistance = rightDistance;
+    	}
         cachedPose.reset(leftEncoder.getDistance(), rightEncoder.getDistance(), leftEncoder.getRate(),
                 rightEncoder.getRate(), gyro.getAngle(), gyro.getRate());
         return cachedPose;

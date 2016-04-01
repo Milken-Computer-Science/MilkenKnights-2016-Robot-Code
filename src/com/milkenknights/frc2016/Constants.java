@@ -13,7 +13,7 @@ public final class Constants {
     public static final double kDriveStraightKd = 0.0;
     public static final double kDrivePositionKv = 0.008;
     public static final double kDrivePositionKa = 0.0017;
-    public static final double kDriveOnTargetError = 0.75;
+    public static final double kDriveOnTargetError = 3.0;
     public static final double kDrivePathHeadingFollowKp = 0.01;
     
     public class Dio {
