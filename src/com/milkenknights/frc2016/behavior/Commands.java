@@ -11,6 +11,7 @@ public class Commands {
     public DriveGear driveGear;
     public boolean reverseDrive;
     public AlignRobot alignRobot;
+    public boolean toggleBallClamp;
     public boolean fireCatapult;
     public IntakePosition intakePosition;
     public IntakeSpeedState intakeSpeed;

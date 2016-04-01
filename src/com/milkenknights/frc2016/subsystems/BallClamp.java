@@ -10,7 +10,7 @@ public final class BallClamp extends Subsystem {
     private Solenoid solenoid;
     
     public enum BallClampState {
-        OPEN(true), LOCK(false);
+        OPEN(false), LOCK(true);
         
         public final boolean state;
         private BallClampState(final boolean state) {
@@ -39,6 +39,18 @@ public final class BallClamp extends Subsystem {
      */
     public void lock() {
         solenoid.set(BallClampState.LOCK.state);
+    }
+    
+    public void toggle() {
+    	if (solenoid.get() == BallClampState.OPEN.state) {
+    		lock();
+    	} else {
+    		open();
+    	}
+    }
+    
+    public BallClampState getState() {
+    	return solenoid.get() == BallClampState.OPEN.state ? BallClampState.OPEN : BallClampState.LOCK;
     }
 
     @Override

@@ -64,8 +64,10 @@ public final class OperatorInterface {
         if (HardwareAdapter.OPERATOR_STICK.getButton(1).isHeld()
                 && HardwareAdapter.OPERATOR_STICK.getButton(7).isHeld()) {
             commands.fireCatapult = true;
-        } else {
-            commands.fireCatapult = false;
+        }
+        
+        if (HardwareAdapter.OPERATOR_STICK.getButton(8).isPressed()) {
+        	commands.toggleBallClamp = true; 
         }
         
         if (HardwareAdapter.OPERATOR_STICK.getButton(11).isPressed()) {
