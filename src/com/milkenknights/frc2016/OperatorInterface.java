@@ -70,6 +70,10 @@ public final class OperatorInterface {
         	commands.toggleBallClamp = true; 
         }
         
+        if (HardwareAdapter.OPERATOR_STICK.getButton(10).isPressed()) {
+        	commands.zeroCatapult = true;
+        }
+        
         if (HardwareAdapter.OPERATOR_STICK.getButton(11).isPressed()) {
             commands.zeroIntakeArm = true;
         }

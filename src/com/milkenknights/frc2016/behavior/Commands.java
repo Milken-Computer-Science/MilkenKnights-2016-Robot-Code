@@ -16,6 +16,7 @@ public class Commands {
     public IntakePosition intakePosition;
     public IntakeSpeedState intakeSpeed;
     public boolean zeroIntakeArm;
+    public boolean zeroCatapult;
     
     public enum AlignRobot {
         START, STOP, CONTINUE

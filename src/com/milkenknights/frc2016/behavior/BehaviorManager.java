@@ -71,6 +71,10 @@ public class BehaviorManager {
      * @param commands The commands
      */
     private void catapult(final Commands commands) {
+    	if (commands.zeroCatapult && HardwareAdapter.INTAKE_ARM.getPosition() != IntakeArm.IntakePosition.STORED) {
+    		HardwareAdapter.CATAPULT.zero();
+    	}
+    	
         if (commands.fireCatapult && HardwareAdapter.CATAPULT.getState() != Catapult.CatapultState.ZERO) {
             if (HardwareAdapter.INTAKE_ARM.getPosition() == IntakeArm.IntakePosition.STORED) {
                 HardwareAdapter.INTAKE_ARM.setPosition(IntakeArm.IntakePosition.PROTECT);
