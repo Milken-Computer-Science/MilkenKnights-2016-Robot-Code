@@ -9,6 +9,7 @@ import com.milkenknights.frc2016.subsystems.LightManager;
 import com.milkenknights.util.GripHelper;
 import com.milkenknights.util.MkCanTalon;
 import com.milkenknights.util.MkCompressor;
+import com.milkenknights.util.MkGyro;
 import com.milkenknights.util.MkJoystick;
 import com.milkenknights.util.MkPressureTransducer;
 import com.milkenknights.util.hardware.S4T360;
@@ -65,7 +66,7 @@ public final class HardwareAdapter {
         final MkCanTalon catapultTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.CATAPULT));
         final DigitalInput catapultHome = new DigitalInput(Constants.Dio.CATAPULT_HOME);
 
-        final AHRS gyro = new AHRS(SPI.Port.kOnboardCS1);
+        final MkGyro gyro = new MkGyro(new AHRS(SPI.Port.kOnboardCS1));
         final  MkPressureTransducer pressureTransducer
             = new SsiTechnologiesPressureTransducer(Constants.Analog.PRESSURE_TRANSDUCER);
 

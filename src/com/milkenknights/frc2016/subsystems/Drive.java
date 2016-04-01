@@ -6,12 +6,11 @@ import com.milkenknights.frc2016.subsystems.controllers.TimedVelocityController;
 import com.milkenknights.frc2016.subsystems.controllers.TurnInPlaceController;
 import com.milkenknights.util.MkCanTalon;
 import com.milkenknights.util.MkEncoder;
+import com.milkenknights.util.MkGyro;
 import com.milkenknights.util.Pose;
 import com.milkenknights.util.SynchronousPid;
 import com.milkenknights.util.drive.DriveAbstract;
 import com.milkenknights.util.drive.MotorPairSignal;
-
-import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -24,7 +23,7 @@ public final class Drive extends DriveAbstract {
     private Encoder leftEncoder;
     private Encoder rightEncoder;
     private Solenoid shifter;
-    private AHRS gyro;
+    private MkGyro gyro;
     
     private DriveController controller;
     private DriveGear driveGear = DriveGear.HIGH;
@@ -53,7 +52,7 @@ public final class Drive extends DriveAbstract {
      * @param shifter The solenoid object to shift gears
      */
     public Drive(final String name, final MkCanTalon leftMotor, final MkCanTalon rightMotor,
-            final MkEncoder leftEncoder, final MkEncoder rightEncoder, final Solenoid shifter, final AHRS gyro) {
+            final MkEncoder leftEncoder, final MkEncoder rightEncoder, final Solenoid shifter, final MkGyro gyro) {
         super(name);
         
         leftMotor.setInverted(true);
@@ -105,7 +104,6 @@ public final class Drive extends DriveAbstract {
 
     @Override
     public void updateSmartDashboard() {
-        SmartDashboard.putBoolean("Gyro Connected", gyro.isConnected());
         SmartDashboard.putNumber("Drive: Heading", getPhysicalPose().heading);
         SmartDashboard.putNumber("Drive: Left Distance", getPhysicalPose().leftDistance);
         SmartDashboard.putNumber("Drive: Right Distance", getPhysicalPose().rightDistance);
