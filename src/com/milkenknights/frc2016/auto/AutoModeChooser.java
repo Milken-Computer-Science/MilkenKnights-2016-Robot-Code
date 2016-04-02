@@ -3,7 +3,6 @@ package com.milkenknights.frc2016.auto;
 import com.milkenknights.frc2016.auto.modes.DoNothingAutoMode;
 import com.milkenknights.frc2016.auto.modes.LowBarAutoMode;
 import com.milkenknights.frc2016.auto.modes.ReachAutoMode;
-import com.milkenknights.frc2016.auto.modes.RockWallAutoMode;
 import com.milkenknights.util.Button;
 import com.milkenknights.util.MkSendable;
 
@@ -25,9 +24,8 @@ public final class AutoModeChooser implements MkSendable {
         this.button = button;
         
         autoModes.add(DoNothingAutoMode.class);
-        autoModes.add(LowBarAutoMode.class);
         autoModes.add(ReachAutoMode.class);
-        autoModes.add(RockWallAutoMode.class);
+        autoModes.add(LowBarAutoMode.class);
     }
     
     /**
