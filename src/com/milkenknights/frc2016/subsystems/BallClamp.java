@@ -41,16 +41,19 @@ public final class BallClamp extends Subsystem {
         solenoid.set(BallClampState.LOCK.state);
     }
     
+    /**
+     * Toggle the BallClamp.
+     */
     public void toggle() {
-    	if (solenoid.get() == BallClampState.OPEN.state) {
-    		lock();
-    	} else {
-    		open();
-    	}
+        if (solenoid.get() == BallClampState.OPEN.state) {
+            lock();
+        } else {
+            open();
+        }
     }
     
     public BallClampState getState() {
-    	return solenoid.get() == BallClampState.OPEN.state ? BallClampState.OPEN : BallClampState.LOCK;
+        return solenoid.get() == BallClampState.OPEN.state ? BallClampState.OPEN : BallClampState.LOCK;
     }
 
     @Override

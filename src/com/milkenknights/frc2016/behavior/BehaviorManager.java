@@ -71,14 +71,15 @@ public class BehaviorManager {
      * @param commands The commands
      */
     private void catapult(final Commands commands) {
-    	if (commands.zeroCatapult && HardwareAdapter.INTAKE_ARM.getPosition() != IntakeArm.IntakePosition.STORED) {
-    		HardwareAdapter.CATAPULT.zero();
-    	}
-    	
+        if (commands.zeroCatapult && HardwareAdapter.INTAKE_ARM.getPosition() != IntakeArm.IntakePosition.STORED) {
+            HardwareAdapter.CATAPULT.zero();
+        }
+
         if (commands.fireCatapult && HardwareAdapter.CATAPULT.getState() != Catapult.CatapultState.ZERO) {
             if (HardwareAdapter.INTAKE_ARM.getPosition() == IntakeArm.IntakePosition.STORED) {
                 HardwareAdapter.INTAKE_ARM.setPosition(IntakeArm.IntakePosition.PROTECT);
-            } else if (HardwareAdapter.INTAKE_ARM.isOnTarget() && HardwareAdapter.BALL_CLAMP.getState() == BallClampState.OPEN) {
+            } else if (HardwareAdapter.INTAKE_ARM.isOnTarget()
+                    && HardwareAdapter.BALL_CLAMP.getState() == BallClampState.OPEN) {
                 HardwareAdapter.CATAPULT.fire();
             }
         }
@@ -90,9 +91,9 @@ public class BehaviorManager {
      * @param commands The commands
      */
     private void ballClamp(final Commands commands) {
-    	if (commands.toggleBallClamp) {
-    		HardwareAdapter.BALL_CLAMP.toggle();
-    	}
+        if (commands.toggleBallClamp) {
+            HardwareAdapter.BALL_CLAMP.toggle();
+        }
     }
     
     /**

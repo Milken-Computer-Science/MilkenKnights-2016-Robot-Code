@@ -75,9 +75,9 @@ public final class Catapult extends Subsystem implements Loopable {
      * Zero the catapult.
      */
     public void zero() {
-    	shotCount = 0;
-    	zeroState = ZeroState.RETRACT;
-    	setState(CatapultState.ZERO);
+        shotCount = 0;
+        zeroState = ZeroState.RETRACT;
+        setState(CatapultState.ZERO);
     }
     
     /**

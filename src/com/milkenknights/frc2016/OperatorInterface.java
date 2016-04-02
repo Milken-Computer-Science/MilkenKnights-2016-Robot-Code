@@ -67,11 +67,11 @@ public final class OperatorInterface {
         }
         
         if (HardwareAdapter.OPERATOR_STICK.getButton(8).isPressed()) {
-        	commands.toggleBallClamp = true; 
+            commands.toggleBallClamp = true; 
         }
         
         if (HardwareAdapter.OPERATOR_STICK.getButton(10).isPressed()) {
-        	commands.zeroCatapult = true;
+            commands.zeroCatapult = true;
         }
         
         if (HardwareAdapter.OPERATOR_STICK.getButton(11).isPressed()) {
