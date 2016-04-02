@@ -17,7 +17,7 @@ public class LowBarAutoMode extends AutoMode {
         HardwareAdapter.DRIVE.setDistanceSetpoint(30, 25);
         HardwareAdapter.BALL_CLAMP.lock();
         HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.INTAKE);
-        waitForIntake(1.0);
+        waitForIntake(1.5);
         
         HardwareAdapter.DRIVE.setDistanceSetpoint(200, 75);
         waitForDrive(4.0);
@@ -36,7 +36,7 @@ public class LowBarAutoMode extends AutoMode {
         
         HardwareAdapter.DRIVE.setTurnSetpoint(HardwareAdapter.GRIP.getAngleToTarget()
                 + HardwareAdapter.DRIVE.getPhysicalPose().heading);
-        waitForDrive(4.0);
+        waitForDrive(3.0);
         
         HardwareAdapter.CATAPULT.fire();
     }

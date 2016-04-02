@@ -23,9 +23,9 @@ public final class AutoModeChooser implements MkSendable {
         autoModes = new ArrayList<Class<? extends AutoMode>>();
         this.button = button;
         
+        autoModes.add(LowBarAutoMode.class);
         autoModes.add(DoNothingAutoMode.class);
         autoModes.add(ReachAutoMode.class);
-        autoModes.add(LowBarAutoMode.class);
     }
     
     /**
