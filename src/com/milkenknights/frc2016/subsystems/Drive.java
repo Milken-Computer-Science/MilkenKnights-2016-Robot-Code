@@ -129,7 +129,7 @@ public final class Drive extends DriveAbstract {
 
     @Override
     public void setDistanceSetpoint(final double distance, final double velocity) {
-        controller = new DriveStraightController(getPoseToContinueFrom(false), distance, 
+        controller = new DriveStraightController(getPhysicalPose(), distance, 
                 Math.min(Constants.Subsystems.Drive.MAXIMUM_SPEED, Math.max(velocity, 0)));
     }
 
@@ -213,20 +213,6 @@ public final class Drive extends DriveAbstract {
         SmartDashboard.putString("Drive: Last Motor Outputs", signal.toString());
         leftMotor.set(signal.leftMotor);
         rightMotor.set(signal.rightMotor);
-    }
-
-    private Pose getPoseToContinueFrom(final boolean forTurnController) {
-        Pose poseToContinueFrom = getPhysicalPose();
-        if (!forTurnController && controller instanceof TurnInPlaceController) {
-            final Pose poseToUse = getPhysicalPose();
-            poseToUse.heading = ((TurnInPlaceController) controller).getHeadingGoal();
-            poseToUse.headingVelocity = 0;
-            poseToContinueFrom = poseToUse;
-        } else if (controller != null && controller.isOnTarget()) {
-            poseToContinueFrom = controller.getCurrentSetpoint();
-        }
-        
-        return poseToContinueFrom;
     }
 
 }
