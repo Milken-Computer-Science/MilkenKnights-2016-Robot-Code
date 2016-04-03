@@ -3,10 +3,8 @@ package com.milkenknights.util;
 import edu.wpi.first.wpilibj.util.BoundaryException;
 
 /**
- * Class implements a PID Control Loop.
- * <p>
- * Does all computation synchronously (i.e. the calculate() function must be
- * called by the user from his own thread)
+ * Implements a PID Control Loop. Does all computation synchronously (i.e. the calculate() function must be
+ * called by the user from his own thread).
  */
 public class SynchronousPid {
     
@@ -260,7 +258,7 @@ public class SynchronousPid {
     }
 
     /**
-     * Reset all internal terms.
+     * Reset all terms.
      */
     public void reset() {
         lastInput = Double.NaN;
