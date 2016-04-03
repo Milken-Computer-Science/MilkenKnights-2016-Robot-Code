@@ -27,7 +27,6 @@ public final class Drive extends DriveAbstract {
     
     private DriveController controller;
     private DriveGear driveGear = DriveGear.HIGH;
-    private final Pose cachedPose = new Pose(0, 0, 0, 0, 0, 0);
     private final SynchronousPid leftVelocityPid;
     private final SynchronousPid rightVelocityPid;
     
@@ -188,17 +187,17 @@ public final class Drive extends DriveAbstract {
 
     @Override
     public Pose getPhysicalPose() {
-        double leftDistance = leftEncoder.getDistance();
-        double rightDistance = rightEncoder.getDistance();
-
-        if (leftDistance + 6 > rightDistance) {
-            rightDistance = leftDistance;
-        } else if (rightDistance + 6 > leftDistance) {
-            leftDistance = rightDistance;
-        }
-        cachedPose.reset(leftEncoder.getDistance(), rightEncoder.getDistance(), leftEncoder.getRate(),
+        Pose pose = new Pose(leftEncoder.getDistance(), rightEncoder.getDistance(), leftEncoder.getRate(),
                 rightEncoder.getRate(), gyro.getAngle(), gyro.getRate());
-        return cachedPose;
+        
+        if (pose.leftDistance + Constants.Subsystems.Drive.ENCODER_BROKEN_DISTANCE > pose.rightDistance) {
+            pose.rightDistance = pose.leftDistance;
+            pose.rightVelocity = pose.leftVelocity;
+        } else if (pose.rightDistance + Constants.Subsystems.Drive.ENCODER_BROKEN_DISTANCE > pose.leftDistance) {
+            pose.leftDistance = pose.rightDistance;
+            pose.leftVelocity = pose.rightVelocity;
+        }
+        return pose;
     }
     
     private void setDriveSpeed(final MotorPairSignal signal) {
