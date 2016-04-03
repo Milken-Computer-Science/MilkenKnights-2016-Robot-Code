@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 public final class Robot extends IterativeRobot {
     
     private final MultiLooper looper = new MultiLooper("Controllers", Constants.ControlLoops.CONTROLLERS_PERIOD);
-    private final MultiLooper visionLooper = new MultiLooper("Vision", Constants.ControlLoops.VISION_PERIOD);
+    private final MultiLooper slowLooper = new MultiLooper("Vision", Constants.ControlLoops.SLOW_PERIOD);
     private final SmartDashboardUpdater smartDashboardUpdater = new SmartDashboardUpdater(
             Constants.ControlLoops.SMARTDASHBOARD_UPDATER_PERIOD);
     
@@ -43,6 +43,8 @@ public final class Robot extends IterativeRobot {
         looper.addLoopable(HardwareAdapter.CATAPULT);
         looper.addLoopable(HardwareAdapter.COMPRESSOR);
         
+        slowLooper.addLoopable(autoModeChooser);
+        
         smartDashboardUpdater.addSendable(HardwareAdapter.DRIVE);
         smartDashboardUpdater.addSendable(HardwareAdapter.INTAKE_ARM);
         smartDashboardUpdater.addSendable(HardwareAdapter.INTAKE_SPEED);
@@ -53,7 +55,7 @@ public final class Robot extends IterativeRobot {
         smartDashboardUpdater.addSendable(HardwareAdapter.GRIP);
         smartDashboardUpdater.addSendable(autoModeChooser);
         
-        visionLooper.start();
+        slowLooper.start();
         smartDashboardUpdater.start();
         
         HardwareAdapter.GRIP.register();

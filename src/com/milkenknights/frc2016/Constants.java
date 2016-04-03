@@ -56,7 +56,7 @@ public final class Constants {
     
     public class ControlLoops {
         public static final double CONTROLLERS_PERIOD = 1 / 200.0;
-        public static final double VISION_PERIOD = 1 / 25.0;
+        public static final double SLOW_PERIOD = 1 / 25.0;
         public static final double SMARTDASHBOARD_UPDATER_PERIOD = 1 / 50.0;
     }
     
