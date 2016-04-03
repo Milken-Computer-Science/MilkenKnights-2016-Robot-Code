@@ -125,13 +125,13 @@ public final class Drive extends DriveAbstract {
 
     @Override
     public void setDistanceSetpoint(final double distance) {
-        setDistanceSetpoint(distance, Constants.kDriveMaxSpeedInchesPerSec);
+        setDistanceSetpoint(distance, Constants.Subsystems.Drive.MAXIMUM_SPEED);
     }
 
     @Override
     public void setDistanceSetpoint(final double distance, final double velocity) {
         controller = new DriveStraightController(getPoseToContinueFrom(false), distance, 
-                Math.min(Constants.kDriveMaxSpeedInchesPerSec, Math.max(velocity, 0)));
+                Math.min(Constants.Subsystems.Drive.MAXIMUM_SPEED, Math.max(velocity, 0)));
     }
 
     @Override

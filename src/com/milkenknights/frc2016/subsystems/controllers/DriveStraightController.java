@@ -25,16 +25,16 @@ public final class DriveStraightController implements Drive.DriveController {
     public DriveStraightController(final Pose priorSetpoint, final double goalSetpoint, final double maxVelocity) {
         final TrajectoryFollower.TrajectoryConfig config = new TrajectoryFollower.TrajectoryConfig();
         config.dt = Constants.ControlLoops.CONTROLLERS_PERIOD;
-        config.maxAcc = Constants.kDriveMaxAccelInchesPerSec2;
+        config.maxAcc = Constants.Subsystems.Drive.MAXIMUM_ACCEL;
         config.maxVel = maxVelocity;
 
         distanceController = new TrajectoryFollowingPositionController(
-                Constants.kDrivePositionKp,
-                Constants.kDrivePositionKi,
-                Constants.kDrivePositionKd,
-                Constants.kDrivePositionKv,
-                Constants.kDrivePositionKa,
-                Constants.kDriveOnTargetError,
+                Constants.Subsystems.Drive.POSITION_KP,
+                Constants.Subsystems.Drive.POSITION_KI,
+                Constants.Subsystems.Drive.POSITION_KD,
+                Constants.Subsystems.Drive.POSITION_KV,
+                Constants.Subsystems.Drive.POSITION_KA,
+                Constants.Subsystems.Drive.POSITION_ALLOWABLE_ERROR,
                 config);
 
         final TrajectorySetpoint initialSetpoint = new TrajectorySetpoint();
@@ -44,9 +44,9 @@ public final class DriveStraightController implements Drive.DriveController {
 
         turnPid = new SynchronousPid();
         turnPid.setPid(
-                Constants.kDriveStraightKp,
-                Constants.kDriveStraightKi,
-                Constants.kDriveStraightKd);
+                Constants.Subsystems.Drive.STRAIGHT_KP,
+                Constants.Subsystems.Drive.STRAIGHT_KI,
+                Constants.Subsystems.Drive.STRAIGHT_KD);
         turnPid.setSetpoint(priorSetpoint.getHeading());
         setpointRelativePose = new Pose(
                 priorSetpoint.getLeftDistance(),

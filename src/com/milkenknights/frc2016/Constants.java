@@ -2,20 +2,6 @@ package com.milkenknights.frc2016;
 
 public final class Constants {
     
-    // DriveStraightController gains
-    public static final double kDriveMaxSpeedInchesPerSec = 140;
-    public static final double kDriveMaxAccelInchesPerSec2 = 200;
-    public static final double kDrivePositionKp = 0.3; //.7
-    public static final double kDrivePositionKi = 0.0;
-    public static final double kDrivePositionKd = 0.0;
-    public static final double kDriveStraightKp = 0.1; //3
-    public static final double kDriveStraightKi = 0.0;
-    public static final double kDriveStraightKd = 0.0;
-    public static final double kDrivePositionKv = 0.008;
-    public static final double kDrivePositionKa = 0.0017;
-    public static final double kDriveOnTargetError = 3.0;
-    public static final double kDrivePathHeadingFollowKp = 0.01;
-    
     public class Dio {
         public static final int CATAPULT_HOME = 0;
         public static final int DRIVE_LEFT_A = 10; // ENC 0
@@ -86,17 +72,30 @@ public final class Constants {
             public static final double GEAR_RATIO = 20.0 / 64.0 / 3.0;
             
             public static final double MAXIMUM_SPEED = 140.0;
+            public static final double MAXIMUM_ACCEL = 200.0;
             
             public static final double VELOCITY_OUTPUT_RANGE = 0.2;
             
-            public static final double VELOCITY_KP = 0.001; // .002
+            public static final double VELOCITY_KP = 0.001;
             public static final double VELOCITY_KI = 0.0;
             public static final double VELOCITY_KD = 0.0;
             
-            public static final double TURN_KP = 4.0; //5.0
+            public static final double TURN_KP = 4.0;
             public static final double TURN_KI = 0.0;
             public static final double TURN_KD = 0.1;
             public static final double TURN_ALLOWABLE_ERROR = 2.0;
+            
+            public static final double POSITION_KP = 0.3;
+            public static final double POSITION_KI = 0.0;
+            public static final double POSITION_KD = 0.0;
+            public static final double POSITION_KV = 0.008;
+            public static final double POSITION_KA = 0.0017;
+            public static final double POSITION_ALLOWABLE_ERROR = 3.0;
+            
+            public static final double STRAIGHT_KP = 0.1;
+            public static final double STRAIGHT_KI = 0.0;
+            public static final double STRAIGHT_KD = 0.0;
+            
         }
         
         public class Intake {
