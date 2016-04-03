@@ -50,7 +50,6 @@ public final class Robot extends IterativeRobot {
         smartDashboardUpdater.addSendable(HardwareAdapter.INTAKE_SPEED);
         smartDashboardUpdater.addSendable(HardwareAdapter.CATAPULT);
         smartDashboardUpdater.addSendable(HardwareAdapter.BALL_CLAMP);
-        smartDashboardUpdater.addSendable(HardwareAdapter.LIGHT_MANAGER);
         smartDashboardUpdater.addSendable(HardwareAdapter.COMPRESSOR);
         smartDashboardUpdater.addSendable(HardwareAdapter.GRIP);
         smartDashboardUpdater.addSendable(autoModeChooser);
@@ -71,7 +70,6 @@ public final class Robot extends IterativeRobot {
         System.out.println("Start autonomousInit()");
         
         HardwareAdapter.COMPRESSOR.start();
-        HardwareAdapter.LIGHT_MANAGER.setGreenLedRing();
         HardwareAdapter.DRIVE.setGear(DriveGear.HIGH);
         HardwareAdapter.DRIVE.resetEncoders();
         HardwareAdapter.DRIVE.resetGyro();
@@ -91,7 +89,6 @@ public final class Robot extends IterativeRobot {
         System.out.println("Start teleopInit()");
         
         HardwareAdapter.COMPRESSOR.start();
-        HardwareAdapter.LIGHT_MANAGER.setGreenLedRing();
         HardwareAdapter.DRIVE.resetEncoders();
         HardwareAdapter.DRIVE.resetGyro();
         
@@ -119,7 +116,6 @@ public final class Robot extends IterativeRobot {
         looper.stop();
 
         HardwareAdapter.COMPRESSOR.stop();
-        HardwareAdapter.LIGHT_MANAGER.off();
         HardwareAdapter.DRIVE.setOpenLoop(MotorPairSignal.NEUTRAL);
         
         System.gc();

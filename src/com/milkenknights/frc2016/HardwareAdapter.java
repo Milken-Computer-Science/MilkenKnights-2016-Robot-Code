@@ -5,7 +5,6 @@ import com.milkenknights.frc2016.subsystems.Catapult;
 import com.milkenknights.frc2016.subsystems.Drive;
 import com.milkenknights.frc2016.subsystems.IntakeArm;
 import com.milkenknights.frc2016.subsystems.IntakeSpeed;
-import com.milkenknights.frc2016.subsystems.LightManager;
 import com.milkenknights.util.GripHelper;
 import com.milkenknights.util.MkCanTalon;
 import com.milkenknights.util.MkCompressor;
@@ -29,7 +28,6 @@ public final class HardwareAdapter {
     public static final IntakeSpeed INTAKE_SPEED;
     public static final Catapult CATAPULT;
     public static final BallClamp BALL_CLAMP;
-    public static final LightManager LIGHT_MANAGER;
     
     public static final PowerDistributionPanel PDP;
     public static final MkCompressor COMPRESSOR;
@@ -60,8 +58,6 @@ public final class HardwareAdapter {
 
         final Solenoid driveShifter = new Solenoid(Constants.Pcm.ID, Constants.Pcm.DRIVE_SHIFTER);
         final Solenoid ballClamp = new Solenoid(Constants.Pcm.ID, Constants.Pcm.BALL_HOLDER);
-        final Solenoid flashlight = new Solenoid(Constants.Pcm.ID, Constants.Pcm.FLASHLIGHT);
-        final Solenoid greenLedRing = new Solenoid(Constants.Pcm.ID, Constants.Pcm.LED_RING);
         
         final MkCanTalon catapultTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.CATAPULT));
         final DigitalInput catapultHome = new DigitalInput(Constants.Dio.CATAPULT_HOME);
@@ -76,7 +72,6 @@ public final class HardwareAdapter {
         INTAKE_SPEED = new IntakeSpeed("Intake Speed", intakeSpeedTalon);
         CATAPULT = new Catapult("Catapult", catapultTalon, catapultEncoder, catapultHome);
         BALL_CLAMP = new BallClamp("Ball Clamp", ballClamp);
-        LIGHT_MANAGER = new LightManager("Light Manager", flashlight, greenLedRing);
         
         PDP = new PowerDistributionPanel();
         COMPRESSOR = new MkCompressor(Constants.Pcm.ID, pressureTransducer);

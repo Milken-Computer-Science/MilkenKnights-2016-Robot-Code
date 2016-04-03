@@ -40,8 +40,6 @@ public final class Constants {
 
         public static final int DRIVE_SHIFTER = 0;
         public static final int BALL_HOLDER = 1;
-        public static final int FLASHLIGHT = 6;
-        public static final int LED_RING = 7;
     }
     
     public class CanTalon {
