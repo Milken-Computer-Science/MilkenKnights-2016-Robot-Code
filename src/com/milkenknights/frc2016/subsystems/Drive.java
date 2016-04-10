@@ -189,6 +189,14 @@ public final class Drive extends DriveAbstract {
     public Pose getPhysicalPose() {
         Pose pose = new Pose(leftEncoder.getDistance(), rightEncoder.getDistance(), leftEncoder.getRate(),
                 rightEncoder.getRate(), gyro.getAngle(), gyro.getRate());
+        
+        if (pose.leftDistance + Constants.Subsystems.Drive.ENCODER_BROKEN_DISTANCE > pose.rightDistance) {
+            pose.rightDistance = pose.leftDistance;
+            pose.rightVelocity = pose.leftVelocity;
+        } else if (pose.rightDistance + Constants.Subsystems.Drive.ENCODER_BROKEN_DISTANCE > pose.leftDistance) {
+            pose.leftDistance = pose.rightDistance;
+            pose.leftVelocity = pose.rightVelocity;
+        }
         return pose;
     }
     
