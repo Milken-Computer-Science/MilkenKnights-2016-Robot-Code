@@ -71,8 +71,6 @@ public final class Constants {
             public static final double WHEEL_DIAMETER = 7.67;
             public static final double GEAR_RATIO = 20.0 / 64.0 / 3.0;
             
-            public static final double ENCODER_BROKEN_DISTANCE = 6.0;
-            
             public static final double MAXIMUM_SPEED = 140.0;
             public static final double MAXIMUM_ACCEL = 200.0;
             

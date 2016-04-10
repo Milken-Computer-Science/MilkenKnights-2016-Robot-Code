@@ -64,7 +64,7 @@ public final class DriveStraightController implements Drive.DriveController {
                 (currentPose.getLeftVelocity() + currentPose.getRightVelocity()) / 2.0);
         final double throttle = distanceController.get();
         final double turn = turnPid.calculate(currentPose.getHeading());
-
+        System.out.println(throttle);
         return new MotorPairSignal(throttle + turn, throttle - turn);
     }
 
