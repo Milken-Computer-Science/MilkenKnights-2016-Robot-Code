@@ -137,12 +137,14 @@ public final class Constants {
             public static final double SLOW_RETRACT_SPEED = 0.1;
             public static final double MAX_VELOCITY = 0.75;
             public static final double READY_OFFSET = 0.1;
+            public static final double FIRE_OFFSET = 0.075;
+            public static final double RETRACT_DELAY = 0.5;
             
             public static final double VELOCITY_KP = 0.005;
             public static final double VELOCITY_KI = 0.0;
             public static final double VELOCITY_KD = 0.0;
             
-            public static final double POSITION_KP = 10.0;
+            public static final double POSITION_KP = 12.0;
             public static final double POSITION_KI = 0.0;
             public static final double POSITION_KD = 0.0;
         }

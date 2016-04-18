@@ -8,6 +8,7 @@ import com.milkenknights.util.Subsystem;
 import com.milkenknights.util.SynchronousPid;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public final class Catapult extends Subsystem implements Loopable {
@@ -25,6 +26,7 @@ public final class Catapult extends Subsystem implements Loopable {
     private final DigitalInput home;
     private final SynchronousPid positionPid;
     private final SynchronousPid velocityPid;
+    private final Timer timer;
     private CatapultState state;
     private int shotCount;
     private ZeroState zeroState;
@@ -56,6 +58,8 @@ public final class Catapult extends Subsystem implements Loopable {
         velocityPid.setOutputRange(-1.0, 1.0);
         velocityPid.sumOutput();
         
+        timer = new Timer();
+        
         this.talon = talon;
         this.encoder = encoder;
         this.home = home;
@@ -68,6 +72,8 @@ public final class Catapult extends Subsystem implements Loopable {
      * Fire the catapult.
      */
     public void fire() {
+        timer.reset();
+        timer.start();
         setState(CatapultState.FIRE);
     }
     
@@ -118,10 +124,11 @@ public final class Catapult extends Subsystem implements Loopable {
                     state = CatapultState.ZERO;
                     break;
                 }
-                positionPid.setSetpoint(Constants.Subsystems.Catapult.READY_OFFSET + shotCount + 1);
+                positionPid.setSetpoint(Constants.Subsystems.Catapult.READY_OFFSET + shotCount
+                        + Constants.Subsystems.Catapult.FIRE_OFFSET);
                 velocityPid.setSetpoint(positionPid.calculate(encoder.getDistance()));
                 talon.set(velocityPid.calculate(encoder.getRate()));
-                if (positionPid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR)) {
+                if (timer.hasPeriodPassed(Constants.Subsystems.Catapult.RETRACT_DELAY)) {
                     shotCount++;
                     state = CatapultState.RETRACT;
                 }
