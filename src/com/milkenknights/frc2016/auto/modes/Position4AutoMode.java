@@ -21,7 +21,7 @@ public class Position4AutoMode extends AutoMode {
         HardwareAdapter.DRIVE.setDistanceSetpoint(200, 140);
         waitForDrive(4.0);
         
-        HardwareAdapter.DRIVE.setTurnSetpoint(-30.0);
+        HardwareAdapter.DRIVE.setTurnSetpoint(-15.0);
         waitForDrive(1.5);
         
         HardwareAdapter.BALL_CLAMP.open();

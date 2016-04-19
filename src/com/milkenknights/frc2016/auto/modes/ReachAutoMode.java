@@ -11,8 +11,6 @@ public class ReachAutoMode extends AutoMode {
 
     @Override
     protected void routine() throws AutoModeEndedException {
-        waitTime(0.25);
-        
         HardwareAdapter.DRIVE.setDistanceSetpoint(75, 25);
         waitForDrive(10.0);
     }
