@@ -3,6 +3,7 @@ package com.milkenknights.frc2016.auto;
 import com.milkenknights.frc2016.Constants;
 import com.milkenknights.frc2016.auto.actions.Action;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 
 import java.util.concurrent.TimeUnit;
@@ -29,11 +30,11 @@ public abstract class AutoModeBase implements Runnable {
             timer.start();
             routine();
         } catch (AutoModeEndedException e) {
-            System.out.println("Auto mode done, ended early");
+            DriverStation.reportError("Auto mode done, ended early", false);
             return;
         }
-        System.out.println("Auto mode done");
-        System.out.println("Auto time: " + timer.get());
+        DriverStation.reportError("Auto mode done", false);
+        DriverStation.reportError("Auto time: " + timer.get(), false);
         timer.stop();
     }
     
