@@ -22,4 +22,17 @@ public class MkGyro {
     public double getRate() {
         return navX.getRate();
     }
+    
+    public double getPitch() {
+        return navX.getPitch();
+    }
+    
+    public double getRoll() {
+        return navX.getRoll();
+    }
+    
+    public boolean isMoving() {
+        return navX.isMoving();
+    }
+    
 }
