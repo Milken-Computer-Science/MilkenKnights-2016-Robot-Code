@@ -25,7 +25,6 @@ public final class Drive extends DriveAbstract {
     private Solenoid shifter;
     private MkGyro gyro;
     
-    private DriveController controller;
     private DriveGear driveGear = DriveGear.HIGH;
     private final SynchronousPid leftVelocityPid;
     private final SynchronousPid rightVelocityPid;
@@ -100,6 +99,14 @@ public final class Drive extends DriveAbstract {
             setDriveOutputs(controller.update(getPhysicalPose()));
         }
     }
+    
+    public double getPitch() {
+        return gyro.getRoll();  // Inverted due to mounting
+    }
+    
+    public double getRoll() {
+        return gyro.getPitch(); // Inverted due to mounting
+    }
 
     @Override
     public void updateSmartDashboard() {
@@ -109,10 +116,13 @@ public final class Drive extends DriveAbstract {
         SmartDashboard.putNumber("Drive: Left Speed", getPhysicalPose().leftVelocity);
         SmartDashboard.putNumber("Drive: Right Speed", getPhysicalPose().rightVelocity);
         SmartDashboard.putNumber("Drive: Heading Speed", getPhysicalPose().headingVelocity);
+        SmartDashboard.putNumber("Drive: Pitch", getPitch());
+        SmartDashboard.putNumber("Drive: Roll", getRoll());
+        SmartDashboard.putBoolean("Drive: Moving", gyro.isMoving());
         
         if (controller != null) {
             SmartDashboard.putNumber("Drive: Error", controller.getError());
-            SmartDashboard.putBoolean("Drive: Controller on target", controller.isOnTarget());
+            SmartDashboard.putBoolean("Drive: Controller on target", controllerOnTarget());
         }
     }
 
@@ -187,8 +197,8 @@ public final class Drive extends DriveAbstract {
 
     @Override
     public Pose getPhysicalPose() {
-        Pose pose = new Pose(leftEncoder.getDistance(), rightEncoder.getDistance(), leftEncoder.getRate(),
-                rightEncoder.getRate(), gyro.getAngle(), gyro.getRate());
+        Pose pose = new Pose(leftEncoder.getDistance(), leftEncoder.getDistance(), leftEncoder.getRate(),
+                leftEncoder.getRate(), gyro.getAngle(), gyro.getRate());
 
         return pose;
     }

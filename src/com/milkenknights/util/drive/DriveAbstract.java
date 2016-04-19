@@ -6,7 +6,7 @@ import com.milkenknights.util.Subsystem;
 
 public abstract class DriveAbstract extends Subsystem implements Loopable {
 
-    private DriveController controller;
+    protected DriveController controller;
 
     public DriveAbstract(final String name) {
         super(name);
