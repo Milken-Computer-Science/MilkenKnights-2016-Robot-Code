@@ -102,6 +102,7 @@ public final class Catapult extends Subsystem implements Loopable {
         SmartDashboard.putNumber("Catapult PID Result", positionPid.calculate(encoder.getDistance()));
         SmartDashboard.putBoolean("Catapult Banner", home.get());
         SmartDashboard.putBoolean("Catapult Home", !home.get());
+        SmartDashboard.putNumber("Catapult Shot Count", shotCount);
     }
 
     @Override
