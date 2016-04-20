@@ -12,27 +12,27 @@ public class Position4AutoMode extends AutoMode {
 
     @Override
     protected void routine() throws AutoModeEndedException {
-        waitTime(0.25);
-        
         HardwareAdapter.BALL_CLAMP.lock();
         HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.STORED);
         waitForIntake(1.0);
         
-        HardwareAdapter.DRIVE.setDistanceSetpoint(200, 140);
-        waitForDrive(4.0);
-        
-        HardwareAdapter.DRIVE.setTurnSetpoint(-15.0);
-        waitForDrive(1.5);
+        HardwareAdapter.DRIVE.setDistanceSetpoint(180, 100);
+        waitForDrive(3.0);
         
         HardwareAdapter.BALL_CLAMP.open();
         HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.PROTECT);
-        waitForIntake(1.5);
+        HardwareAdapter.DRIVE.setTurnSetpoint(0.0);
+        waitForDrive(1.0);
         
         HardwareAdapter.DRIVE.setTurnSetpoint(HardwareAdapter.GRIP.getAngleToTarget()
                 + HardwareAdapter.DRIVE.getPhysicalPose().heading);
-        waitForDrive(4.0);
+        waitForDrive(1.0);
+        waitForIntake(1.0);
+        waitTime(0.25);
         
         HardwareAdapter.CATAPULT.fire();
+        // wait for catapult to fire
+        waitTime(0.5);
     }
 
 }

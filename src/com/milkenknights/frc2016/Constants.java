@@ -113,7 +113,7 @@ public final class Constants {
                 public static final double I = 0.0;
                 public static final double D = 0.0;
                 
-                public static final double MAXIMUM_OUTPUT = 0.60;
+                public static final double MAXIMUM_OUTPUT = 0.75;
                 public static final double DRIFT_POWER = 0.10;
                 public static final double ZERO_POWER = 0.20;
                 public static final double ZERO_CURRENT = 3.0;

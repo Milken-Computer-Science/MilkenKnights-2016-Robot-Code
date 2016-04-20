@@ -2,6 +2,7 @@ package com.milkenknights.frc2016.auto;
 
 import com.milkenknights.frc2016.auto.modes.DoNothingAutoMode;
 import com.milkenknights.frc2016.auto.modes.LowBarAutoMode;
+import com.milkenknights.frc2016.auto.modes.Position4AutoMode;
 import com.milkenknights.frc2016.auto.modes.ReachAutoMode;
 import com.milkenknights.util.Button;
 import com.milkenknights.util.Loopable;
@@ -23,7 +24,8 @@ public final class AutoModeChooser implements MkSendable, Loopable {
     public AutoModeChooser(Button button) {
         autoModes = new ArrayList<Class<? extends AutoMode>>();
         this.button = button;
-        
+
+        autoModes.add(Position4AutoMode.class);
         autoModes.add(LowBarAutoMode.class);
         autoModes.add(DoNothingAutoMode.class);
         autoModes.add(ReachAutoMode.class);
