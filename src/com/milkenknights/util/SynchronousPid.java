@@ -109,16 +109,6 @@ public class SynchronousPid {
     }
     
     /**
-     * Set the PID controller gain parameters.
-     * Set the proportional, integral, and differential coefficients.
-     * 
-     * @param pid The Pid object to use
-     */
-    public void setPid(final Pid pid) {
-        setPid(pid.proportionalCoefficient, pid.integralCoefficient, pid.derivativeCoefficient);
-    }
-    
-    /**
      * Enable maximum velocity feed forward.  This will feed forward setpoint / maxVelocity.  Useful for velocity PID.
      */
     public void enableMaxVelocityFeedForward(final double maxVelocity) {
