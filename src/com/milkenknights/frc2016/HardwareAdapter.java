@@ -1,5 +1,6 @@
 package com.milkenknights.frc2016;
 
+import com.milkenknights.frc2016.subsystems.ActionArm;
 import com.milkenknights.frc2016.subsystems.BallClamp;
 import com.milkenknights.frc2016.subsystems.Catapult;
 import com.milkenknights.frc2016.subsystems.Drive;
@@ -27,6 +28,7 @@ public final class HardwareAdapter {
     public static final IntakeArm INTAKE_ARM;
     public static final IntakeSpeed INTAKE_SPEED;
     public static final Catapult CATAPULT;
+    public static final ActionArm ACTION_ARM;
     public static final BallClamp BALL_CLAMP;
     
     public static final PowerDistributionPanel PDP;
@@ -50,11 +52,14 @@ public final class HardwareAdapter {
         
         final MkCanTalon intakePositionTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.INTAKE_ARM));
         final MkCanTalon intakeSpeedTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.INTAKE_SPEED));
+        
+        final MkCanTalon actionArmTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.ACTION_ARM));
 
         final S4T360 driveLeftEncoder = new S4T360(Constants.Dio.DRIVE_LEFT_A, Constants.Dio.DRIVE_LEFT_B);
         final S4T360 driveRightEncoder = new S4T360(Constants.Dio.DRIVE_RIGHT_A, Constants.Dio.DRIVE_RIGHT_B);
         final S4T360 catapultEncoder = new S4T360(Constants.Dio.CATAPULT_A, Constants.Dio.CATAPULT_B);
         final S4T360 intakeEncoder = new S4T360(Constants.Dio.INTAKE_A, Constants.Dio.INTAKE_B);
+        final S4T360 actionArmEncoder = new S4T360(Constants.Dio.ACTION_ARM_A, Constants.Dio.ACTION_ARM_B);
 
         final Solenoid driveShifter = new Solenoid(Constants.Pcm.ID, Constants.Pcm.DRIVE_SHIFTER);
         final Solenoid ballClamp = new Solenoid(Constants.Pcm.ID, Constants.Pcm.BALL_HOLDER);
@@ -71,6 +76,7 @@ public final class HardwareAdapter {
         INTAKE_ARM = new IntakeArm("Intake Arm", intakePositionTalon, intakeEncoder);
         INTAKE_SPEED = new IntakeSpeed("Intake Speed", intakeSpeedTalon);
         CATAPULT = new Catapult("Catapult", catapultTalon, catapultEncoder, catapultHome);
+        ACTION_ARM = new ActionArm("Action Arm", actionArmTalon, actionArmEncoder);
         BALL_CLAMP = new BallClamp("Ball Clamp", ballClamp);
         
         PDP = new PowerDistributionPanel();

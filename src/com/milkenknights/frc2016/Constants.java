@@ -12,6 +12,8 @@ public final class Constants {
         public static final int CATAPULT_B = 15; // ENC 2
         public static final int INTAKE_A = 16; // ENC 3
         public static final int INTAKE_B = 17; // ENC 3
+        public static final int ACTION_ARM_A = 16; // ENC 4
+        public static final int ACTION_ARM_B = 17; // ENC 4
     }
     
     public class Analog {
@@ -36,6 +38,7 @@ public final class Constants {
         public static final int CATAPULT = 8;
         public static final int INTAKE_ARM = 7;
         public static final int INTAKE_SPEED = 3;
+        public static final int ACTION_ARM = 0; //TODO: Find this value
     }
     
     public class ControlLoops {
