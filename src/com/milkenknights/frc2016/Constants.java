@@ -149,6 +149,23 @@ public final class Constants {
             public static final double POSITION_KD = 0.0;
         }
         
+        public class ActionArm {
+            public static final double GEAR_RATIO = 0.0 / 0.0;
+            
+            public static final double STORED = 0.0;
+            
+            public static final double MAXIMUM_OUTPUT = 1.0;
+            
+            public static final double ZERO_POWER = 0.0;
+            public static final double ZERO_CURRENT = 0.0;
+            public static final double ZEROED_RATE = 0.0;
+            public static final double ALLOWABLE_ERROR = 0.0;
+            
+            public static final double P = 0.0;
+            public static final double I = 0.0;
+            public static final double D = 0.0;
+        }
+        
     }
     
 }

@@ -110,6 +110,7 @@ public final class IntakeArm extends Subsystem implements Loopable {
                 armEncoder.reset();
                 zeroed = true;
                 System.out.println("Intake Zeroed!");
+                return;
             }
             arm.set(Constants.Subsystems.Intake.Arm.ZERO_POWER);
         }
