@@ -4,6 +4,7 @@ import com.milkenknights.frc2016.HardwareAdapter;
 import com.milkenknights.frc2016.auto.AutoMode;
 import com.milkenknights.frc2016.auto.AutoModeEndedException;
 import com.milkenknights.frc2016.subsystems.IntakeArm.IntakePosition;
+import com.milkenknights.frc2016.subsystems.IntakeSpeed.IntakeSpeedState;
 
 /**
  * This AutoMode will breach the OuterWorks.
@@ -14,12 +15,12 @@ public class LowBarAutoMode extends AutoMode {
 
     @Override
     protected void routine() throws AutoModeEndedException {
-        HardwareAdapter.DRIVE.setDistanceSetpoint(80, 30);
+        HardwareAdapter.DRIVE.setDistanceSetpoint(80, 50);
         HardwareAdapter.BALL_CLAMP.lock();
         HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.INTAKE);
         waitForIntake(1.5);
         
-        HardwareAdapter.DRIVE.setDistanceSetpoint(200, 80);
+        HardwareAdapter.DRIVE.setDistanceSetpoint(200, 100);
         waitForDriveDistance(130, true, 4.0);
         
         HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.STORED);
@@ -46,8 +47,10 @@ public class LowBarAutoMode extends AutoMode {
         
         /** -------------------------- **/
         
+        HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.STORED);
         HardwareAdapter.DRIVE.setTurnSetpoint(turn);
         waitForDrive(1.0);
+        waitForIntake(1.0);
         
         HardwareAdapter.DRIVE.resetEncoders();
         HardwareAdapter.DRIVE.setDistanceSetpoint(-12, 20);
@@ -59,7 +62,14 @@ public class LowBarAutoMode extends AutoMode {
         waitForIntake(1.0);
         
         HardwareAdapter.DRIVE.resetEncoders();
-        HardwareAdapter.DRIVE.setDistanceSetpoint(-200, 100);
+        HardwareAdapter.DRIVE.setDistanceSetpoint(-188, 100);
+        HardwareAdapter.INTAKE_SPEED.setSpeed(IntakeSpeedState.INTAKE);
+        waitForDrive(3.0);
+        // Wait for Ball
+        
+        /** --------------------- **/
+        
+        
     }
 
 }
