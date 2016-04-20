@@ -152,6 +152,8 @@ public final class Constants {
         public class ActionArm {
             public static final double GEAR_RATIO = 0.0 / 0.0;
             
+            public static final double PORTICULLIS = 0.0;
+            public static final double CDF = 0.0;
             public static final double STORED = 0.0;
             
             public static final double MAXIMUM_OUTPUT = 1.0;

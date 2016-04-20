@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public final class ActionArm extends Subsystem implements Loopable {
 
     public enum ActionArmPosition {
+        PORTICULLIS(Constants.Subsystems.ActionArm.PORTICULLIS),
+        CDF(Constants.Subsystems.ActionArm.CDF),
         STORED(Constants.Subsystems.ActionArm.STORED);
         
         public final double position;
