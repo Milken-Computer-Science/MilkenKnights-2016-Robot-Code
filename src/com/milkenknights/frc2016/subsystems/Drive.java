@@ -172,8 +172,10 @@ public final class Drive extends DriveAbstract {
      * @param gear The gear to set to
      */
     public void setGear(final DriveGear gear) {
-        driveGear = gear;
-        shifter.set(gear.shifter);
+        if (gear != getGear()) {
+            driveGear = gear;
+            shifter.set(gear.shifter);
+        }
     }
     
     /**

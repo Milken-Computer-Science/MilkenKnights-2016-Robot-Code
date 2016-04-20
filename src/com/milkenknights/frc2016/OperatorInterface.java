@@ -1,8 +1,8 @@
 package com.milkenknights.frc2016;
 
 import com.milkenknights.frc2016.behavior.Commands;
+import com.milkenknights.frc2016.behavior.Commands.ArmPosition;
 import com.milkenknights.frc2016.subsystems.Drive.DriveGear;
-import com.milkenknights.frc2016.subsystems.IntakeArm.IntakePosition;
 import com.milkenknights.frc2016.subsystems.IntakeSpeed.IntakeSpeedState;
 
 public final class OperatorInterface {
@@ -46,11 +46,11 @@ public final class OperatorInterface {
     
     private void getOperatorCommands() {
         if (HardwareAdapter.OPERATOR_STICK.getButton(3).isPressed()) {
-            commands.intakePosition = IntakePosition.PROTECT;
+            commands.armPosition = ArmPosition.CDF_PROTECT;
         } else if (HardwareAdapter.OPERATOR_STICK.getButton(2).isPressed()) {
-            commands.intakePosition = IntakePosition.INTAKE;
+            commands.armPosition = ArmPosition.LOWBAR_PORTCULLIS;
         } else if (HardwareAdapter.OPERATOR_STICK.getButton(6).isPressed()) {
-            commands.intakePosition = IntakePosition.STORED;
+            commands.armPosition = ArmPosition.STORED;
         }
         
         if (HardwareAdapter.OPERATOR_STICK.getButton(4).isHeld()) {
@@ -75,7 +75,7 @@ public final class OperatorInterface {
         }
         
         if (HardwareAdapter.OPERATOR_STICK.getButton(11).isPressed()) {
-            commands.zeroIntakeArm = true;
+            commands.zeroArms = true;
         }
     }
 }

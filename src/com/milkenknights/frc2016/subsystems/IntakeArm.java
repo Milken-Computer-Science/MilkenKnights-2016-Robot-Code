@@ -54,9 +54,10 @@ public final class IntakeArm extends Subsystem implements Loopable {
      * Set the position of the intake.
      */
     public void setPosition(final IntakePosition position) {
-        this.position = position;
-        pid.setSetpoint(position.position);
-        
+        if (position != getPosition()) {
+            this.position = position;
+            pid.setSetpoint(position.position);
+        } 
     }
     
     /**

@@ -1,8 +1,10 @@
 package com.milkenknights.frc2016.behavior;
 
 import com.milkenknights.frc2016.HardwareAdapter;
+import com.milkenknights.frc2016.subsystems.ActionArm.ActionArmPosition;
 import com.milkenknights.frc2016.subsystems.BallClamp.BallClampState;
-import com.milkenknights.frc2016.subsystems.Catapult;
+import com.milkenknights.frc2016.subsystems.Catapult.CatapultState;
+import com.milkenknights.frc2016.subsystems.IntakeArm.IntakePosition;
 import com.milkenknights.frc2016.subsystems.IntakeArm;
 import com.milkenknights.util.drive.ArcadeDriveHelper;
 
@@ -36,32 +38,74 @@ public class BehaviorManager {
             driveHelper.commandDrive(commands.driveSpeed, commands.driveRotate);
         }
         
-        if (commands.driveGear != null && commands.driveGear != HardwareAdapter.DRIVE.getGear()) {
+        if (commands.driveGear != null) {
             HardwareAdapter.DRIVE.setGear(commands.driveGear);
         }
     }
     
     /**
-     * Update the intake subsystem with the latest commands.
+     * Update the Intake subsystem with the latest commands.
      * 
      * @param commands The commands
      */
     private void intake(final Commands commands) {
-        if (commands.zeroIntakeArm && HardwareAdapter.CATAPULT.getState() == Catapult.CatapultState.READY) {
+        if (commands.zeroArms && HardwareAdapter.CATAPULT.getState() == CatapultState.READY) {
             HardwareAdapter.INTAKE_ARM.zero();
         }
         
-        if (commands.intakePosition != null && commands.intakePosition != HardwareAdapter.INTAKE_ARM.getPosition()) {
-            if (commands.intakePosition != IntakeArm.IntakePosition.STORED) {
-                HardwareAdapter.INTAKE_ARM.setPosition(commands.intakePosition);
-            } else if (commands.intakePosition == IntakeArm.IntakePosition.STORED
-                    && HardwareAdapter.CATAPULT.getState() == Catapult.CatapultState.READY) {
-                HardwareAdapter.INTAKE_ARM.setPosition(commands.intakePosition);
+        if (commands.armPosition != null) {
+            switch (commands.armPosition) {
+                case CDF_PROTECT:
+                    HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.PROTECT);
+                    break;
+                case INTAKE:
+                    HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.INTAKE);
+                    break;
+                case LOWBAR_PORTCULLIS:
+                    HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.INTAKE);
+                    break;
+                case STORED:
+                    if (HardwareAdapter.CATAPULT.getState() == CatapultState.READY) {
+                        HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.STORED);
+                    }
+                    break;
+                default:
+                    break;
             }
         }
         
         if (commands.intakeSpeed != null && commands.intakeSpeed != HardwareAdapter.INTAKE_SPEED.getSpeed()) {
             HardwareAdapter.INTAKE_SPEED.setSpeed(commands.intakeSpeed);
+        }
+    }
+    
+    /**
+     * Update the ActionArm subsystem with the latest commands.
+     * 
+     * @param commands The commands
+     */
+    private void actionArm(final Commands commands) {
+        if (commands.zeroArms) {
+            HardwareAdapter.ACTION_ARM.zero();
+        }
+        
+        if (commands.armPosition != null) {
+            switch (commands.armPosition) {
+                case CDF_PROTECT:
+                    HardwareAdapter.ACTION_ARM.setPosition(ActionArmPosition.CDF);
+                    break;
+                case INTAKE:
+                    HardwareAdapter.ACTION_ARM.setPosition(ActionArmPosition.STORED);
+                    break;
+                case LOWBAR_PORTCULLIS:
+                    HardwareAdapter.ACTION_ARM.setPosition(ActionArmPosition.PORTICULLIS);
+                    break;
+                case STORED:
+                    HardwareAdapter.ACTION_ARM.setPosition(ActionArmPosition.STORED);
+                    break;
+                default:
+                    break;
+            }
         }
     }
     
@@ -75,7 +119,7 @@ public class BehaviorManager {
             HardwareAdapter.CATAPULT.zero();
         }
 
-        if (commands.fireCatapult && HardwareAdapter.CATAPULT.getState() != Catapult.CatapultState.ZERO) {
+        if (commands.fireCatapult && HardwareAdapter.CATAPULT.getState() != CatapultState.ZERO) {
             if (HardwareAdapter.INTAKE_ARM.getPosition() == IntakeArm.IntakePosition.STORED) {
                 HardwareAdapter.INTAKE_ARM.setPosition(IntakeArm.IntakePosition.PROTECT);
             } else if (HardwareAdapter.INTAKE_ARM.isOnTarget()
@@ -104,6 +148,7 @@ public class BehaviorManager {
     public void update(final Commands commands) {
         drive(commands);
         intake(commands);
+        actionArm(commands);
         ballClamp(commands);
         catapult(commands);
     }
