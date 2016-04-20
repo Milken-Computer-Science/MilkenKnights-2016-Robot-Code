@@ -13,8 +13,7 @@ public class WaitForCatapultAction extends TimeoutAction {
     /**
      * Is finished when the drive passes a certain distance. 
      * 
-     * @param firstPitch The pitch to start at
-     * @param secondPitch The pitch to end at
+     * @param catapultState The state the catapult should enter.
      * @param timeout When to timeout
      */
     public WaitForCatapultAction(final CatapultState catapultState, final double timeout) {

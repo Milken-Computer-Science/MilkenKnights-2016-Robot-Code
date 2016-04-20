@@ -121,7 +121,10 @@ public class MkCanTalon implements SpeedController {
         }
     }
     
-    public final void print(final boolean print) {
+    /**
+     * When print is true, everytime the output of the Talon is updated the value sent to the Talon will be printed.
+     */
+    public final void setPrint(final boolean print) {
         this.print = print;
     }
     

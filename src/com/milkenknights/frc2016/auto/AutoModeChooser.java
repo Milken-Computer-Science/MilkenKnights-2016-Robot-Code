@@ -21,7 +21,7 @@ public final class AutoModeChooser implements MkSendable, Loopable {
     /**
      * Create a new AutoModeChooser.
      */
-    public AutoModeChooser(Button button) {
+    public AutoModeChooser(final Button button) {
         autoModes = new ArrayList<Class<? extends AutoMode>>();
         this.button = button;
 
@@ -35,12 +35,14 @@ public final class AutoModeChooser implements MkSendable, Loopable {
      * Get the selected AutoMode.
      */
     public AutoMode getAutoMode() {
+        AutoMode autoMode;
         try {
-            return autoModes.get(count % autoModes.size()).newInstance();
+            autoMode = autoModes.get(count % autoModes.size()).newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
+            autoMode = new DoNothingAutoMode();
         }
-        return new DoNothingAutoMode();
+        return autoMode;
     }
 
     @Override

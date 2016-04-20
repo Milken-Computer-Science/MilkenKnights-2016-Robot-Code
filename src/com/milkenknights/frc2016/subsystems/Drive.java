@@ -197,7 +197,7 @@ public final class Drive extends DriveAbstract {
 
     @Override
     public Pose getPhysicalPose() {
-        Pose pose = new Pose(leftEncoder.getDistance(), leftEncoder.getDistance(), leftEncoder.getRate(),
+        final Pose pose = new Pose(leftEncoder.getDistance(), leftEncoder.getDistance(), leftEncoder.getRate(),
                 leftEncoder.getRate(), gyro.getAngle(), gyro.getRate());
 
         return pose;

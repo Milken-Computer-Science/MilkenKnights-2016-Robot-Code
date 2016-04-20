@@ -60,7 +60,7 @@ public class GripHelper implements MkSendable, ITableListener {
      * @return The angle from -180.0 to 180.0
      */
     public double getAngleToTarget() {
-        return ((2 * (cachedTarget.centerX / matSize.getNumber("x", 1)) - 1) * Constants.Vision.HORIZONTAL_FOV / 2.0);
+        return (2 * (cachedTarget.centerX / matSize.getNumber("x", 1)) - 1) * Constants.Vision.HORIZONTAL_FOV / 2.0;
     }
     
     @Override
