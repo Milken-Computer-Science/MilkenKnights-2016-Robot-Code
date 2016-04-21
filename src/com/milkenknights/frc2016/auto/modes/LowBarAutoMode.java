@@ -3,6 +3,7 @@ package com.milkenknights.frc2016.auto.modes;
 import com.milkenknights.frc2016.HardwareAdapter;
 import com.milkenknights.frc2016.auto.AutoMode;
 import com.milkenknights.frc2016.auto.AutoModeEndedException;
+import com.milkenknights.frc2016.subsystems.Catapult.CatapultState;
 import com.milkenknights.frc2016.subsystems.IntakeArm.IntakePosition;
 import com.milkenknights.frc2016.subsystems.IntakeSpeed.IntakeSpeedState;
 
@@ -42,7 +43,6 @@ public class LowBarAutoMode extends AutoMode {
         waitTime(0.25);
         
         HardwareAdapter.CATAPULT.fire();
-        //wait for Catapult to fire
         waitTime(0.5);
         
         /** -------------------------- **/
@@ -60,6 +60,7 @@ public class LowBarAutoMode extends AutoMode {
         HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.INTAKE);
         waitForDrive(1.5);
         waitForIntake(1.0);
+        waitForCatapult(CatapultState.READY, 15.0);
         
         HardwareAdapter.DRIVE.resetEncoders();
         HardwareAdapter.DRIVE.setDistanceSetpoint(-188, 100);

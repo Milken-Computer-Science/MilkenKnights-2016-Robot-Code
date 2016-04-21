@@ -104,6 +104,10 @@ public final class Catapult extends Subsystem implements Loopable {
         SmartDashboard.putBoolean("Catapult Home", !home.get());
         SmartDashboard.putNumber("Catapult Shot Count", shotCount);
     }
+    
+    public boolean onTarget() {
+        return positionPid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR);
+    }
 
     @Override
     public void update() {
@@ -112,7 +116,9 @@ public final class Catapult extends Subsystem implements Loopable {
                 positionPid.setSetpoint(shotCount + Constants.Subsystems.Catapult.READY_OFFSET);
                 velocityPid.setSetpoint(positionPid.calculate(encoder.getDistance()));
                 talon.set(velocityPid.calculate(encoder.getRate()));
-                if (positionPid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR) || positionPid.getError() < 0) {
+                if (zeroState != ZeroState.ZEROED) {
+                    state = CatapultState.ZERO;
+                } else if (onTarget() || positionPid.getError() < 0) {
                     state = CatapultState.READY;
                 }
                 break;
@@ -121,10 +127,6 @@ public final class Catapult extends Subsystem implements Loopable {
                 talon.set(velocityPid.calculate(encoder.getRate()));
                 break;
             case FIRE:
-                if (zeroState != ZeroState.ZEROED) {
-                    state = CatapultState.ZERO;
-                    break;
-                }
                 positionPid.setSetpoint(Constants.Subsystems.Catapult.READY_OFFSET + shotCount
                         + Constants.Subsystems.Catapult.FIRE_OFFSET);
                 velocityPid.setSetpoint(positionPid.calculate(encoder.getDistance()));
@@ -172,9 +174,9 @@ public final class Catapult extends Subsystem implements Loopable {
             default:
                 break;
         }
-        
+
     }
-    
+
     private void setState(final CatapultState state) {
         this.state = state;
     }

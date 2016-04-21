@@ -16,7 +16,7 @@ public class Position4AutoMode extends AutoMode {
         HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.STORED);
         waitForIntake(1.0);
         
-        HardwareAdapter.DRIVE.setDistanceSetpoint(180, 100);
+        HardwareAdapter.DRIVE.setDistanceSetpoint(180, 80);
         waitForDrive(3.0);
         
         HardwareAdapter.BALL_CLAMP.open();
@@ -31,7 +31,6 @@ public class Position4AutoMode extends AutoMode {
         waitTime(0.25);
         
         HardwareAdapter.CATAPULT.fire();
-        // wait for catapult to fire
         waitTime(0.5);
     }
 
