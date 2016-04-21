@@ -43,7 +43,7 @@ public final class HardwareAdapter {
      * Initialize the robot hardware.
      */
     static {
-        System.out.println("Init hardware");
+        System.out.println("Start HardwareAdapter Init");
         
         final MkCanTalon driveLeftTalon = new MkCanTalon(new CANTalon[] {
             new CANTalon(Constants.CanTalon.DRIVE_LEFT_1), new CANTalon(Constants.CanTalon.DRIVE_LEFT_2)});
@@ -52,25 +52,34 @@ public final class HardwareAdapter {
         
         final MkCanTalon intakePositionTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.INTAKE_ARM));
         final MkCanTalon intakeSpeedTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.INTAKE_SPEED));
-        
+        final MkCanTalon catapultTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.CATAPULT));
         final MkCanTalon actionArmTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.ACTION_ARM));
 
+        System.out.println("CanTalon init complete");
+        
         final S4T360 driveLeftEncoder = new S4T360(Constants.Dio.DRIVE_LEFT_A, Constants.Dio.DRIVE_LEFT_B);
         final S4T360 driveRightEncoder = new S4T360(Constants.Dio.DRIVE_RIGHT_A, Constants.Dio.DRIVE_RIGHT_B);
         final S4T360 catapultEncoder = new S4T360(Constants.Dio.CATAPULT_A, Constants.Dio.CATAPULT_B);
         final S4T360 intakeEncoder = new S4T360(Constants.Dio.INTAKE_A, Constants.Dio.INTAKE_B);
         final S4T360 actionArmEncoder = new S4T360(Constants.Dio.ACTION_ARM_A, Constants.Dio.ACTION_ARM_B);
 
+        System.out.println("Encoder init complete");
+        
         final Solenoid driveShifter = new Solenoid(Constants.Pcm.ID, Constants.Pcm.DRIVE_SHIFTER);
         final Solenoid ballClamp = new Solenoid(Constants.Pcm.ID, Constants.Pcm.BALL_HOLDER);
+
+        System.out.println("Solenoid init complete");
         
-        final MkCanTalon catapultTalon = new MkCanTalon(new CANTalon(Constants.CanTalon.CATAPULT));
         final DigitalInput catapultHome = new DigitalInput(Constants.Dio.CATAPULT_HOME);
 
+        System.out.println("DIO init complete");
+        
         final MkGyro gyro = new MkGyro(new AHRS(SPI.Port.kOnboardCS1));
         final  MkPressureTransducer pressureTransducer
             = new SsiTechnologiesPressureTransducer(Constants.Analog.PRESSURE_TRANSDUCER);
 
+        System.out.println("Analog IO init complete");
+        
         DRIVE = new Drive("Drive", driveLeftTalon, driveRightTalon, driveLeftEncoder, driveRightEncoder, 
                 driveShifter, gyro);
         INTAKE_ARM = new IntakeArm("Intake Arm", intakePositionTalon, intakeEncoder);
@@ -79,6 +88,8 @@ public final class HardwareAdapter {
         ACTION_ARM = new ActionArm("Action Arm", actionArmTalon, actionArmEncoder);
         BALL_CLAMP = new BallClamp("Ball Clamp", ballClamp);
         
+        System.out.println("Subsystem init complete");
+        
         PDP = new PowerDistributionPanel();
         COMPRESSOR = new MkCompressor(Constants.Pcm.ID, pressureTransducer);
         
@@ -86,6 +97,8 @@ public final class HardwareAdapter {
 
         DRIVE_STICK = new MkJoystick(Constants.DriverStation.DRIVE_JOYSTICK);
         OPERATOR_STICK = new MkJoystick(Constants.DriverStation.OPERATOR_JOYSTICK);
+        
+        System.out.println("HardwareAdapter init complete");
     }
     
     private HardwareAdapter() {

@@ -4,16 +4,16 @@ public final class Constants {
     
     public class Dio {
         public static final int CATAPULT_HOME = 0;
-        public static final int DRIVE_LEFT_A = 10; // ENC 0
-        public static final int DRIVE_LEFT_B = 11; // ENC 0
+        public static final int DRIVE_LEFT_A = 10;  // ENC 0
+        public static final int DRIVE_LEFT_B = 11;  // ENC 0
         public static final int DRIVE_RIGHT_A = 12; // ENC 1
         public static final int DRIVE_RIGHT_B = 13; // ENC 1
-        public static final int CATAPULT_A = 14; // ENC 2
-        public static final int CATAPULT_B = 15; // ENC 2
-        public static final int INTAKE_A = 16; // ENC 3
-        public static final int INTAKE_B = 17; // ENC 3
-        public static final int ACTION_ARM_A = 16; // ENC 4
-        public static final int ACTION_ARM_B = 17; // ENC 4
+        public static final int CATAPULT_A = 15;    // ENC 2
+        public static final int CATAPULT_B = 14;    // ENC 2
+        public static final int INTAKE_A = 16;      // ENC 3
+        public static final int INTAKE_B = 17;      // ENC 3
+        public static final int ACTION_ARM_A = 18;  // ENC 4
+        public static final int ACTION_ARM_B = 19;  // ENC 4
     }
     
     public class Analog {
@@ -38,7 +38,7 @@ public final class Constants {
         public static final int CATAPULT = 8;
         public static final int INTAKE_ARM = 7;
         public static final int INTAKE_SPEED = 3;
-        public static final int ACTION_ARM = 0; //TODO: Find this value
+        public static final int ACTION_ARM = 2; //TODO: Find this value
     }
     
     public class ControlLoops {

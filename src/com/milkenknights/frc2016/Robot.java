@@ -41,7 +41,7 @@ public final class Robot extends IterativeRobot {
         looper.addLoopable(HardwareAdapter.DRIVE);
         looper.addLoopable(HardwareAdapter.INTAKE_ARM);
         looper.addLoopable(HardwareAdapter.CATAPULT);
-        looper.addLoopable(HardwareAdapter.COMPRESSOR);
+        //looper.addLoopable(HardwareAdapter.COMPRESSOR);
         
         slowLooper.addLoopable(autoModeChooser);
         

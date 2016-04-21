@@ -47,6 +47,10 @@ public class Button {
         return joystick;
     }
     
+    public boolean isJoystickConnected() {
+        return joystick.getButtonCount() > 0;
+    }
+    
     /**
      * Update the last state of the button.
      */

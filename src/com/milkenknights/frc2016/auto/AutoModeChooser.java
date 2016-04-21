@@ -52,7 +52,8 @@ public final class AutoModeChooser implements MkSendable, Loopable {
 
     @Override
     public void update() {
-        if (button.isPressed()) {
+        // Check if the joystick is connected first to not pollute the log
+        if (button.isJoystickConnected() && button.isPressed()) {
             count++;
         }
     }
