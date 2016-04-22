@@ -43,7 +43,7 @@ public final class HardwareAdapter {
      * Initialize the robot hardware.
      */
     static {
-        System.out.println("Start HardwareAdapter Init");
+        System.out.println("Starting HardwareAdapter init");
         
         final MkCanTalon driveLeftTalon = new MkCanTalon(new CANTalon[] {
             new CANTalon(Constants.CanTalon.DRIVE_LEFT_1), new CANTalon(Constants.CanTalon.DRIVE_LEFT_2)});

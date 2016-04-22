@@ -8,8 +8,8 @@ public final class Constants {
         public static final int DRIVE_LEFT_B = 11;  // ENC 0
         public static final int DRIVE_RIGHT_A = 12; // ENC 1
         public static final int DRIVE_RIGHT_B = 13; // ENC 1
-        public static final int CATAPULT_A = 15;    // ENC 2
-        public static final int CATAPULT_B = 14;    // ENC 2
+        public static final int CATAPULT_A = 14;    // ENC 2
+        public static final int CATAPULT_B = 15;    // ENC 2
         public static final int INTAKE_A = 16;      // ENC 3
         public static final int INTAKE_B = 17;      // ENC 3
         public static final int ACTION_ARM_A = 18;  // ENC 4
