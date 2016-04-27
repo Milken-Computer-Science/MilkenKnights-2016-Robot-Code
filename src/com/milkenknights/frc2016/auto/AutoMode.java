@@ -5,6 +5,7 @@ import com.milkenknights.frc2016.auto.actions.WaitForCatapultAction;
 import com.milkenknights.frc2016.auto.actions.WaitForCatapultStateAction;
 import com.milkenknights.frc2016.auto.actions.WaitForDriveAction;
 import com.milkenknights.frc2016.auto.actions.WaitForDriveDistanceAction;
+import com.milkenknights.frc2016.auto.actions.WaitForDriveNotMovingAction;
 import com.milkenknights.frc2016.auto.actions.WaitForIntakeArmAction;
 import com.milkenknights.frc2016.subsystems.Catapult.CatapultState;
 
@@ -30,6 +31,13 @@ public abstract class AutoMode extends AutoModeBase {
     public void waitForDriveDistance(final double distance, final boolean positive,
             final double seconds) throws AutoModeEndedException {
         runAction(new WaitForDriveDistanceAction(distance, positive, seconds));
+    }
+    
+    /**
+     * Run a new WaitForDriveNotMovingAction.
+     */
+    public void waitForDriveNotMoving(final double seconds) throws AutoModeEndedException {
+        runAction(new WaitForDriveNotMovingAction(seconds));
     }
     
     /**

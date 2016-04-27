@@ -40,7 +40,7 @@ public class LowBarAutoMode extends AutoMode {
         HardwareAdapter.DRIVE.setTurnSetpoint(HardwareAdapter.GRIP.getAngleToTarget()
                 + HardwareAdapter.DRIVE.getPhysicalPose().heading);
         waitForDrive(1.0);
-        waitTime(0.25);
+        waitForDriveNotMoving(0.5);
         
         HardwareAdapter.CATAPULT.fire();
         waitTime(0.5);

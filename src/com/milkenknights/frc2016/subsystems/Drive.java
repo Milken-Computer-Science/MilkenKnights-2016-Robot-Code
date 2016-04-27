@@ -107,6 +107,10 @@ public final class Drive extends DriveAbstract {
     public double getRoll() {
         return gyro.getPitch(); // Inverted due to mounting
     }
+    
+    public boolean isMoving() {
+        return gyro.isMoving();
+    }
 
     @Override
     public void updateSmartDashboard() {
