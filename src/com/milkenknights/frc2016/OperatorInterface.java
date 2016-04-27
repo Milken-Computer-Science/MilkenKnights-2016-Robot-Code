@@ -35,7 +35,7 @@ public final class OperatorInterface {
             commands.alignRobot = Commands.AlignRobot.STOP;
         }
         
-        if (HardwareAdapter.DRIVE_STICK.getButton(7).isPressed()) {
+        if (HardwareAdapter.DRIVE_STICK.getButton(2).isPressed()) {
             commands.driveGear = HardwareAdapter.DRIVE.getGear() == DriveGear.HIGH ? DriveGear.LOW : DriveGear.HIGH;
         }
         
@@ -47,6 +47,8 @@ public final class OperatorInterface {
     private void getOperatorCommands() {
         if (HardwareAdapter.OPERATOR_STICK.getButton(3).isPressed()) {
             commands.armPosition = ArmPosition.CDF_PROTECT;
+        } else if (HardwareAdapter.OPERATOR_STICK.getButton(4).isPressed()) {
+            commands.armPosition = ArmPosition.INTAKE;
         } else if (HardwareAdapter.OPERATOR_STICK.getButton(2).isPressed()) {
             commands.armPosition = ArmPosition.LOWBAR_PORTCULLIS;
         } else if (HardwareAdapter.OPERATOR_STICK.getButton(6).isPressed()) {
