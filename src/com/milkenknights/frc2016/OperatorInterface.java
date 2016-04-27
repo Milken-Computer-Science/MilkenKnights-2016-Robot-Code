@@ -39,9 +39,6 @@ public final class OperatorInterface {
             commands.driveGear = HardwareAdapter.DRIVE.getGear() == DriveGear.HIGH ? DriveGear.LOW : DriveGear.HIGH;
         }
         
-        if (HardwareAdapter.DRIVE_STICK.getButton(8).isPressed()) {
-            commands.reverseDrive = true;
-        }
     }
     
     private void getOperatorCommands() {

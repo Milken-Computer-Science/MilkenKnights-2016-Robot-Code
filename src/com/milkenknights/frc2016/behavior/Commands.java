@@ -8,7 +8,6 @@ public class Commands {
     public double driveSpeed;
     public double driveRotate;
     public DriveGear driveGear;
-    public boolean reverseDrive;
     public AlignRobot alignRobot;
     public boolean toggleBallClamp;
     public boolean fireCatapult;
