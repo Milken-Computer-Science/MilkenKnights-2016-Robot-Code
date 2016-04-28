@@ -46,6 +46,8 @@ public final class ActionArm extends Subsystem implements Loopable {
         pid.setOutputRange(-Constants.Subsystems.ActionArm.MAXIMUM_OUTPUT,
                 Constants.Subsystems.ActionArm.MAXIMUM_OUTPUT);
         
+        armController.setInverted(true);
+        
         this.arm = armController;
         this.armEncoder = armEncoder;
     }

@@ -38,7 +38,7 @@ public final class Constants {
         public static final int CATAPULT = 8;
         public static final int INTAKE_ARM = 7;
         public static final int INTAKE_SPEED = 3;
-        public static final int ACTION_ARM = 2; //TODO: Find this value
+        public static final int ACTION_ARM = 2;
     }
     
     public class ControlLoops {
@@ -108,7 +108,7 @@ public final class Constants {
             public class Arm {
                 public static final double GEAR_RATIO = 16.0 / 44.0;
                 
-                public static final double INTAKE = -0.38;
+                public static final double INTAKE = -0.35;
                 public static final double PROTECT = -0.225;
                 public static final double STORED = 0.0;
                 
@@ -153,20 +153,20 @@ public final class Constants {
         }
         
         public class ActionArm {
-            public static final double GEAR_RATIO = 0.0 / 0.0;
+            public static final double GEAR_RATIO = 16.0 / 36.0;
             
-            public static final double PORTICULLIS = 0.0;
-            public static final double CDF = 0.0;
+            public static final double PORTICULLIS = -0.415;
+            public static final double CDF = -0.355;
             public static final double STORED = 0.0;
             
             public static final double MAXIMUM_OUTPUT = 1.0;
             
-            public static final double ZERO_POWER = 0.0;
-            public static final double ZERO_CURRENT = 0.0;
-            public static final double ZEROED_RATE = 0.0;
-            public static final double ALLOWABLE_ERROR = 0.0;
+            public static final double ZERO_POWER = 0.3;
+            public static final double ZERO_CURRENT = 3.0;
+            public static final double ZEROED_RATE = 0.05;
+            public static final double ALLOWABLE_ERROR = 0.025;
             
-            public static final double P = 0.0;
+            public static final double P = 50.0;
             public static final double I = 0.0;
             public static final double D = 0.0;
         }
