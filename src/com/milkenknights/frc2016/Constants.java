@@ -109,7 +109,7 @@ public final class Constants {
                 public static final double GEAR_RATIO = 16.0 / 44.0;
                 
                 public static final double INTAKE = -0.35;
-                public static final double PROTECT = -0.225;
+                public static final double PROTECT = -0.25;
                 public static final double STORED = 0.0;
                 
                 public static final double P = 10.0;
