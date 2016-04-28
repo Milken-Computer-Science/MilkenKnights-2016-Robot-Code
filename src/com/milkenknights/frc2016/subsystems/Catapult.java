@@ -72,9 +72,11 @@ public final class Catapult extends Subsystem implements Loopable {
      * Fire the catapult.
      */
     public void fire() {
-        timer.reset();
-        timer.start();
-        setState(CatapultState.FIRE);
+        if(state == CatapultState.READY) {
+            timer.reset();
+            timer.start();
+            setState(CatapultState.FIRE);
+        }
     }
     
     /**
@@ -131,9 +133,12 @@ public final class Catapult extends Subsystem implements Loopable {
                         + Constants.Subsystems.Catapult.FIRE_OFFSET);
                 velocityPid.setSetpoint(positionPid.calculate(encoder.getDistance()));
                 talon.set(velocityPid.calculate(encoder.getRate()));
-                if (timer.hasPeriodPassed(Constants.Subsystems.Catapult.RETRACT_DELAY)) {
-                    shotCount++;
+                
+                if (zeroState != ZeroState.ZEROED && timer.hasPeriodPassed(Constants.Subsystems.Catapult.RETRACT_DELAY)) {
                     state = CatapultState.RETRACT;
+                } else if(timer.hasPeriodPassed(Constants.Subsystems.Catapult.RETRACT_DELAY)) {
+                    state = CatapultState.RETRACT;
+                    shotCount++;
                 }
                 break;
             case ZERO:
