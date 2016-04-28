@@ -1,6 +1,7 @@
 package com.milkenknights.frc2016.auto;
 
 import com.milkenknights.frc2016.auto.actions.TimeoutAction;
+import com.milkenknights.frc2016.auto.actions.WaitForActionArmAction;
 import com.milkenknights.frc2016.auto.actions.WaitForCatapultAction;
 import com.milkenknights.frc2016.auto.actions.WaitForCatapultStateAction;
 import com.milkenknights.frc2016.auto.actions.WaitForDriveAction;
@@ -45,6 +46,13 @@ public abstract class AutoMode extends AutoModeBase {
      */
     public void waitForIntake(final double seconds) throws AutoModeEndedException {
         runAction(new WaitForIntakeArmAction(seconds));
+    }
+    
+    /**
+     * Run a new WaitForActionArmAction.
+     */
+    public void waitForActionArm(final double seconds) throws AutoModeEndedException {
+        runAction(new WaitForActionArmAction(seconds));
     }
     
     /**

@@ -3,6 +3,7 @@ package com.milkenknights.frc2016.auto.modes;
 import com.milkenknights.frc2016.HardwareAdapter;
 import com.milkenknights.frc2016.auto.AutoMode;
 import com.milkenknights.frc2016.auto.AutoModeEndedException;
+import com.milkenknights.frc2016.subsystems.ActionArm.ActionArmPosition;
 import com.milkenknights.frc2016.subsystems.Catapult.CatapultState;
 import com.milkenknights.frc2016.subsystems.IntakeArm.IntakePosition;
 import com.milkenknights.frc2016.subsystems.IntakeSpeed.IntakeSpeedState;
@@ -16,10 +17,12 @@ public class LowBarAutoMode extends AutoMode {
 
     @Override
     protected void routine() throws AutoModeEndedException {
-        HardwareAdapter.DRIVE.setDistanceSetpoint(80, 50);
+        HardwareAdapter.DRIVE.setDistanceSetpoint(40, 50);
         HardwareAdapter.BALL_CLAMP.lock();
         HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.INTAKE);
+        HardwareAdapter.ACTION_ARM.setPosition(ActionArmPosition.PORTICULLIS);
         waitForIntake(1.5);
+        waitForActionArm(1.5);
         
         HardwareAdapter.DRIVE.setDistanceSetpoint(200, 100);
         waitForDriveDistance(130, true, 4.0);
@@ -70,7 +73,28 @@ public class LowBarAutoMode extends AutoMode {
         
         /** --------------------- **/
         
+        HardwareAdapter.DRIVE.setDistanceSetpoint(188, 100);
+        waitForDriveDistance(118, true, 4.0);
         
+        HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.STORED);
+        waitForDrive(3.0);
+        waitForIntake(1.0);
+        
+        HardwareAdapter.DRIVE.setTurnSetpoint(turn);
+        waitForDrive(1.5);
+        
+        HardwareAdapter.DRIVE.resetEncoders();
+        HardwareAdapter.DRIVE.setDistanceSetpoint(12, 20);
+        HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.PROTECT);
+        waitForIntake(1.5);
+        
+        HardwareAdapter.BALL_CLAMP.open();
+        HardwareAdapter.DRIVE.setTurnSetpoint(HardwareAdapter.GRIP.getAngleToTarget()
+                + HardwareAdapter.DRIVE.getPhysicalPose().heading);
+        waitForDrive(1.0);
+        waitForDriveNotMoving(0.5);
+        
+        HardwareAdapter.CATAPULT.fire();
     }
 
 }

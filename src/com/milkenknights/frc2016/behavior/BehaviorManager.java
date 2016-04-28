@@ -115,6 +115,7 @@ public class BehaviorManager {
         if (commands.fireCatapult && HardwareAdapter.CATAPULT.getState() != CatapultState.ZERO) {
             if (HardwareAdapter.INTAKE_ARM.getPosition() == IntakeArm.IntakePosition.STORED) {
                 HardwareAdapter.INTAKE_ARM.setPosition(IntakeArm.IntakePosition.PROTECT);
+                HardwareAdapter.ACTION_ARM.setPosition(ActionArmPosition.CDF);
             } else if (HardwareAdapter.INTAKE_ARM.isOnTarget()
                     && HardwareAdapter.BALL_CLAMP.getState() == BallClampState.OPEN) {
                 HardwareAdapter.CATAPULT.fire();
