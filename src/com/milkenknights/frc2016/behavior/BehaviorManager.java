@@ -4,8 +4,9 @@ import com.milkenknights.frc2016.HardwareAdapter;
 import com.milkenknights.frc2016.subsystems.ActionArm.ActionArmPosition;
 import com.milkenknights.frc2016.subsystems.BallClamp.BallClampState;
 import com.milkenknights.frc2016.subsystems.Catapult.CatapultState;
-import com.milkenknights.frc2016.subsystems.IntakeArm.IntakePosition;
 import com.milkenknights.frc2016.subsystems.IntakeArm;
+import com.milkenknights.frc2016.subsystems.IntakeArm.IntakePosition;
+import com.milkenknights.frc2016.subsystems.IntakeSpeed.IntakeSpeedState;
 import com.milkenknights.util.drive.ArcadeDriveHelper;
 
 public class BehaviorManager {
@@ -67,9 +68,14 @@ public class BehaviorManager {
             }
         }
         
-        if (commands.intakeSpeed != null && commands.intakeSpeed != HardwareAdapter.INTAKE_SPEED.getSpeed()) {
+        if (commands.intakeSpeed != null
+                && commands.intakeSpeed != HardwareAdapter.INTAKE_SPEED.getSpeed()) {
             HardwareAdapter.INTAKE_SPEED.setSpeed(commands.intakeSpeed);
+            if (commands.intakeSpeed != IntakeSpeedState.NEUTRAL) {
+                HardwareAdapter.BALL_CLAMP.open();
+            }
         }
+        
     }
     
     /**
@@ -112,14 +118,8 @@ public class BehaviorManager {
             HardwareAdapter.CATAPULT.zero();
         }
 
-        if (commands.fireCatapult && HardwareAdapter.CATAPULT.getState() != CatapultState.ZERO) {
-            if (HardwareAdapter.INTAKE_ARM.getPosition() == IntakeArm.IntakePosition.STORED) {
-                HardwareAdapter.INTAKE_ARM.setPosition(IntakeArm.IntakePosition.PROTECT);
-                HardwareAdapter.ACTION_ARM.setPosition(ActionArmPosition.CDF);
-            } else if (HardwareAdapter.INTAKE_ARM.isOnTarget()
-                    && HardwareAdapter.BALL_CLAMP.getState() == BallClampState.OPEN) {
-                HardwareAdapter.CATAPULT.fire();
-            }
+        if (commands.fireCatapult && HardwareAdapter.BALL_CLAMP.getState() == BallClampState.OPEN) {
+            HardwareAdapter.CATAPULT.fire();
         }
     }
     

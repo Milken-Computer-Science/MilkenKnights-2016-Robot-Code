@@ -60,8 +60,8 @@ public final class OperatorInterface {
             commands.intakeSpeed = IntakeSpeedState.NEUTRAL;
         }
         
-        if (HardwareAdapter.OPERATOR_STICK.getButton(1).isHeld()
-                && HardwareAdapter.OPERATOR_STICK.getButton(7).isHeld()) {
+        if (HardwareAdapter.OPERATOR_STICK.getButton(1).isPressed()
+                || HardwareAdapter.OPERATOR_STICK.getButton(7).isPressed()) {
             commands.fireCatapult = true;
         }
         

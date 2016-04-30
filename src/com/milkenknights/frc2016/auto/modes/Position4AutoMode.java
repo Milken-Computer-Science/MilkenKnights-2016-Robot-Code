@@ -3,6 +3,7 @@ package com.milkenknights.frc2016.auto.modes;
 import com.milkenknights.frc2016.HardwareAdapter;
 import com.milkenknights.frc2016.auto.AutoMode;
 import com.milkenknights.frc2016.auto.AutoModeEndedException;
+import com.milkenknights.frc2016.subsystems.ActionArm.ActionArmPosition;
 import com.milkenknights.frc2016.subsystems.IntakeArm.IntakePosition;
 
 /**
@@ -14,6 +15,8 @@ public class Position4AutoMode extends AutoMode {
     protected void routine() throws AutoModeEndedException {
         HardwareAdapter.BALL_CLAMP.lock();
         HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.STORED);
+        HardwareAdapter.ACTION_ARM.setPosition(ActionArmPosition.STORED);
+        waitTime(0.5);
         waitForIntake(1.0);
         
         HardwareAdapter.DRIVE.setDistanceSetpoint(180, 80);
@@ -21,8 +24,10 @@ public class Position4AutoMode extends AutoMode {
         
         HardwareAdapter.BALL_CLAMP.open();
         HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.PROTECT);
+        HardwareAdapter.ACTION_ARM.setPosition(ActionArmPosition.CDF);
         HardwareAdapter.DRIVE.setTurnSetpoint(0.0);
         waitForDrive(1.0);
+        waitForActionArm(3.0);
         
         HardwareAdapter.DRIVE.setTurnSetpoint(HardwareAdapter.GRIP.getAngleToTarget()
                 + HardwareAdapter.DRIVE.getPhysicalPose().heading);

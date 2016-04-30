@@ -44,57 +44,59 @@ public class LowBarAutoMode extends AutoMode {
                 + HardwareAdapter.DRIVE.getPhysicalPose().heading);
         waitForDrive(1.0);
         waitForDriveNotMoving(0.5);
+        waitTime(3.0);
         
         HardwareAdapter.CATAPULT.fire();
-        waitTime(0.5);
+        //waitTime(0.5);
+        //waitForCatapult(CatapultState.READY, 5.0);
         
         /** -------------------------- **/
         
-        HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.STORED);
-        HardwareAdapter.DRIVE.setTurnSetpoint(turn);
-        waitForDrive(1.0);
-        waitForIntake(1.0);
-        
-        HardwareAdapter.DRIVE.resetEncoders();
-        HardwareAdapter.DRIVE.setDistanceSetpoint(-12, 20);
-        waitForDrive(1.5);
-        
-        HardwareAdapter.DRIVE.setTurnSetpoint(0.0);
-        HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.INTAKE);
-        waitForDrive(1.5);
-        waitForIntake(1.0);
-        waitForCatapult(CatapultState.READY, 15.0);
-        
-        HardwareAdapter.DRIVE.resetEncoders();
-        HardwareAdapter.DRIVE.setDistanceSetpoint(-188, 100);
-        HardwareAdapter.INTAKE_SPEED.setSpeed(IntakeSpeedState.INTAKE);
-        waitForDrive(3.0);
+//        HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.STORED);
+//        HardwareAdapter.DRIVE.setTurnSetpoint(turn);
+//        waitForDrive(1.0);
+//        waitForIntake(1.0);
+//        
+//        HardwareAdapter.DRIVE.resetEncoders();
+//        HardwareAdapter.DRIVE.setDistanceSetpoint(-12, 20);
+//        waitForDrive(1.5);
+//        
+//        HardwareAdapter.DRIVE.setTurnSetpoint(0.0);
+//        HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.INTAKE);
+//        waitForDrive(1.5);
+//        waitForIntake(1.0);
+//        waitForCatapult(CatapultState.READY, 15.0);
+//        
+//        HardwareAdapter.DRIVE.resetEncoders();
+//        HardwareAdapter.DRIVE.setDistanceSetpoint(-180, 100);
+//        HardwareAdapter.INTAKE_SPEED.setSpeed(IntakeSpeedState.INTAKE);
+//        waitForDrive(3.0);
         // Wait for Ball
         
-        /** --------------------- **/
-        
-        HardwareAdapter.DRIVE.setDistanceSetpoint(188, 100);
-        waitForDriveDistance(118, true, 4.0);
-        
-        HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.STORED);
-        waitForDrive(3.0);
-        waitForIntake(1.0);
-        
-        HardwareAdapter.DRIVE.setTurnSetpoint(turn);
-        waitForDrive(1.5);
-        
-        HardwareAdapter.DRIVE.resetEncoders();
-        HardwareAdapter.DRIVE.setDistanceSetpoint(12, 20);
-        HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.PROTECT);
-        waitForIntake(1.5);
-        
-        HardwareAdapter.BALL_CLAMP.open();
-        HardwareAdapter.DRIVE.setTurnSetpoint(HardwareAdapter.GRIP.getAngleToTarget()
-                + HardwareAdapter.DRIVE.getPhysicalPose().heading);
-        waitForDrive(1.0);
-        waitForDriveNotMoving(0.5);
-        
-        HardwareAdapter.CATAPULT.fire();
+//        /** --------------------- **/
+//        
+//        HardwareAdapter.DRIVE.setDistanceSetpoint(188, 100);
+//        waitForDriveDistance(118, true, 4.0);
+//        
+//        HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.STORED);
+//        waitForDrive(3.0);
+//        waitForIntake(1.0);
+//        
+//        HardwareAdapter.DRIVE.setTurnSetpoint(turn);
+//        waitForDrive(1.5);
+//        
+//        HardwareAdapter.DRIVE.resetEncoders();
+//        HardwareAdapter.DRIVE.setDistanceSetpoint(12, 20);
+//        HardwareAdapter.INTAKE_ARM.setPosition(IntakePosition.PROTECT);
+//        waitForIntake(1.5);
+//        
+//        HardwareAdapter.BALL_CLAMP.open();
+//        HardwareAdapter.DRIVE.setTurnSetpoint(HardwareAdapter.GRIP.getAngleToTarget()
+//                + HardwareAdapter.DRIVE.getPhysicalPose().heading);
+//        waitForDrive(1.0);
+//        waitForDriveNotMoving(0.5);
+//        
+//        HardwareAdapter.CATAPULT.fire();
     }
 
 }

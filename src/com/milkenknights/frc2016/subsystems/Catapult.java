@@ -8,7 +8,6 @@ import com.milkenknights.util.Subsystem;
 import com.milkenknights.util.SynchronousPid;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public final class Catapult extends Subsystem implements Loopable {
@@ -26,7 +25,6 @@ public final class Catapult extends Subsystem implements Loopable {
     private final DigitalInput home;
     private final SynchronousPid positionPid;
     private final SynchronousPid velocityPid;
-    private final Timer timer;
     private CatapultState state;
     private int shotCount;
     private ZeroState zeroState;
@@ -58,8 +56,6 @@ public final class Catapult extends Subsystem implements Loopable {
         velocityPid.setOutputRange(-1.0, 1.0);
         velocityPid.sumOutput();
         
-        timer = new Timer();
-        
         this.talon = talon;
         this.encoder = encoder;
         this.home = home;
@@ -72,11 +68,7 @@ public final class Catapult extends Subsystem implements Loopable {
      * Fire the catapult.
      */
     public void fire() {
-        if(state == CatapultState.READY) {
-            timer.reset();
-            timer.start();
-            setState(CatapultState.FIRE);
-        }
+        setState(CatapultState.FIRE);
     }
     
     /**
@@ -94,6 +86,10 @@ public final class Catapult extends Subsystem implements Loopable {
     public CatapultState getState() {
         return state;
     }
+    
+    public boolean onTarget() {
+        return positionPid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR);
+    }
 
     @Override
     public void updateSmartDashboard() {
@@ -104,11 +100,6 @@ public final class Catapult extends Subsystem implements Loopable {
         SmartDashboard.putNumber("Catapult PID Result", positionPid.calculate(encoder.getDistance()));
         SmartDashboard.putBoolean("Catapult Banner", home.get());
         SmartDashboard.putBoolean("Catapult Home", !home.get());
-        SmartDashboard.putNumber("Catapult Shot Count", shotCount);
-    }
-    
-    public boolean onTarget() {
-        return positionPid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR);
     }
 
     @Override
@@ -118,9 +109,7 @@ public final class Catapult extends Subsystem implements Loopable {
                 positionPid.setSetpoint(shotCount + Constants.Subsystems.Catapult.READY_OFFSET);
                 velocityPid.setSetpoint(positionPid.calculate(encoder.getDistance()));
                 talon.set(velocityPid.calculate(encoder.getRate()));
-                if (zeroState != ZeroState.ZEROED) {
-                    state = CatapultState.ZERO;
-                } else if (onTarget() || positionPid.getError() < 0) {
+                if (positionPid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR) || positionPid.getError() < 0) {
                     state = CatapultState.READY;
                 }
                 break;
@@ -133,12 +122,14 @@ public final class Catapult extends Subsystem implements Loopable {
                         + Constants.Subsystems.Catapult.FIRE_OFFSET);
                 velocityPid.setSetpoint(positionPid.calculate(encoder.getDistance()));
                 talon.set(velocityPid.calculate(encoder.getRate()));
-                
-                if (zeroState != ZeroState.ZEROED && timer.hasPeriodPassed(Constants.Subsystems.Catapult.RETRACT_DELAY)) {
-                    state = CatapultState.RETRACT;
-                } else if(timer.hasPeriodPassed(Constants.Subsystems.Catapult.RETRACT_DELAY)) {
-                    state = CatapultState.RETRACT;
-                    shotCount++;
+                if (positionPid.onTarget(Constants.Subsystems.Catapult.ALLOWABLE_ERROR)) {
+                    if (zeroState != ZeroState.ZEROED) {
+                        state = CatapultState.ZERO;
+                    } else {
+                        shotCount++;
+                        state = CatapultState.RETRACT;
+                    }
+
                 }
                 break;
             case ZERO:
@@ -179,9 +170,9 @@ public final class Catapult extends Subsystem implements Loopable {
             default:
                 break;
         }
-
+        
     }
-
+    
     private void setState(final CatapultState state) {
         this.state = state;
     }

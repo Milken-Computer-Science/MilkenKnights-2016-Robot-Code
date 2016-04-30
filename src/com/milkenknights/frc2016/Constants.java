@@ -61,7 +61,7 @@ public final class Constants {
         
         public static final double HORIZONTAL_FOV  = 54.0;
         
-        public static final double OFFSET = -35.0;
+        public static final double OFFSET = -30.0;
     }
     
     public class Auto {
@@ -81,7 +81,7 @@ public final class Constants {
             
             public static final double VELOCITY_OUTPUT_RANGE = 0.2;
             
-            public static final double VELOCITY_KP = 0.001;
+            public static final double VELOCITY_KP = 0.00125;
             public static final double VELOCITY_KI = 0.0;
             public static final double VELOCITY_KD = 0.0;
             
@@ -108,7 +108,7 @@ public final class Constants {
             public class Arm {
                 public static final double GEAR_RATIO = 16.0 / 44.0;
                 
-                public static final double INTAKE = -0.35;
+                public static final double INTAKE = -0.375;
                 public static final double PROTECT = -0.25;
                 public static final double STORED = 0.0;
                 
@@ -138,7 +138,7 @@ public final class Constants {
             public static final double ALLOWABLE_ERROR = 0.025;
             public static final double RETRACT_SPEED = 0.4;
             public static final double SLOW_RETRACT_SPEED = 0.1;
-            public static final double MAX_VELOCITY = 0.75;
+            public static final double MAX_VELOCITY = 1.0;
             public static final double READY_OFFSET = 0.1;
             public static final double FIRE_OFFSET = 0.075;
             public static final double RETRACT_DELAY = 0.5;
@@ -155,7 +155,7 @@ public final class Constants {
         public class ActionArm {
             public static final double GEAR_RATIO = 16.0 / 36.0;
             
-            public static final double PORTICULLIS = -0.415;
+            public static final double PORTICULLIS = -0.41;
             public static final double CDF = -0.355;
             public static final double STORED = 0.0;
             

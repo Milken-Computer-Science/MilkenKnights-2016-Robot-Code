@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 public class MkJoystick extends Joystick {
     
+    private final int port;
     private final HashMap<Integer, Button> buttons;
     
     /**
@@ -13,6 +14,7 @@ public class MkJoystick extends Joystick {
      */
     public MkJoystick(final int port) {
         super(port);
+        this.port = port;
         
         buttons = new HashMap<Integer, Button>();
     }
@@ -28,6 +30,10 @@ public class MkJoystick extends Joystick {
             buttons.put(button, new Button(this, button));
         }
         return buttons.get(button);
+    }
+    
+    public int getPort() {
+        return port;
     }
 
 }

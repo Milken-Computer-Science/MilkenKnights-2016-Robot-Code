@@ -28,6 +28,7 @@ public class SynchronousPid {
     private double lastOutput;
     private boolean totalOutput;
     private boolean maxVelocityFeedForward;
+    private double lastCalcResult;
 
     /**
      * Allocate a PID object with the given constants for P, I, D.
@@ -89,8 +90,12 @@ public class SynchronousPid {
         if (maxVelocityFeedForward) {
             result += setpoint / maxVelocity;
         }
-        
+        lastCalcResult = result;
         return result;
+    }
+    
+    public double lastResult() {
+        return lastCalcResult;
     }
 
     /**

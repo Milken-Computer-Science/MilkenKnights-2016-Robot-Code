@@ -1,14 +1,15 @@
 package com.milkenknights.util;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Button {
     
-    private final Joystick joystick;
+    private final MkJoystick joystick;
     private final int rawButton;
     private boolean lastState;
 
-    public Button(final Joystick joystick, final int rawButton) {
+    public Button(final MkJoystick joystick, final int rawButton) {
         this.joystick = joystick;
         this.rawButton = rawButton;
     }
@@ -19,6 +20,10 @@ public class Button {
     public boolean isPressed() {
         final boolean isPressed =  !lastState && joystick.getRawButton(rawButton);
         update();
+        if (isPressed) {
+            System.out.println(DriverStation.getInstance().getMatchTime() + "\t[Joystick] " + joystick.getPort()
+                + "\t[Button]" + rawButton + "\t Pressed");
+        }
         return isPressed;
     }
     

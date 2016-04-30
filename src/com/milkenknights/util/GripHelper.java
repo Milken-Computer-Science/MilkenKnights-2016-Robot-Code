@@ -53,6 +53,7 @@ public class GripHelper implements MkSendable, ITableListener {
      */
     public void register() {
         targetTable.addTableListener(this);
+        SmartDashboard.putNumber("Vision Offset", Constants.Vision.OFFSET);
     }
     
     /**
@@ -91,7 +92,7 @@ public class GripHelper implements MkSendable, ITableListener {
             }
             
             try {
-                cachedTarget.reset(centerX[index] + Constants.Vision.OFFSET, centerY[index], width[index],
+                cachedTarget.reset(centerX[index] + SmartDashboard.getNumber("Vision Offset", Constants.Vision.OFFSET), centerY[index], width[index],
                         height[index], area[index], solidity[index]);
             } catch (ArrayIndexOutOfBoundsException exception) {
                 exception.printStackTrace();
