@@ -4,9 +4,7 @@ import com.milkenknights.frc2016.HardwareAdapter;
 import com.milkenknights.frc2016.auto.AutoMode;
 import com.milkenknights.frc2016.auto.AutoModeEndedException;
 import com.milkenknights.frc2016.subsystems.ActionArm.ActionArmPosition;
-import com.milkenknights.frc2016.subsystems.Catapult.CatapultState;
 import com.milkenknights.frc2016.subsystems.IntakeArm.IntakePosition;
-import com.milkenknights.frc2016.subsystems.IntakeSpeed.IntakeSpeedState;
 
 /**
  * This AutoMode will breach the OuterWorks.
